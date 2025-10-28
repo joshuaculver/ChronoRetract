@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://4fvug57k1c8o"]
+
+[ext_resource type="Script" uid="uid://c6c2kw7ugrk40" path="res://scripts/faction.gd" id="1_l6epr"]
+
+[node name="faction" type="Node"]
+script = ExtResource("1_l6epr")
+faction = 2

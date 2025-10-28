@@ -1,0 +1,257 @@
+[gd_scene load_steps=7 format=3 uid="uid://c5jgxsddp8xy0"]
+
+[ext_resource type="Script" uid="uid://brcybdxg3yh42" path="res://scripts/managers.gd" id="1_4e3gx"]
+[ext_resource type="Script" uid="uid://c6c2kw7ugrk40" path="res://scripts/faction.gd" id="2_lhlys"]
+[ext_resource type="Script" uid="uid://xy45s833i4ww" path="res://factionsManager.gd" id="2_wa1pu"]
+[ext_resource type="PackedScene" uid="uid://bgv8m0iehg3yi" path="res://prefabs/region.tscn" id="4_wa1pu"]
+[ext_resource type="Texture2D" uid="uid://dwvk1h5vqhw6i" path="res://icon.svg" id="6_4yc1i"]
+[ext_resource type="Script" uid="uid://8u5bt1d1lbdr" path="res://scripts/unit.gd" id="7_vocqp"]
+
+[node name="main" type="Node2D"]
+
+[node name="managers" type="Node" parent="."]
+unique_name_in_owner = true
+script = ExtResource("1_4e3gx")
+
+[node name="tickTimer" type="Timer" parent="managers"]
+autostart = true
+
+[node name="Button2" type="Button" parent="managers"]
+offset_left = 208.0
+offset_top = 105.0
+offset_right = 312.0
+offset_bottom = 137.0
+text = "Target
+"
+
+[node name="Label" type="Label" parent="managers"]
+offset_left = 912.0
+offset_top = 32.0
+offset_right = 1065.0
+offset_bottom = 55.0
+text = "None"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="factions" type="Node" parent="managers"]
+script = ExtResource("2_wa1pu")
+
+[node name="Faction" type="Node" parent="managers/factions"]
+script = ExtResource("2_lhlys")
+
+[node name="units" type="Node" parent="managers"]
+
+[node name="unit" type="Sprite2D" parent="managers/units" node_paths=PackedStringArray("location")]
+z_index = 1
+position = Vector2(640, 216)
+scale = Vector2(0.1875, 0.1875)
+texture = ExtResource("6_4yc1i")
+script = ExtResource("7_vocqp")
+ID = 1
+location = NodePath("../../regions/42")
+faction = 5
+
+[node name="regions" type="Node" parent="managers"]
+
+[node name="10" parent="managers/regions" node_paths=PackedStringArray("neighbors") instance=ExtResource("4_wa1pu")]
+position = Vector2(472, 104)
+ID = 10
+factionOwner = 4
+neighbors = [NodePath("../11")]
+graphPos = Vector2(1, 0)
+
+[node name="11" parent="managers/regions" node_paths=PackedStringArray("neighbors") instance=ExtResource("4_wa1pu")]
+position = Vector2(472, 160)
+ID = 11
+factionOwner = 4
+neighbors = [NodePath("../10"), NodePath("../21"), NodePath("../12"), NodePath("../22")]
+graphPos = Vector2(1, 1)
+
+[node name="21" parent="managers/regions" node_paths=PackedStringArray("neighbors") instance=ExtResource("4_wa1pu")]
+position = Vector2(528, 160)
+ID = 21
+neighbors = [NodePath("../10"), NodePath("../31"), NodePath("../22")]
+graphPos = Vector2(2, 1)
+
+[node name="31" parent="managers/regions" node_paths=PackedStringArray("neighbors") instance=ExtResource("4_wa1pu")]
+position = Vector2(584, 160)
+ID = 31
+factionOwner = 2
+neighbors = [NodePath("../21"), NodePath("../22"), NodePath("../42")]
+graphPos = Vector2(3, 1)
+
+[node name="51" parent="managers/regions" node_paths=PackedStringArray("neighbors") instance=ExtResource("4_wa1pu")]
+position = Vector2(696, 160)
+ID = 51
+factionOwner = 0
+neighbors = [NodePath("../61")]
+graphPos = Vector2(5, 1)
+
+[node name="61" parent="managers/regions" node_paths=PackedStringArray("neighbors") instance=ExtResource("4_wa1pu")]
+position = Vector2(752, 160)
+ID = 61
+factionOwner = 0
+neighbors = [NodePath("../60"), NodePath("../62")]
+graphPos = Vector2(6, 1)
+
+[node name="22" parent="managers/regions" node_paths=PackedStringArray("neighbors") instance=ExtResource("4_wa1pu")]
+position = Vector2(528, 216)
+ID = 22
+factionOwner = 2
+neighbors = [NodePath("../21"), NodePath("../31"), NodePath("../12"), NodePath("../23")]
+graphPos = Vector2(2, 2)
+
+[node name="42" parent="managers/regions" node_paths=PackedStringArray("neighbors") instance=ExtResource("4_wa1pu")]
+position = Vector2(640, 216)
+ID = 42
+neighbors = [NodePath("../31"), NodePath("../33"), NodePath("../53"), NodePath("../44")]
+graphPos = Vector2(4, 2)
+
+[node name="60" parent="managers/regions" node_paths=PackedStringArray("neighbors") instance=ExtResource("4_wa1pu")]
+position = Vector2(752, 104)
+ID = 60
+factionOwner = 0
+neighbors = [NodePath("../70"), NodePath("../61")]
+graphPos = Vector2(6, 0)
+
+[node name="62" parent="managers/regions" node_paths=PackedStringArray("neighbors") instance=ExtResource("4_wa1pu")]
+position = Vector2(752, 216)
+ID = 62
+factionOwner = 0
+neighbors = [NodePath("../61"), NodePath("../42"), NodePath("../53")]
+graphPos = Vector2(6, 2)
+
+[node name="70" parent="managers/regions" node_paths=PackedStringArray("neighbors") instance=ExtResource("4_wa1pu")]
+position = Vector2(809, 105)
+ID = 70
+factionOwner = 0
+neighbors = [NodePath("../60")]
+graphPos = Vector2(7, 0)
+
+[node name="53" parent="managers/regions" node_paths=PackedStringArray("neighbors") instance=ExtResource("4_wa1pu")]
+position = Vector2(696, 272)
+ID = 53
+factionOwner = 3
+neighbors = [NodePath("../62"), NodePath("../42"), NodePath("../44"), NodePath("../55")]
+graphPos = Vector2(5, 3)
+
+[node name="02" parent="managers/regions" node_paths=PackedStringArray("neighbors") instance=ExtResource("4_wa1pu")]
+position = Vector2(416, 216)
+ID = 2
+factionOwner = 4
+neighbors = [NodePath("../12"), NodePath("../03")]
+graphPos = Vector2(0, 2)
+
+[node name="12" parent="managers/regions" node_paths=PackedStringArray("neighbors") instance=ExtResource("4_wa1pu")]
+position = Vector2(472, 216)
+ID = 12
+factionOwner = 4
+neighbors = [NodePath("../11"), NodePath("../02"), NodePath("../22"), NodePath("../03")]
+graphPos = Vector2(1, 2)
+
+[node name="03" parent="managers/regions" node_paths=PackedStringArray("neighbors") instance=ExtResource("4_wa1pu")]
+position = Vector2(416, 272)
+ID = 3
+factionOwner = 4
+neighbors = [NodePath("../02"), NodePath("../12"), NodePath("../04"), NodePath("../14")]
+graphPos = Vector2(0, 3)
+
+[node name="23" parent="managers/regions" node_paths=PackedStringArray("neighbors") instance=ExtResource("4_wa1pu")]
+position = Vector2(528, 272)
+ID = 23
+factionOwner = 2
+neighbors = [NodePath("../12"), NodePath("../22"), NodePath("../33"), NodePath("../14"), NodePath("../24")]
+graphPos = Vector2(2, 3)
+
+[node name="33" parent="managers/regions" node_paths=PackedStringArray("neighbors") instance=ExtResource("4_wa1pu")]
+position = Vector2(584, 272)
+ID = 33
+factionOwner = 2
+neighbors = [NodePath("../31"), NodePath("../42"), NodePath("../22"), NodePath("../44"), NodePath("../06"), NodePath("../35")]
+graphPos = Vector2(3, 3)
+
+[node name="04" parent="managers/regions" node_paths=PackedStringArray("neighbors") instance=ExtResource("4_wa1pu")]
+position = Vector2(416, 328)
+ID = 4
+factionOwner = 1
+neighbors = [NodePath("../03"), NodePath("../14"), NodePath("../15")]
+graphPos = Vector2(0, 4)
+
+[node name="14" parent="managers/regions" node_paths=PackedStringArray("neighbors") instance=ExtResource("4_wa1pu")]
+position = Vector2(472, 328)
+ID = 14
+factionOwner = 1
+neighbors = [NodePath("../03"), NodePath("../04"), NodePath("../23"), NodePath("../24"), NodePath("../15")]
+graphPos = Vector2(1, 4)
+
+[node name="24" parent="managers/regions" node_paths=PackedStringArray("neighbors") instance=ExtResource("4_wa1pu")]
+position = Vector2(528, 328)
+ID = 24
+neighbors = [NodePath("../14"), NodePath("../23"), NodePath("../15"), NodePath("../35")]
+graphPos = Vector2(2, 4)
+
+[node name="44" parent="managers/regions" node_paths=PackedStringArray("neighbors") instance=ExtResource("4_wa1pu")]
+position = Vector2(640, 328)
+ID = 44
+factionOwner = 2
+neighbors = [NodePath("../33"), NodePath("../42"), NodePath("../53"), NodePath("../55"), NodePath("../45"), NodePath("../35")]
+graphPos = Vector2(4, 4)
+
+[node name="15" parent="managers/regions" node_paths=PackedStringArray("neighbors") instance=ExtResource("4_wa1pu")]
+position = Vector2(472, 385)
+ID = 15
+factionOwner = 1
+neighbors = [NodePath("../04"), NodePath("../14"), NodePath("../24"), NodePath("../16")]
+graphPos = Vector2(1, 5)
+
+[node name="35" parent="managers/regions" node_paths=PackedStringArray("neighbors") instance=ExtResource("4_wa1pu")]
+position = Vector2(584, 385)
+ID = 35
+factionOwner = 2
+neighbors = [NodePath("../24"), NodePath("../33"), NodePath("../44"), NodePath("../45")]
+graphPos = Vector2(3, 5)
+
+[node name="16" parent="managers/regions" node_paths=PackedStringArray("neighbors") instance=ExtResource("4_wa1pu")]
+position = Vector2(472, 440)
+ID = 16
+factionOwner = 1
+neighbors = [NodePath("../15"), NodePath("../06")]
+graphPos = Vector2(1, 6)
+
+[node name="06" parent="managers/regions" node_paths=PackedStringArray("neighbors") instance=ExtResource("4_wa1pu")]
+position = Vector2(416, 440)
+ID = 6
+factionOwner = 1
+neighbors = [NodePath("../16")]
+graphPos = Vector2(0, 6)
+
+[node name="45" parent="managers/regions" node_paths=PackedStringArray("neighbors") instance=ExtResource("4_wa1pu")]
+position = Vector2(640, 385)
+ID = 45
+factionOwner = 3
+neighbors = [NodePath("../35"), NodePath("../44"), NodePath("../53"), NodePath("../46")]
+graphPos = Vector2(4, 5)
+
+[node name="46" parent="managers/regions" node_paths=PackedStringArray("neighbors") instance=ExtResource("4_wa1pu")]
+position = Vector2(640, 440)
+ID = 46
+factionOwner = 3
+neighbors = [NodePath("../45"), NodePath("../55")]
+graphPos = Vector2(4, 6)
+
+[node name="55" parent="managers/regions" node_paths=PackedStringArray("neighbors") instance=ExtResource("4_wa1pu")]
+position = Vector2(696, 385)
+ID = 55
+factionOwner = 3
+neighbors = [NodePath("../44"), NodePath("../53"), NodePath("../46")]
+graphPos = Vector2(5, 5)
+
+[node name="56" parent="managers/regions" node_paths=PackedStringArray("neighbors") instance=ExtResource("4_wa1pu")]
+position = Vector2(697, 440)
+ID = 56
+factionOwner = 3
+neighbors = [NodePath("../55")]
+graphPos = Vector2(5, 6)
+
+[connection signal="timeout" from="managers/tickTimer" to="managers" method="tick"]
+[connection signal="pressed" from="managers/Button2" to="managers/units/unit" method="getPath"]

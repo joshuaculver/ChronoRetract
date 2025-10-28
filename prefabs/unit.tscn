@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://b4vm3mputhumb"]
+
+[ext_resource type="Texture2D" uid="uid://dwvk1h5vqhw6i" path="res://icon.svg" id="1_cq4v0"]
+[ext_resource type="Script" uid="uid://8u5bt1d1lbdr" path="res://scripts/unit.gd" id="2_on614"]
+
+[node name="unit" type="Sprite2D"]
+z_index = 1
+scale = Vector2(0.188, 0.188)
+texture = ExtResource("1_cq4v0")
+script = ExtResource("2_on614")
+faction = 5
