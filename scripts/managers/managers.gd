@@ -69,6 +69,7 @@ func addUnit(unit : Unit):
 		return ID
 
 ##When a unit arrives at a new region they send a signal which calls this function
+##This allows appropriate references to be established
 func unitMoved(unitID : int, regionID : int, lastRegionID : int):
 	var region = regionDict[regionID]
 	var oldRegion = regionDict[lastRegionID]

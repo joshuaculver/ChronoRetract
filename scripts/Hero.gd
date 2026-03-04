@@ -1,3 +1,4 @@
+##Unique unit type
 class_name Hero
 
 extends Unit
@@ -17,7 +18,7 @@ func tick() -> void:
 		if mode == enums.UnitMode.AID || mode == enums.UnitMode.NEUTRAL:
 			rest()
 
-#TODO work in stats
+##TODO work in stats
 func rest():
 	if hasFought == false:
 		if location.factionOwner == faction:

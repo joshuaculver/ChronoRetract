@@ -1,6 +1,6 @@
 extends Node
 
-##Global enums
+##Global enum definitions
 enum Factions {RED, BLUE, GREEN, YELLOW, PURPLE, NONE}
 enum Rapport {SELF, ALLY, LIKE, NEUTRAL, DISLIKE, ENEMY, WAR}
 

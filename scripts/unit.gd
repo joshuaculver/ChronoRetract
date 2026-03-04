@@ -27,7 +27,7 @@ func _ready():
 	##Node gets ID from manager unit dictionary
 	ID = managers.addUnit(self)
 
-#Regular unit/army version
+##Regular unit/army version
 func tick() -> void:
 	if path.size() > 0:
 		move()

@@ -5,6 +5,7 @@ var regionArr : Array[Node] = []
 func _ready() -> void:
 	managers.regionManager = self
 
+##Gets information on regions from nodes
 func updateRegions() -> void:
 	regionArr = get_children()
 

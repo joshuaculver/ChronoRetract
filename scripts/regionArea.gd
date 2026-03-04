@@ -49,8 +49,8 @@ func _ready():
 	##Node gets ID from manager unit dictionary
 	managers.addRegion(self)
 
-#For future pathfinding stuff:
-#Astar2D. Can create graph of nodes. Assign regions to vector2 positions on said graph
+##For future pathfinding stuff:
+##Astar2D. Can create graph of nodes. Assign regions to vector2 positions on said graph
 func tick():
 	if sieged:
 		pass

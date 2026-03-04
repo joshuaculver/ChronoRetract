@@ -21,7 +21,7 @@ var saving = true
 ##Amount to keep before spending
 var saveAmt = 0
 
-
+#Dictionary for tracking relationship with other factions
 @export var factionRapport : = {
 	enums.Factions.RED:enums.Rapport.NEUTRAL,
 	enums.Factions.BLUE:enums.Rapport.NEUTRAL,
