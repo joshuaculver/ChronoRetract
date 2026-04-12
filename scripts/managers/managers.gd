@@ -7,6 +7,7 @@ var sessionManager
 var factionManager
 var regionManager
 var unitManager
+var battleManager
 
 ##Manager has dictionaries that can be referenced by node ID
 ##regionDict[ID]
@@ -23,7 +24,7 @@ var gameSpeed : float = 1
 ##Region selected in interface
 var selectedRegion : Region = null
 
-var unitScene = preload("res://prefabs/unit.tscn")
+var unitScene = preload("res://prefabs/units/army.tscn")
 
 #Gets called by parent node of session once it gets it's _ready call
 func initSession() -> void:
@@ -63,6 +64,7 @@ func addUnit(unit : Unit):
 		unitDict[unitID] = unit
 		
 		unit.relocated.connect(unitMoved)
+		battleManager.unitConnect(unit)
 		
 		unitID = unitID + 1
 		print("new unit ID: " + str(ID))

@@ -1,4 +1,4 @@
-class_name Unit
+@abstract class_name Unit
 
 extends Sprite2D
 
@@ -16,32 +16,21 @@ var path : Array[int]
 
 var hasFought : bool = false
 
+##Current state of unit
 @export var mode : enums.UnitMode = enums.UnitMode.NEUTRAL
 
 signal created
 signal relocated
+signal encounteredEnemy(currRegion)
 
 func _ready():
 	modulate = enums.colorDict[faction]
 	
 	##Node gets ID from manager unit dictionary
 	ID = managers.addUnit(self)
+	created.emit()
 
-##Regular unit/army version
-func tick() -> void:
-	if path.size() > 0:
-		move()
-		print("Unit: " + str(ID) + " arrived at: " + str(location.ID))
-	else:
-		if  location.factionOwner == faction || managers.factionManager.rapportCheck(faction, location.factionOwner) <= 3:
-			mode = enums.UnitMode.NEUTRAL
-		elif managers.factionManager.rapportCheck(faction, location.factionOwner) == 5:
-			mode = enums.UnitMode.BATTLE
-	if location.factionOwner == faction || managers.factionManager.rapportCheck(faction, location.factionOwner) <= 3:
-		if mode == enums.UnitMode.NEUTRAL:
-			rest()
-	
-	hasFought = false
+@abstract func tick()
 
 ##Should be player version. NPC version would get passed a target from somewhere
 func getPath() -> void:
@@ -84,9 +73,9 @@ func move() -> void:
 			location = managers.regionDict[nextID]
 			position = location.position
 			relocated.emit(ID, location.ID, oldID)
-		else:
-			##Aid, battle, etc.
-			mode = enums.UnitMode.NEUTRAL
+			
+			if mode != enums.UnitMode.BATTLE:
+				hostileCheck()
 
 func rest():
 	if hasFought == false:
@@ -97,6 +86,13 @@ func rest():
 			if power < maxPower:
 				power = clamp(power + (maxPower * 0.025),0,maxPower)
 
-func encUnit(other : Unit):
-	if factionRapport[other.factionOwner] == enums.Rapport.ENEMY:
-		pass
+func hostileCheck():
+	for unit in location.units:
+		if unit != self:
+			if factionRapport[unit.factionOwner] == enums.Rapport.ENEMY:
+				encounteredEnemy.emit(location, self, unit)
+				##TODO set mode to battle in battleManager
+				##only needs to send signal once
+				break
+
+@abstract func die()

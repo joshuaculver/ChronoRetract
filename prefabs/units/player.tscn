@@ -1,0 +1,12 @@
+[gd_scene format=3 uid="uid://8101hdxjn6gr"]
+
+[ext_resource type="Texture2D" uid="uid://dwvk1h5vqhw6i" path="res://icon.svg" id="1_12kc1"]
+[ext_resource type="Script" uid="uid://blxxx7d4ogd22" path="res://scripts/player.gd" id="2_0c73n"]
+
+[node name="Player" type="Sprite2D" unique_id=322862248 node_paths=PackedStringArray("location")]
+z_index = 1
+scale = Vector2(0.1875, 0.1875)
+texture = ExtResource("1_12kc1")
+script = ExtResource("2_0c73n")
+location = NodePath("")
+faction = 2

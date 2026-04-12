@@ -1,9 +1,9 @@
-##Unique unit type
-class_name Hero
+class_name Army
 
 extends Unit
 
 func tick() -> void:
+	hostileCheck()
 	match mode:
 		enums.UnitMode.NEUTRAL:
 			rest()
@@ -27,25 +27,10 @@ func tick() -> void:
 						mode = enums.UnitMode.BATTLE
 		enums.UnitMode.AID:
 			##TODO
+			##Regular units do not aid
 			pass
 	
 	hasFought = false
-
-##TODO work in stats
-func rest():
-	if hasFought == false:
-		if location.factionOwner == faction:
-			if power < maxPower:
-				power = clamp(power + (maxPower *0.15),0,maxPower)
-		else:
-			if power < maxPower:
-				power = clamp(power + (maxPower *0.05),0,maxPower)
-
-func encUnit(other : Unit):
-	if other.faction == faction:
-		pass
-	elif factionRapport[other.factionOwner] == enums.Rapport.ENEMY:
-		pass
 
 func die():
 	pass
