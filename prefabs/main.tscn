@@ -619,3 +619,4 @@ stats = {
 }
 
 [connection signal="timeout" from="session/tickTimer" to="session" method="tick"]
+[connection signal="pressed" from="session/UI/RegionPanel/Button2" to="session/units/Player" method="getPath"]

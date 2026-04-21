@@ -92,3 +92,6 @@ func upgradePrice(stat : String):
 
 func reportScore():
 	return int(stats["population"] + stats["growth"] + stats["production"] + stats["logistics"])
+	
+func removeUnit(unit : Unit) -> void:
+	units.erase(unit)

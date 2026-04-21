@@ -22,6 +22,7 @@ var hasFought : bool = false
 signal created
 signal relocated
 signal encounteredEnemy(currRegion)
+signal destroyed
 
 func _ready():
 	modulate = enums.colorDict[faction]
@@ -31,6 +32,10 @@ func _ready():
 	created.emit()
 
 @abstract func tick()
+
+@abstract func getDamaged(damage : int)
+
+##TODO make single getPath or abstract getPath func
 
 ##Should be player version. NPC version would get passed a target from somewhere
 func getPath() -> void:
@@ -96,3 +101,4 @@ func hostileCheck():
 				break
 
 @abstract func die()
+	##destroyed.emit(self)

@@ -47,5 +47,8 @@ func encUnit(other : Unit):
 	elif factionRapport[other.factionOwner] == enums.Rapport.ENEMY:
 		pass
 
+func getDamaged(damage : int):
+	pass
+
 func die():
 	pass

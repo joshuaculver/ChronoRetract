@@ -32,5 +32,12 @@ func tick() -> void:
 	
 	hasFought = false
 
+func getDamaged(damage : int):
+	power -= damage
+	if power <= 0:
+		die()
+
 func die():
-	pass
+	destroyed.emit(self)
+	##TODO make sure this is handled safely and node is only removed once clean up is succesfully completed
+	queue_free()

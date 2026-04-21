@@ -1,5 +1,7 @@
 extends Node
 
+#TODO make manager nodes into loadable scenes to initialize and/or convert managers from Node -> Object
+
 ##Manager has access to game nodes
 ##Adds self to singleton
 var UImanager
@@ -11,6 +13,8 @@ var battleManager
 
 ##Manager has dictionaries that can be referenced by node ID
 ##regionDict[ID]
+
+##TODO move these to appropriate managers, add safe access, etc.
 var factionDict = {}
 var regionDict = {}
 var unitDict = {}
@@ -63,7 +67,9 @@ func addUnit(unit : Unit):
 		var ID = unitID
 		unitDict[unitID] = unit
 		
+		##Connecting unit signals to managers
 		unit.relocated.connect(unitMoved)
+		unit.destroyed.connect(removeUnit)
 		battleManager.unitConnect(unit)
 		
 		unitID = unitID + 1
@@ -110,6 +116,12 @@ func tryMakeUnit(callFaction : enums.Factions, resources: int):
 	##newUnit.getPathRegion(testRegion)
 	
 	print("Faction: " + str(name) + " made unit" + " | " + "POW: " + str(newUnit.maxPower))
+
+func removeUnit(unit : Unit):
+	unit.location.removeUnit(unit)
+	factionDict[unit.faction].removeUnit(unit)
+	
+	unitDict.erase(unit.ID)
 
 ##Called by signal of regions when region is clicked
 func regionSelected(ID) -> void:

@@ -94,4 +94,6 @@ func updateAdjRegions():
 			if ownedRegions[i].neighbors[x].factionOwner != faction && ! adjacentRegions.has(ownedRegions[i].neighbors[x]):
 				adjacentRegions.append(ownedRegions[i].neighbors[x])
 	print("Faction: " + str(faction) + " | Adjacent regions: " + str(adjacentRegions))
-	
+
+func removeUnit(unit):
+	ownedUnits.erase(unit)
