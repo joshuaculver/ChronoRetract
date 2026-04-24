@@ -6,6 +6,8 @@ var ID : int = 0
 @export var location : Region
 @export var faction : enums.Factions
 
+@export var unitSize : enums.UnitSize
+
 ##Gets assigned faction's rapport
 var factionRapport : = {}
 

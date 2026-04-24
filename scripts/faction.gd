@@ -38,8 +38,7 @@ var resources : int = 0
 func _ready() -> void:
 	managers.addFaction(self)
 	
-	##Unit power is 100 per cost of unit. So, higher faction unit cost means less cost effective units. 
-	saveAmt = randi_range(400,1200)
+	saveAmt = enums.powerVals['M']
 	
 func tick() -> void:
 	if ownedUnits.size() == 0:
@@ -57,7 +56,7 @@ func tick() -> void:
 							print("Upgraded: " + str(i) + "," + str(x))
 	if resources >= saveAmt:
 		if ownedUnits.size() == 0:
-			managers.tryMakeUnit(faction, saveAmt)
+			managers.tryMakeUnit(faction, saveAmt, enums.UnitSize.SMALL)
 		else:
 			saving = false
 	DEBUGscore.text = str(reportScore())

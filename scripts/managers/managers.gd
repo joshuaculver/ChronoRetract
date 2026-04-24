@@ -90,7 +90,7 @@ func unitMoved(unitID : int, regionID : int, lastRegionID : int):
 	region.units.append(unit)
 	region.notify_property_list_changed()
 
-func tryMakeUnit(callFaction : enums.Factions, resources: int):
+func tryMakeUnit(callFaction : enums.Factions, resources: int, size : enums.UnitSize):
 	var faction = factionDict[callFaction]
 	var amount = int(resources / faction.unitCost)
 
@@ -109,6 +109,7 @@ func tryMakeUnit(callFaction : enums.Factions, resources: int):
 	newUnit.modulate = enums.colorDict[faction.faction]
 	
 	newUnit.position = faction.ownedRegions[0].position
+	newUnit.name = "Unit: " + str(newUnit.ID)
 	
 	faction.ownedUnits.append(newUnit)
 	

@@ -7,7 +7,7 @@ var battles : Array[Battle] = []
 
 func _ready() -> void:
 	managers.battleManager = self
-
+	
 func tick():
 	for war in wars:
 		war.tick()

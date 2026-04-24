@@ -1,4 +1,4 @@
-@abstract class_name War
+class_name War
 
 extends Object
 
@@ -11,6 +11,3 @@ var defender : Faction
 var defAllies : Array[Faction] = []
 
 ##TODO war stats for tracking purposes, penalties, etc.
-
-func tick() -> void:
-	pass

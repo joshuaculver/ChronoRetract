@@ -65,9 +65,6 @@ text = "Target
 "
 icon_alignment = 1
 
-[node name="battles" type="Node" parent="session" unique_id=1437992177]
-script = ExtResource("12_sd0oo")
-
 [node name="factions" type="Node" parent="session" unique_id=2018685686]
 script = ExtResource("6_fsdge")
 
@@ -236,13 +233,6 @@ label_settings = ExtResource("5_n3pe4")
 layout_mode = 2
 text = "0"
 label_settings = ExtResource("5_n3pe4")
-
-[node name="units" type="Node" parent="session" unique_id=66006011]
-script = ExtResource("8_ies5r")
-
-[node name="Player" parent="session/units" unique_id=322862248 node_paths=PackedStringArray("location") instance=ExtResource("9_nhjm5")]
-position = Vector2(640, 216)
-location = NodePath("../../regions/42")
 
 [node name="regions" type="Node" parent="session" unique_id=843833391]
 script = ExtResource("11_fdj3s")
@@ -617,6 +607,16 @@ stats = {
 "population": 250,
 "production": 6
 }
+
+[node name="battles" type="Node" parent="session" unique_id=1437992177]
+script = ExtResource("12_sd0oo")
+
+[node name="units" type="Node" parent="session" unique_id=66006011]
+script = ExtResource("8_ies5r")
+
+[node name="Player" parent="session/units" unique_id=322862248 node_paths=PackedStringArray("location") instance=ExtResource("9_nhjm5")]
+position = Vector2(640, 216)
+location = NodePath("../../regions/42")
 
 [connection signal="timeout" from="session/tickTimer" to="session" method="tick"]
 [connection signal="pressed" from="session/UI/RegionPanel/Button2" to="session/units/Player" method="getPath"]
