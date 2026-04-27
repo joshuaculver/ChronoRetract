@@ -45,7 +45,6 @@ func _ready():
 	factionManager.init()
 	
 	unitManager.addPlayer()
-	
 
 ##Make add X general thing that can choose which dict to use
 func addFaction(faction: Faction):

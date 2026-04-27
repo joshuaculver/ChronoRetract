@@ -6,6 +6,19 @@ extends Node
 
 var turnCount : int = 0
 
+##factions
+##regions
+
+var factions = preload("res://prefabs/managers/factions.tscn")
+var regions = preload("res://prefabs/managers/regions.tscn")
+
+func _ready():
+	var newFactions = factions.instantiate()
+	add_child(newFactions)
+	
+	var newRegions = regions.instantiate()
+	add_child(newRegions)
+
 func tick() -> void:
 	turnCount = turnCount + 1
 	if turnCount % 10 == 0:

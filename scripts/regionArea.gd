@@ -45,10 +45,6 @@ func _ready():
 	statUpgrades["growth"] = stats["growth"]
 	statUpgrades["production"] = stats["production"]
 	statUpgrades["logistics"] = stats["logistics"]
-	
-	##Node gets ID from manager unit dictionary
-	##Added from region manager
-	##managers.regionManager.addRegion(self)
 
 ##For future pathfinding stuff:
 ##Astar2D. Can create graph of nodes. Assign regions to vector2 positions on said graph

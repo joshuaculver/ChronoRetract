@@ -8,20 +8,11 @@ var selectedRegion : Region = null
 
 var navGraph : AStar2D = AStar2D.new()
 
-##Default region setup
-var regionScene = preload("res://prefabs/game/InitRegions.tscn")
-
-func _ready():
-	var newRegions = regionScene.instantiate()
-	for region in newRegions.get_children():
-		region.reparent(self)
-		addRegion(region)
-	regionArr = get_children()
-	
-	newRegions.queue_free()
-	
 func init():
-	##Needs to wait for factions to be initialized or called from somewhere else
+	regionArr = get_children()
+	for region in regionArr:
+		addRegion(region)
+	
 	parentRegions()
 	connectGraph()
 

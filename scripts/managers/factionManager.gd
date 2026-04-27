@@ -2,21 +2,13 @@ extends Node
 
 var factionArr: Array[Node] = []
 
-#Default faction setup
-var factionScene = preload("res://prefabs/game/InitFactions.tscn")
-
-func _ready():
-	var newFactions = factionScene.instantiate()
-	for faction in newFactions.get_children():
-		faction.reparent(self)
-	factionArr = get_children()
-
 func init():
+	factionArr = get_children()
 	for faction in factionArr:
 		faction.updateAdjRegions()
 
 func rapportCheck(from : enums.Factions, to : enums.Factions):
-	var rapport = %managers.factionDict.get(from).factionRapport.get(to)
+	var rapport = managers.factionDict.get(from).factionRapport.get(to)
 	if rapport != null:
 		return rapport
 	else:
