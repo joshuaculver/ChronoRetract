@@ -14,7 +14,6 @@ func tick() -> void:
 
 ##Check if both sides have units, resolve outcome, etc.
 func statusCheck():
-	
 	return true
 
 func turn():

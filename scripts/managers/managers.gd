@@ -4,6 +4,7 @@ extends Node
 
 ##Manager has access to game nodes
 ##Adds self to singleton
+
 var UImanager
 var sessionManager
 var factionManager
@@ -11,37 +12,40 @@ var regionManager
 var unitManager
 var battleManager
 
+var player
+
 ##Manager has dictionaries that can be referenced by node ID
 ##regionDict[ID]
 
 ##TODO move these to appropriate managers, add safe access, etc.
 var factionDict = {}
-var regionDict = {}
 var unitDict = {}
-var unitID : int = 0 
-
-##Manager handles navigation
-var navGraph : AStar2D = AStar2D.new()
+var unitID = 0
 
 var gameSpeed : float = 1
 
-##Region selected in interface
-var selectedRegion : Region = null
-
 var unitScene = preload("res://prefabs/units/army.tscn")
+var sessScene = preload("res://prefabs/game/session.tscn")
 
-#Gets called by parent node of session once it gets it's _ready call
-func initSession() -> void:
-	factionManager.updateFactions()
-	regionManager.updateRegions()
-	unitManager.updateUnits()
+func _ready():
+	var session = sessScene.instantiate()
+	add_child(session)
 	
-	regionManager.parentRegions()
+	UImanager = $UI
+	sessionManager = $session
+	factionManager = $session/factions
+	regionManager = $session/regions
+	unitManager = $session/units
+	battleManager = $session/battles
 	
-	for faction in factionManager.factionArr:
-		faction.updateAdjRegions()
+	##await factionManager.ready
+	##await regionManager.ready
 	
-	connectGraph()
+	regionManager.init()
+	factionManager.init()
+	
+	unitManager.addPlayer()
+	
 
 ##Make add X general thing that can choose which dict to use
 func addFaction(faction: Faction):
@@ -49,15 +53,6 @@ func addFaction(faction: Faction):
 		print("Faction already added")
 	else:
 		factionDict[faction.faction] = faction
-
-func addRegion(region : Region):
-	if regionDict.has(region):
-		print("Faction already added")
-	else:
-		regionDict[region.ID] = region
-		
-		addToGraph(region.ID, region.graphPos)
-		region.selectedRegion.connect(regionSelected)
 
 func addUnit(unit : Unit):
 	if unitDict.has(unit):
@@ -79,8 +74,8 @@ func addUnit(unit : Unit):
 ##When a unit arrives at a new region they send a signal which calls this function
 ##This allows appropriate references to be established
 func unitMoved(unitID : int, regionID : int, lastRegionID : int):
-	var region = regionDict[regionID]
-	var oldRegion = regionDict[lastRegionID]
+	var region = regionManager.regionDict[regionID]
+	var oldRegion = regionManager.regionDict[lastRegionID]
 	var unit = unitDict[unitID]
 	
 	var oldIndex = oldRegion.units.find(unit)
@@ -124,18 +119,6 @@ func removeUnit(unit : Unit):
 	
 	unitDict.erase(unit.ID)
 
-##Called by signal of regions when region is clicked
-func regionSelected(ID) -> void:
-	var newRegion = regionDict[ID]
-	if selectedRegion != null && newRegion == selectedRegion:
-			UImanager.regionSelected(null)
-			selectedRegion = null
-			print("Selected none")
-	else:
-		selectedRegion = newRegion
-		UImanager.regionSelected(selectedRegion)
-		print("selected: " + str(selectedRegion.ID))
-
 func militaryReport():
 	var factions = factionManager.factionArr
 	
@@ -160,18 +143,5 @@ func militaryReport():
 	
 	print(str(scoreDict))
 
-
-func addToGraph(ID, graphPos) -> void:
-		#ID, position, weight_scale
-		navGraph.add_point(ID, graphPos, 1)
-
-func connectGraph():
-	var regionArr = regionManager.regionArr
-	
-	for i in regionArr.size():
-		var neighbors = regionArr[i].neighbors
-		if neighbors.size() > 0:
-			for x in neighbors.size():
-				#Connecting region to navigation graph
-				navGraph.connect_points(regionArr[i].ID, neighbors[x].ID)
-				#print(str(regionArr[i].ID) + " connected to: " +  str(neighbors[x].ID))
+func _on_select_region_button_pressed() -> void:
+	player.getPathRegion(regionManager.selectedRegion)

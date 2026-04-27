@@ -37,33 +37,13 @@ func _ready():
 
 @abstract func getDamaged(damage : int)
 
-##TODO make single getPath or abstract getPath func
-
-##Should be player version. NPC version would get passed a target from somewhere
-func getPath() -> void:
-	mode = enums.UnitMode.TRAVEL
-	
-	var target = managers.selectedRegion
-	path = []
-	##List comes in current position first, target position last
-	if location != null && target != null:
-		var newPath = managers.navGraph.get_id_path(location.ID, target.ID)
-		for i in newPath.size():
-			if newPath[i] != location.ID:
-				##push_back = append
-				path.push_back(newPath[i])
-		print("new path: " + str(newPath))
-	else:
-		print("null in get path location or target")
-
 func getPathRegion(target : Region) -> void:
 	mode = enums.UnitMode.TRAVEL
 	
 	path = []
 	##List comes in current position first, target position last
 	if location != null && target != null:
-		##var newPath = %managers.navGraph.get_id_path(location.ID, target.ID)
-		var newPath = managers.getPath(location.ID, target.ID)
+		var newPath = managers.regionManager.navGraph.get_id_path(location.ID, target.ID)
 		for i in newPath.size():
 			if newPath[i] != location.ID:
 				##push_back = append
@@ -77,7 +57,7 @@ func move() -> void:
 			print("moving")
 			var oldID = location.ID
 			var nextID = path.pop_front()
-			location = managers.regionDict[nextID]
+			location = managers.regionManager.regionDict[nextID]
 			position = location.position
 			relocated.emit(ID, location.ID, oldID)
 			

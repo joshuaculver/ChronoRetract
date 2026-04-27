@@ -1,9 +1,9 @@
+class_name UIManager
+
 extends Node
 
 @onready var regPanel : BoxContainer = $RegionPanel
-
-func _ready() -> void:
-	managers.UImanager = self
+@onready var regionButton : Button = $RegionPanel/SelectRegionButton
 
 func regionSelected(newRegion : Region) -> void:
 	if newRegion == null:
@@ -18,7 +18,7 @@ func regionSelected(newRegion : Region) -> void:
 		regPanel.visible = true
 		
 		var titleText = regPanel.get_node("Title")
-		titleText.text = str(newRegion.ID)
+		titleText.text = str(str(newRegion.ID) + " - " + newRegion.title)
 		
 		var textPanel = regPanel.get_node("TextPanel/Stats")
 		

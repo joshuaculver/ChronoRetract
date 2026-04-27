@@ -16,7 +16,7 @@ func tick() -> void:
 				print("Unit: " + str(ID) + " arrived at: " + str(location.ID))
 			else:
 				##Faction rapport is an indexed enum 
-				if location.factionOwner == faction || managers.factionManager.rapportCheck(faction, location.factionOwner) <= 2:
+				if location.factionOwner == faction || %managers.factionManager.rapportCheck(faction, location.factionOwner) <= 2:
 					if path.size() <= 0:
 						mode = enums.UnitMode.AID
 				elif managers.factionManager.rapportCheck(faction, location.factionOwner) <= 3:

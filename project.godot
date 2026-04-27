@@ -22,7 +22,7 @@ config/icon="res://icon.svg"
 [autoload]
 
 enums="*res://scripts/enums.gd"
-managers="*res://scripts/managers/managers.gd"
+managers="*uid://csltbteku5f2f"
 
 [dotnet]
 

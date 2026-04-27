@@ -5,9 +5,6 @@ var battle = load("res://scripts/battle.gd")
 var wars : Array[War] = []
 var battles : Array[Battle] = []
 
-func _ready() -> void:
-	managers.battleManager = self
-	
 func tick():
 	for war in wars:
 		war.tick()

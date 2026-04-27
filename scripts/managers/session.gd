@@ -1,13 +1,10 @@
+class_name SessionManager
+
 extends Node
 
 @onready var timer = $tickTimer
 
 var turnCount : int = 0
-
-##All ready signal
-func _ready():
-	managers.sessionManager = self
-	managers.initSession()
 
 func tick() -> void:
 	turnCount = turnCount + 1
@@ -17,3 +14,7 @@ func tick() -> void:
 	$units.tick()
 	$regions.tick()
 	$factions.tick()
+
+func startTimer():
+	if timer.is_stopped():
+		timer.start()

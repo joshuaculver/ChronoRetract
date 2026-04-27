@@ -1,0 +1,32 @@
+[gd_scene format=3 uid="uid://dyr1cfq8xacd3"]
+
+[ext_resource type="Script" uid="uid://c6c2kw7ugrk40" path="res://scripts/faction.gd" id="1_vejgu"]
+[ext_resource type="LabelSettings" uid="uid://d04acrf5gru7k" path="res://labelSettings/body.tres" id="2_o2dkk"]
+
+[node name="Red - 0" type="Node" unique_id=1010137497]
+script = ExtResource("1_vejgu")
+factionRapport = {
+0: 0,
+1: 4,
+2: 4,
+3: 2,
+4: 4,
+5: 4
+}
+
+[node name="DEBUGscore" type="BoxContainer" parent="." unique_id=2055992248]
+offset_left = 192.0
+offset_top = 48.0
+offset_right = 232.0
+offset_bottom = 88.0
+
+[node name="Label" type="Label" parent="DEBUGscore" unique_id=1638100490]
+modulate = Color(1, 0, 0, 1)
+layout_mode = 2
+text = "Red:"
+label_settings = ExtResource("2_o2dkk")
+
+[node name="Score" type="Label" parent="DEBUGscore" unique_id=1609555378]
+layout_mode = 2
+text = "0"
+label_settings = ExtResource("2_o2dkk")

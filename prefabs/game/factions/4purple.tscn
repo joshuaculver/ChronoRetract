@@ -1,0 +1,33 @@
+[gd_scene format=3 uid="uid://kqjl872c5jro"]
+
+[ext_resource type="Script" uid="uid://c6c2kw7ugrk40" path="res://scripts/faction.gd" id="1_fxme0"]
+[ext_resource type="LabelSettings" uid="uid://d04acrf5gru7k" path="res://labelSettings/body.tres" id="2_ytmjh"]
+
+[node name="Purple - 4" type="Node" unique_id=435892000]
+script = ExtResource("1_fxme0")
+faction = 4
+factionRapport = {
+0: 3,
+1: 4,
+2: 3,
+3: 3,
+4: 0,
+5: 3
+}
+
+[node name="DEBUGscore" type="BoxContainer" parent="." unique_id=883113886]
+offset_left = 192.0
+offset_top = 112.0
+offset_right = 245.0
+offset_bottom = 152.0
+
+[node name="Label" type="Label" parent="DEBUGscore" unique_id=627547005]
+modulate = Color(0.513726, 0, 1, 1)
+layout_mode = 2
+text = "Purple:"
+label_settings = ExtResource("2_ytmjh")
+
+[node name="Score" type="Label" parent="DEBUGscore" unique_id=1244172303]
+layout_mode = 2
+text = "0"
+label_settings = ExtResource("2_ytmjh")

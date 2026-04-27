@@ -1,6 +1,53 @@
-[gd_scene load_steps=2 format=3 uid="uid://csltbteku5f2f"]
+[gd_scene format=3 uid="uid://csltbteku5f2f"]
 
 [ext_resource type="Script" uid="uid://brcybdxg3yh42" path="res://scripts/managers/managers.gd" id="1_4e3gx"]
+[ext_resource type="Script" uid="uid://y7kft50bx6pl" path="res://scripts/managers/uiManager.gd" id="2_ld7kh"]
+[ext_resource type="LabelSettings" uid="uid://cqhqhjy18of31" path="res://labelSettings/title.tres" id="3_owny3"]
+[ext_resource type="LabelSettings" uid="uid://d04acrf5gru7k" path="res://labelSettings/body.tres" id="4_flgu2"]
 
-[node name="managers" type="Node"]
+[node name="managers" type="Node" unique_id=599014927]
 script = ExtResource("1_4e3gx")
+
+[node name="UI" type="Node" parent="." unique_id=1813317719]
+script = ExtResource("2_ld7kh")
+
+[node name="RegionPanel" type="BoxContainer" parent="UI" unique_id=96626426]
+visible = false
+offset_left = 896.0
+offset_top = 128.0
+offset_right = 1048.0
+offset_bottom = 232.0
+vertical = true
+
+[node name="Title" type="Label" parent="UI/RegionPanel" unique_id=2069829296]
+layout_mode = 2
+text = "Region"
+label_settings = ExtResource("3_owny3")
+horizontal_alignment = 1
+
+[node name="TextPanel" type="BoxContainer" parent="UI/RegionPanel" unique_id=574450319]
+layout_mode = 2
+
+[node name="Info" type="Label" parent="UI/RegionPanel/TextPanel" unique_id=2015256688]
+layout_mode = 2
+text = "lorum ipsum
+lorum ipsum
+lorum ipsum
+lorum ipsum"
+label_settings = ExtResource("4_flgu2")
+
+[node name="Stats" type="Label" parent="UI/RegionPanel/TextPanel" unique_id=1654131873]
+layout_mode = 2
+text = "lorum ipsum
+lorum ipsum
+lorum ipsum
+lorum ipsum"
+label_settings = ExtResource("4_flgu2")
+
+[node name="SelectRegionButton" type="Button" parent="UI/RegionPanel" unique_id=759500174]
+layout_mode = 2
+text = "Target
+"
+icon_alignment = 1
+
+[connection signal="pressed" from="UI/RegionPanel/SelectRegionButton" to="." method="_on_select_region_button_pressed"]

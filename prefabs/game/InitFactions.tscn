@@ -1,0 +1,22 @@
+[gd_scene format=3 uid="uid://bnlqp26x66dsu"]
+
+[ext_resource type="PackedScene" uid="uid://dyr1cfq8xacd3" path="res://prefabs/game/factions/0red.tscn" id="1_tjngn"]
+[ext_resource type="PackedScene" uid="uid://bf6ah033mr22q" path="res://prefabs/game/factions/1blue.tscn" id="2_xx18q"]
+[ext_resource type="PackedScene" uid="uid://b08vfc2axej10" path="res://prefabs/game/factions/2green.tscn" id="3_47f43"]
+[ext_resource type="PackedScene" uid="uid://ff1mq280el2y" path="res://prefabs/game/factions/3yellow.tscn" id="4_1d6bu"]
+[ext_resource type="PackedScene" uid="uid://kqjl872c5jro" path="res://prefabs/game/factions/4purple.tscn" id="5_evgpl"]
+[ext_resource type="PackedScene" uid="uid://hvm2ccpbqkto" path="res://prefabs/game/factions/5none.tscn" id="6_qjm4y"]
+
+[node name="factions" type="Node" unique_id=1780382336]
+
+[node name="Red - 0" parent="." unique_id=1010137497 instance=ExtResource("1_tjngn")]
+
+[node name="Blue - 1" parent="." unique_id=1141131353 instance=ExtResource("2_xx18q")]
+
+[node name="Green - 2" parent="." unique_id=1413311764 instance=ExtResource("3_47f43")]
+
+[node name="Yellow - 3" parent="." unique_id=948189790 instance=ExtResource("4_1d6bu")]
+
+[node name="Purple - 4" parent="." unique_id=435892000 instance=ExtResource("5_evgpl")]
+
+[node name="None - 5" parent="." unique_id=1099005822 instance=ExtResource("6_qjm4y")]

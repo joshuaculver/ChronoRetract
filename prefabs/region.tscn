@@ -1,16 +1,16 @@
-[gd_scene load_steps=2 format=3 uid="uid://bgv8m0iehg3yi"]
+[gd_scene format=3 uid="uid://bgv8m0iehg3yi"]
 
 [ext_resource type="Script" uid="uid://cgftdj0mg7kha" path="res://scripts/regionArea.gd" id="1_vxaj5"]
 
-[node name="Region" type="Area2D"]
+[node name="Region" type="Area2D" unique_id=1888828550]
 script = ExtResource("1_vxaj5")
 factionOwner = 5
 
-[node name="Polygon2D" type="Polygon2D" parent="."]
+[node name="Polygon2D" type="Polygon2D" parent="." unique_id=637763809]
 position = Vector2(-25, -25)
 polygon = PackedVector2Array(0, 0, 50, 0, 50, 50, 0, 50)
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="." unique_id=2146228224]
 position = Vector2(-25, -25)
 polygon = PackedVector2Array(0, 0, 50, 0, 50, 50, 0, 50)
 

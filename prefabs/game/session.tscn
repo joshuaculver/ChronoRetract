@@ -1,0 +1,27 @@
+[gd_scene format=3 uid="uid://gxd8csjv8w3n"]
+
+[ext_resource type="Script" uid="uid://b7sctcni8e6il" path="res://scripts/managers/session.gd" id="1_fcthj"]
+[ext_resource type="Script" uid="uid://d20ccs66oewuw" path="res://scripts/managers/factionManager.gd" id="2_1ksju"]
+[ext_resource type="Script" uid="uid://xi2qj72sifh5" path="res://scripts/managers/regionManager.gd" id="3_ck4tw"]
+[ext_resource type="Script" uid="uid://s6w6dn1gyuu" path="res://scripts/managers/battleManager.gd" id="4_6qygy"]
+[ext_resource type="Script" uid="uid://dxv4y1j48kyi0" path="res://scripts/managers/unitManager.gd" id="5_c5yvp"]
+
+[node name="session" type="Node" unique_id=1107036774]
+script = ExtResource("1_fcthj")
+
+[node name="tickTimer" type="Timer" parent="." unique_id=479722136]
+autostart = true
+
+[node name="factions" type="Node" parent="." unique_id=1062982466]
+script = ExtResource("2_1ksju")
+
+[node name="regions" type="Node" parent="." unique_id=390075732]
+script = ExtResource("3_ck4tw")
+
+[node name="battles" type="Node" parent="." unique_id=214462869]
+script = ExtResource("4_6qygy")
+
+[node name="units" type="Node" parent="." unique_id=1272087133]
+script = ExtResource("5_c5yvp")
+
+[connection signal="timeout" from="tickTimer" to="." method="tick"]
