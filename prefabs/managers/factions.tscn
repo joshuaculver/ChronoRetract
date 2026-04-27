@@ -1,12 +1,12 @@
 [gd_scene format=3 uid="uid://b6vw5t6l8f7l8"]
 
 [ext_resource type="Script" uid="uid://d20ccs66oewuw" path="res://scripts/managers/factionManager.gd" id="1_0bwsc"]
-[ext_resource type="PackedScene" uid="uid://dyr1cfq8xacd3" path="res://prefabs/game/factions/0red.tscn" id="2_5764h"]
-[ext_resource type="PackedScene" uid="uid://bf6ah033mr22q" path="res://prefabs/game/factions/1blue.tscn" id="3_ohg6u"]
-[ext_resource type="PackedScene" uid="uid://b08vfc2axej10" path="res://prefabs/game/factions/2green.tscn" id="4_knylk"]
-[ext_resource type="PackedScene" uid="uid://ff1mq280el2y" path="res://prefabs/game/factions/3yellow.tscn" id="5_44qs0"]
-[ext_resource type="PackedScene" uid="uid://kqjl872c5jro" path="res://prefabs/game/factions/4purple.tscn" id="6_fkbei"]
-[ext_resource type="PackedScene" uid="uid://hvm2ccpbqkto" path="res://prefabs/game/factions/5none.tscn" id="7_472kn"]
+[ext_resource type="PackedScene" uid="uid://dyr1cfq8xacd3" path="res://prefabs/factions/0red.tscn" id="2_5764h"]
+[ext_resource type="PackedScene" uid="uid://bf6ah033mr22q" path="res://prefabs/factions/1blue.tscn" id="3_ohg6u"]
+[ext_resource type="PackedScene" uid="uid://b08vfc2axej10" path="res://prefabs/factions/2green.tscn" id="4_knylk"]
+[ext_resource type="PackedScene" uid="uid://ff1mq280el2y" path="res://prefabs/factions/3yellow.tscn" id="5_44qs0"]
+[ext_resource type="PackedScene" uid="uid://kqjl872c5jro" path="res://prefabs/factions/4purple.tscn" id="6_fkbei"]
+[ext_resource type="PackedScene" uid="uid://hvm2ccpbqkto" path="res://prefabs/factions/5none.tscn" id="7_472kn"]
 
 [node name="factions" type="Node" unique_id=1710397326]
 script = ExtResource("1_0bwsc")

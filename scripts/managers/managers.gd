@@ -25,7 +25,7 @@ var unitID = 0
 var gameSpeed : float = 1
 
 var unitScene = preload("res://prefabs/units/army.tscn")
-var sessScene = preload("res://prefabs/game/session.tscn")
+var sessScene = preload("res://prefabs/session.tscn")
 
 func _ready():
 	var session = sessScene.instantiate()
