@@ -14,20 +14,28 @@ func tick() -> void:
 			if path.size() > 0:
 				move()
 				print("Unit: " + str(ID) + " arrived at: " + str(location.ID))
+
 			else:
-				##Faction rapport is an indexed enum 
-				if location.factionOwner == faction || %managers.factionManager.rapportCheck(faction, location.factionOwner) <= 2:
+				##Faction rapport is an indexed enum
+				if location.factionOwner == faction:
 					if path.size() <= 0:
 						mode = enums.UnitMode.AID
-				elif managers.factionManager.rapportCheck(faction, location.factionOwner) <= 3:
-					if path.size() <= 0:
-						mode = enums.UnitMode.NEUTRAL
-				elif managers.factionManager.rapportCheck(faction, location.factionOwner) == 5:
-					if path.size() <= 0:
-						mode = enums.UnitMode.BATTLE
+				else:
+					var factRapport = managers.factionManager.rapportCheck(faction, location.factionOwner)
+					
+					match factRapport:
+						enums.Rapport.ALLY:
+							if path.size() <= 0:
+								mode = enums.UnitMode.AID
+						enums.Rapport.LIKE:
+							if path.size() <= 0:
+								mode = enums.UnitMode.AID
+						_:
+							if path.size() <= 0:
+								mode = enums.UnitMode.NEUTRAL
 		enums.UnitMode.AID:
-			##TODO
-			pass
+			##Region checks for aiding units
+			rest()
 	
 	hasFought = false
 
@@ -44,11 +52,18 @@ func rest():
 func encUnit(other : Unit):
 	if other.faction == faction:
 		pass
-	elif factionRapport[other.factionOwner] == enums.Rapport.ENEMY:
-		pass
+	elif managers.factionManager.rapportCheck(faction, other.faction) == enums.Rapport.WAR:
+		managers.battleManager.createBattle(location, self, other)
 
+##Currently using army version for testing
 func getDamaged(damage : int):
-	pass
+	power = power - damage
+	if power <= 0:
+		print(str(self) + " destroyed")
+		die()
 
+##Currently using army version for testing
 func die():
-	pass
+	destroyed.emit(self)
+	##TODO make sure this is handled safely and node is only removed once clean up is succesfully completed
+	##queue_free()

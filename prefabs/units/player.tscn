@@ -1,11 +1,11 @@
 [gd_scene format=3 uid="uid://8101hdxjn6gr"]
 
-[ext_resource type="Texture2D" uid="uid://dwvk1h5vqhw6i" path="res://icon.svg" id="1_12kc1"]
+[ext_resource type="Texture2D" uid="uid://ct048j8mboed0" path="res://assets/sprites/Figure.png" id="1_12kc1"]
 [ext_resource type="Script" uid="uid://blxxx7d4ogd22" path="res://scripts/player.gd" id="2_0c73n"]
 
 [node name="Player" type="Sprite2D" unique_id=322862248]
 z_index = 1
-scale = Vector2(0.1875, 0.1875)
+scale = Vector2(2, 2)
 texture = ExtResource("1_12kc1")
 script = ExtResource("2_0c73n")
 faction = 2

@@ -1,11 +1,11 @@
 [gd_scene format=3 uid="uid://cgm3dqn0luny5"]
 
-[ext_resource type="Texture2D" uid="uid://dwvk1h5vqhw6i" path="res://icon.svg" id="1_os78n"]
+[ext_resource type="Texture2D" uid="uid://ct048j8mboed0" path="res://assets/sprites/Figure.png" id="1_os78n"]
 [ext_resource type="Script" uid="uid://rk7b3j144xyc" path="res://scripts/Hero.gd" id="2_lsqe2"]
 
 [node name="Hero" type="Sprite2D" unique_id=1699240411]
 z_index = 1
-scale = Vector2(0.1875, 0.1875)
+scale = Vector2(2, 2)
 texture = ExtResource("1_os78n")
 script = ExtResource("2_lsqe2")
 faction = 2

@@ -105,8 +105,10 @@ func tryMakeUnit(callFaction : enums.Factions, resources: int, size : enums.Unit
 	newUnit.position = faction.ownedRegions[0].position
 	newUnit.name = "Unit: " + str(newUnit.ID)
 	
+	faction.ownedRegions[0].units.append(newUnit)
 	faction.ownedUnits.append(newUnit)
 	
+	unitManager.updateUnits()
 	##var testRegion : Region = faction.ownedRegions[2]
 	##newUnit.getPathRegion(testRegion)
 	
@@ -115,8 +117,11 @@ func tryMakeUnit(callFaction : enums.Factions, resources: int, size : enums.Unit
 func removeUnit(unit : Unit):
 	unit.location.removeUnit(unit)
 	factionDict[unit.faction].removeUnit(unit)
-	
 	unitDict.erase(unit.ID)
+	unitManager.unitArr.erase(unit)
+
+	unitManager.updateUnits()
+
 
 func militaryReport():
 	var factions = factionManager.factionArr

@@ -1,10 +1,10 @@
 [gd_scene format=3 uid="uid://b3qvvj15rpdr3"]
 
-[ext_resource type="Texture2D" uid="uid://dwvk1h5vqhw6i" path="res://icon.svg" id="1_xa1ms"]
+[ext_resource type="Texture2D" uid="uid://ct048j8mboed0" path="res://assets/sprites/Figure.png" id="1_xa1ms"]
 [ext_resource type="Script" uid="uid://ckhblujbs8g11" path="res://scripts/Army.gd" id="2_vw6ds"]
 
 [node name="Army" type="Sprite2D" unique_id=915219067]
 z_index = 1
-scale = Vector2(0.188, 0.188)
+scale = Vector2(2, 2)
 texture = ExtResource("1_xa1ms")
 script = ExtResource("2_vw6ds")

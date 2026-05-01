@@ -37,6 +37,9 @@ func _ready():
 
 @abstract func getDamaged(damage : int)
 
+func setMode(newMode : enums.UnitMode):
+	mode = newMode
+
 func getPathRegion(target : Region) -> void:
 	mode = enums.UnitMode.TRAVEL
 	
@@ -60,9 +63,8 @@ func move() -> void:
 			location = managers.regionManager.regionDict[nextID]
 			position = location.position
 			relocated.emit(ID, location.ID, oldID)
-			
-			if mode != enums.UnitMode.BATTLE:
-				hostileCheck()
+
+			hostileCheck()
 
 func rest():
 	if hasFought == false:
@@ -74,13 +76,17 @@ func rest():
 				power = clamp(power + (maxPower * 0.025),0,maxPower)
 
 func hostileCheck():
-	for unit in location.units:
-		if unit != self:
-			if factionRapport[unit.factionOwner] == enums.Rapport.ENEMY:
-				encounteredEnemy.emit(location, self, unit)
-				##TODO set mode to battle in battleManager
-				##only needs to send signal once
-				break
+	print("Hostile check")
+	if mode != enums.UnitMode.BATTLE:
+		for unit in location.units:
+			if unit != self:
+				print("Other unit: " + str(unit))
+				if managers.factionManager.rapportCheck(self.faction, unit.faction) == enums.Rapport.WAR:
+					encounteredEnemy.emit(location, self, unit)
+					print(str(self) + " found hostile " + str(unit))
+					break
+				else:
+					print(str(managers.factionManager.rapportCheck(self.faction, unit.faction)))
 
 @abstract func die()
 	##destroyed.emit(self)

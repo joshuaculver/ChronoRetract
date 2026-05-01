@@ -4,9 +4,6 @@ var unitArr : Array[Node] = []
 
 var playerScene = preload("res://prefabs/units/player.tscn")
 
-func _ready():
-	pass
-
 func addPlayer():
 	var player = playerScene.instantiate()
 	add_child(player)
@@ -20,4 +17,5 @@ func updateUnits() -> void:
 
 func tick() -> void:
 	for i in unitArr.size():
-		unitArr[i].tick()
+		if unitArr[i] != null:
+			unitArr[i].tick()

@@ -27,6 +27,12 @@ func tick() -> void:
 	$units.tick()
 	$regions.tick()
 	$factions.tick()
+	$battles.tick()
+	
+	##DEBUG
+	##
+	if turnCount == 2:
+		managers.battleManager.createWar(managers.factionDict[enums.Factions.RED], managers.factionDict[enums.Factions.GREEN])
 
 func startTimer():
 	if timer.is_stopped():

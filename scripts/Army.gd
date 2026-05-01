@@ -3,7 +3,6 @@ class_name Army
 extends Unit
 
 func tick() -> void:
-	hostileCheck()
 	match mode:
 		enums.UnitMode.NEUTRAL:
 			rest()
@@ -33,11 +32,11 @@ func tick() -> void:
 	hasFought = false
 
 func getDamaged(damage : int):
-	power -= damage
+	power = power - damage
 	if power <= 0:
+		print(str(self) + " destroyed")
 		die()
 
 func die():
 	destroyed.emit(self)
-	##TODO make sure this is handled safely and node is only removed once clean up is succesfully completed
 	queue_free()

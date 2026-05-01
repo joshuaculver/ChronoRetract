@@ -10,4 +10,10 @@ var atkAllies : Array[Faction] = []
 var defender : Faction
 var defAllies : Array[Faction] = []
 
+##TODO war goal
+
+func _init(attack : Faction, defend : Faction):
+	attacker = attack
+	defender = defend
+
 ##TODO war stats for tracking purposes, penalties, etc.

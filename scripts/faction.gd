@@ -39,7 +39,10 @@ func _ready() -> void:
 	managers.addFaction(self)
 	
 	saveAmt = enums.powerVals['M']
-	
+
+func setRapport(target : enums.Factions, newRapport : enums.Rapport):
+	factionRapport[target] = newRapport
+
 func tick() -> void:
 	if ownedUnits.size() == 0:
 		saving = true
