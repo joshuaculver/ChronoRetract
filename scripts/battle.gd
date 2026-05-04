@@ -11,12 +11,10 @@ var atkTeam : Array[Unit] = []
 var defTeam : Array[Unit] = []
 
 func tick() -> void:
+	##Battle manager handles resolution and cleanup once battle is marked no longer ongoing
 	if ongoing == true:
 		if statusCheck():
 			turn()
-	else:
-		##TODO resolve removing battle and releasing units
-		pass
 
 ##Check if both sides have units, resolve outcome, etc.
 func statusCheck():

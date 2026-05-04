@@ -1,9 +1,5 @@
 extends Node
-
-#TODO make manager nodes into loadable scenes to initialize and/or convert managers from Node -> Object
-
 ##Manager has access to game nodes
-##Adds self to singleton
 
 var UImanager
 var sessionManager
@@ -14,10 +10,6 @@ var battleManager
 
 var player
 
-##Manager has dictionaries that can be referenced by node ID
-##regionDict[ID]
-
-##TODO move these to appropriate managers, add safe access, etc.
 var factionDict = {}
 var unitDict = {}
 var unitID = 0
@@ -38,15 +30,11 @@ func _ready():
 	unitManager = $session/units
 	battleManager = $session/battles
 	
-	##await factionManager.ready
-	##await regionManager.ready
-	
 	regionManager.init()
 	factionManager.init()
 	
 	unitManager.addPlayer()
 
-##Make add X general thing that can choose which dict to use
 func addFaction(faction: Faction):
 	if factionDict.has(faction):
 		print("Faction already added")
