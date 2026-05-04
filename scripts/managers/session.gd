@@ -6,9 +6,6 @@ extends Node
 
 var turnCount : int = 0
 
-##factions
-##regions
-
 var factions = preload("res://prefabs/managers/factions.tscn")
 var regions = preload("res://prefabs/managers/regions.tscn")
 

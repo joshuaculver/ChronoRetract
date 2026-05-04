@@ -25,9 +25,8 @@ func tick() -> void:
 					if path.size() <= 0:
 						mode = enums.UnitMode.BATTLE
 		enums.UnitMode.AID:
-			##TODO
 			##Regular units do not aid
-			pass
+			rest()
 	
 	hasFought = false
 

@@ -49,6 +49,7 @@ func _ready():
 ##For future pathfinding stuff:
 ##Astar2D. Can create graph of nodes. Assign regions to vector2 positions on said graph
 func tick():
+	##TODO add un-owned region behavior. 
 	if sieged:
 		pass
 	else:
@@ -66,6 +67,10 @@ func tick():
 			stats["population"] = (stats["population"] + int((stats["growth"] * stats["logistics"])/2)) * (unitEffect)
 			unitEffect = 0
 			ticksToChange = 10
+			
+		##TODO add un-owned region behavior. 
+		if factionOwner == enums.Factions.NONE:
+			pass
 
 func _on_input_event(viewport: Node, event: InputEvent, shape_idx: int) -> void:
 	if event is InputEventMouseButton:
@@ -74,8 +79,6 @@ func _on_input_event(viewport: Node, event: InputEvent, shape_idx: int) -> void:
 
 func upgrade(stat : String):
 	statUpgrades[stat] = statUpgrades[stat] + 1
-	##Probably going to use more complex formula for increasing number eventually
-	##Call recalc of region stats
 	stats[stat] = stats[stat] + 1
 
 func upgradePrice(stat : String):

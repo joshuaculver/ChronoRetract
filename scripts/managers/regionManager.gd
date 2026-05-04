@@ -26,9 +26,6 @@ func parentRegions() -> void:
 func tick() -> void:
 	for i in regionArr.size():
 		regionArr[i].tick()
-		if regionArr[i].factionOwner != enums.Factions.NONE:
-			##Expand on this to attempt to ugprade un-owned region
-			managers.factionManager.factionArr[regionArr[i].factionOwner].resources = managers.factionManager.factionArr[regionArr[i].factionOwner].resources + regionArr[i].stats["production"]
 
 ##Called by signal of regions when region is clicked
 func regionSelected(ID) -> void:
@@ -49,7 +46,6 @@ func connectGraph():
 			for x in neighbors.size():
 				#Connecting region to navigation graph
 				navGraph.connect_points(regionArr[i].ID, neighbors[x].ID)
-				#print(str(regionArr[i].ID) + " connected to: " +  str(neighbors[x].ID))
 
 func addRegion(region : Region):
 	if regionDict.has(region):
