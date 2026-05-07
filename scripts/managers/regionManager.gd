@@ -29,6 +29,9 @@ func tick() -> void:
 
 ##Called by signal of regions when region is clicked
 func regionSelected(ID) -> void:
+	if selectedRegion != null:
+		selectedRegion.selected(false)
+	
 	var newRegion = regionDict[ID]
 	if selectedRegion != null && newRegion == selectedRegion:
 			managers.UImanager.regionSelected(null)
@@ -36,6 +39,7 @@ func regionSelected(ID) -> void:
 			print("Selected none")
 	else:
 		selectedRegion = newRegion
+		newRegion.selected(true)
 		managers.UImanager.regionSelected(selectedRegion)
 		print("selected: " + str(selectedRegion.ID))
 

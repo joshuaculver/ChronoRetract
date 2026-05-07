@@ -12,9 +12,11 @@ extends Area2D
 
 @export var graphPos : Vector2
 
-@onready var graphic : Polygon2D = get_node("Polygon2D")
-@onready var collider : CollisionPolygon2D = get_node("CollisionPolygon2D")
-@onready var outline : Line2D = get_node("Line2D")
+@onready var visual: Polygon2D = $Polygon2D
+@onready var collider : CollisionPolygon2D = $CollisionPolygon2D
+@onready var outline : Line2D = $Line2D
+
+@onready var defVisual : Polygon2D
 
 var ticksToChange : int = 10
 
@@ -40,8 +42,6 @@ var upgradePriceMult : Dictionary = {
 	"logistics":1.7,
 }
 
-@onready var visual: Polygon2D = $Polygon2D
-
 signal selectedRegion
 
 func _ready():
@@ -50,9 +50,12 @@ func _ready():
 	statUpgrades["production"] = stats["production"]
 	statUpgrades["logistics"] = stats["logistics"]
 	
-	var polyShape = graphic.polygon
+	var polyShape = visual.polygon
 	collider.polygon = polyShape
 	outline.points = polyShape
+	
+	defVisual = Polygon2D.new()
+	defVisual.polygon = polyShape
 
 ##For future pathfinding stuff:
 ##Astar2D. Can create graph of nodes. Assign regions to vector2 positions on said graph
@@ -103,3 +106,20 @@ func reportScore():
 	
 func removeUnit(unit : Unit) -> void:
 	units.erase(unit)
+
+func _on_mouse_entered() -> void:
+	defVisual.color = visual.color
+	visual.color = visual.color.darkened(0.4)
+
+func _on_mouse_exited() -> void:
+	visual.color = defVisual.color
+	
+func selected(input : bool):
+	if input:
+		z_index = 1
+		outline.default_color = Color.WHITE
+		outline.width = 4.0
+	else:
+		z_index = 0
+		outline.default_color = Color.BLACK
+		outline.width = 2.0
