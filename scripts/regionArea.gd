@@ -12,6 +12,10 @@ extends Area2D
 
 @export var graphPos : Vector2
 
+@onready var graphic : Polygon2D = get_node("Polygon2D")
+@onready var collider : CollisionPolygon2D = get_node("CollisionPolygon2D")
+@onready var outline : Line2D = get_node("Line2D")
+
 var ticksToChange : int = 10
 
 var sieged : bool = false
@@ -45,6 +49,10 @@ func _ready():
 	statUpgrades["growth"] = stats["growth"]
 	statUpgrades["production"] = stats["production"]
 	statUpgrades["logistics"] = stats["logistics"]
+	
+	var polyShape = graphic.polygon
+	collider.polygon = polyShape
+	outline.points = polyShape
 
 ##For future pathfinding stuff:
 ##Astar2D. Can create graph of nodes. Assign regions to vector2 positions on said graph

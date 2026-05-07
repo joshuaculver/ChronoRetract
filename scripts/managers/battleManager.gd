@@ -71,4 +71,3 @@ func resolveBattle(conflict):
 	
 	battles.erase(conflict)
 	conflict.queue_free()
-	

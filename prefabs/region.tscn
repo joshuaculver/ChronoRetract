@@ -14,4 +14,13 @@ polygon = PackedVector2Array(0, 0, 50, 0, 50, 50, 0, 50)
 position = Vector2(-25, -25)
 polygon = PackedVector2Array(0, 0, 50, 0, 50, 50, 0, 50)
 
+[node name="Line2D" type="Line2D" parent="." unique_id=1439140826]
+position = Vector2(-25, -25)
+points = PackedVector2Array(0, 0, 36.693558, 0, 50, 0, 50, 50, 0, 50)
+closed = true
+width = 2.0
+default_color = Color(0, 0, 0, 1)
+joint_mode = 2
+round_precision = 16
+
 [connection signal="input_event" from="." to="." method="_on_input_event"]
