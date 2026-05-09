@@ -1,3 +1,14 @@
 [gd_scene format=3 uid="uid://c5jgxsddp8xy0"]
 
+[ext_resource type="Script" uid="uid://cjnqw3tv4siva" path="res://scripts/cameraControl.gd" id="1_wmafp"]
+
 [node name="main" type="Node2D" unique_id=1783014624]
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=1692593032]
+position = Vector2(576, 320)
+zoom = Vector2(2, 2)
+process_callback = 0
+position_smoothing_enabled = true
+drag_horizontal_enabled = true
+drag_vertical_enabled = true
+script = ExtResource("1_wmafp")

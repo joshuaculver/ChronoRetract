@@ -4,7 +4,7 @@
 [ext_resource type="Script" uid="uid://blxxx7d4ogd22" path="res://scripts/player.gd" id="2_0c73n"]
 
 [node name="Player" type="Sprite2D" unique_id=322862248]
-z_index = 1
+z_index = 4
 scale = Vector2(2, 2)
 texture = ExtResource("1_12kc1")
 script = ExtResource("2_0c73n")

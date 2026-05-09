@@ -84,8 +84,8 @@ func tick():
 			pass
 
 func _on_input_event(viewport: Node, event: InputEvent, shape_idx: int) -> void:
-	if event is InputEventMouseButton:
-		if event.pressed:
+	if event.is_action("select"):
+		if event.is_pressed():
 			selectedRegion.emit(ID)
 
 func upgrade(stat : String):
