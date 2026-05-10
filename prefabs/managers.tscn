@@ -4,6 +4,7 @@
 [ext_resource type="Script" uid="uid://y7kft50bx6pl" path="res://scripts/managers/uiManager.gd" id="2_ld7kh"]
 [ext_resource type="LabelSettings" uid="uid://cqhqhjy18of31" path="res://labelSettings/title.tres" id="3_owny3"]
 [ext_resource type="LabelSettings" uid="uid://d04acrf5gru7k" path="res://labelSettings/body.tres" id="4_flgu2"]
+[ext_resource type="Script" uid="uid://cjnqw3tv4siva" path="res://scripts/cameraControl.gd" id="5_leyp6"]
 
 [sub_resource type="Gradient" id="Gradient_midqu"]
 offsets = PackedFloat32Array(0, 0.99706745)
@@ -16,7 +17,6 @@ script = ExtResource("1_4e3gx")
 script = ExtResource("2_ld7kh")
 
 [node name="RegionPanel" type="BoxContainer" parent="UI" unique_id=96626426]
-visible = false
 offset_left = 896.0
 offset_top = 128.0
 offset_right = 1048.0
@@ -53,6 +53,11 @@ layout_mode = 2
 text = "Target
 "
 icon_alignment = 1
+
+[node name="Camera2D" type="Camera2D" parent="UI" unique_id=416702327]
+position = Vector2(640, 240)
+zoom = Vector2(2, 2)
+script = ExtResource("5_leyp6")
 
 [node name="BG" type="Node" parent="." unique_id=681847618]
 

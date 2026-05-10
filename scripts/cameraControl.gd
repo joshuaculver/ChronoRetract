@@ -1,3 +1,5 @@
+class_name cameraControl
+
 extends Camera2D
 
 var dragging = false

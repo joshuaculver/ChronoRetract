@@ -5,6 +5,8 @@ extends Node
 @onready var regPanel : BoxContainer = $RegionPanel
 @onready var regionButton : Button = $RegionPanel/SelectRegionButton
 
+@onready var mainCam : Camera2D = $Camera2D
+
 func regionSelected(newRegion : Region) -> void:
 	if newRegion == null:
 		regPanel.visible = false
