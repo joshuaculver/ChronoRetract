@@ -1,7 +1,6 @@
 [gd_scene format=3 uid="uid://bf6ah033mr22q"]
 
 [ext_resource type="Script" uid="uid://c6c2kw7ugrk40" path="res://scripts/faction.gd" id="1_sih1y"]
-[ext_resource type="LabelSettings" uid="uid://d04acrf5gru7k" path="res://labelSettings/body.tres" id="2_fwgc4"]
 
 [node name="Blue - 1" type="Node" unique_id=1141131353]
 script = ExtResource("1_sih1y")
@@ -14,20 +13,3 @@ factionRapport = {
 4: 3,
 5: 3
 }
-
-[node name="DEBUGscore" type="BoxContainer" parent="." unique_id=425468947]
-offset_left = 192.0
-offset_top = 64.0
-offset_right = 233.0
-offset_bottom = 104.0
-
-[node name="Label" type="Label" parent="DEBUGscore" unique_id=1663602766]
-modulate = Color(0, 0, 1, 1)
-layout_mode = 2
-text = "Blue:"
-label_settings = ExtResource("2_fwgc4")
-
-[node name="Score" type="Label" parent="DEBUGscore" unique_id=1172668287]
-layout_mode = 2
-text = "0"
-label_settings = ExtResource("2_fwgc4")

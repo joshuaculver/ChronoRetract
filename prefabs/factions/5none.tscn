@@ -1,7 +1,6 @@
 [gd_scene format=3 uid="uid://hvm2ccpbqkto"]
 
 [ext_resource type="Script" uid="uid://c6c2kw7ugrk40" path="res://scripts/faction.gd" id="1_kbt5r"]
-[ext_resource type="LabelSettings" uid="uid://d04acrf5gru7k" path="res://labelSettings/body.tres" id="2_js2do"]
 
 [node name="None - 5" type="Node" unique_id=1099005822]
 script = ExtResource("1_kbt5r")
@@ -14,19 +13,3 @@ factionRapport = {
 4: 3,
 5: 0
 }
-
-[node name="DEBUGscore" type="BoxContainer" parent="." unique_id=1268583421]
-offset_left = 192.0
-offset_top = 128.0
-offset_right = 245.0
-offset_bottom = 168.0
-
-[node name="Label" type="Label" parent="DEBUGscore" unique_id=1508474117]
-layout_mode = 2
-text = "None:"
-label_settings = ExtResource("2_js2do")
-
-[node name="Score" type="Label" parent="DEBUGscore" unique_id=618842823]
-layout_mode = 2
-text = "0"
-label_settings = ExtResource("2_js2do")

@@ -37,6 +37,13 @@ func _ready():
 
 @abstract func getDamaged(damage : int)
 
+func _input(event: InputEvent) -> void:
+	if event.is_action("select") and event.is_pressed():
+		if get_rect().has_point(to_local(event.position)):
+			##Select
+			##event.set_input_as_handled()
+			pass
+
 func setMode(newMode : enums.UnitMode):
 	mode = newMode
 

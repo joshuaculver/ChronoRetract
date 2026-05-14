@@ -2,8 +2,8 @@ class_name UIManager
 
 extends Node
 
-@onready var regPanel : BoxContainer = $RegionPanel
-@onready var regionButton : Button = $RegionPanel/SelectRegionButton
+@onready var regPanel : BoxContainer = $CanvasLayer/RegionPanel
+@onready var regionButton : Button = $CanvasLayer/RegionPanel/SelectRegionButton
 
 @onready var mainCam : Camera2D = $Camera2D
 

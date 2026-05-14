@@ -31,8 +31,6 @@ var saveAmt = 0
 	enums.Factions.NONE:enums.Rapport.NEUTRAL
 }
 
-@onready var DEBUGscore : Node = $DEBUGscore/Score
-
 var resources : int = 0
 
 func _ready() -> void:
@@ -62,7 +60,6 @@ func tick() -> void:
 			managers.tryMakeUnit(faction, saveAmt, enums.UnitSize.SMALL)
 		else:
 			saving = false
-	DEBUGscore.text = str(reportScore())
 
 ##Goes down list of owned regions and buys first upgrade that can be afforded
 ##Returns true on succsesful upgrade
