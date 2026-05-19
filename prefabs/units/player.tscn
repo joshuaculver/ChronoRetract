@@ -9,3 +9,5 @@ scale = Vector2(2, 2)
 texture = ExtResource("1_12kc1")
 script = ExtResource("2_0c73n")
 faction = 2
+
+[connection signal="property_list_changed" from="." to="." method="_on_property_list_changed"]

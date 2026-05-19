@@ -11,8 +11,13 @@ var ID : int = 0
 ##Gets assigned faction's rapport
 var factionRapport : = {}
 
-var maxPower : int = 100
-var power : int = 100
+var maxPower : int
+var power : int :
+	get:
+		return power
+	set(value):
+		power = clamp(value, 0, maxPower)
+		changed.emit()
 
 var path : Array[int]
 
@@ -21,28 +26,21 @@ var hasFought : bool = false
 ##Current state of unit
 @export var mode : enums.UnitMode = enums.UnitMode.NEUTRAL
 
-signal created
 signal relocated
 signal encounteredEnemy(currRegion)
 signal destroyed
+
+signal changed
 
 func _ready():
 	modulate = enums.colorDict[faction]
 	
 	##Node gets ID from manager unit dictionary
 	ID = managers.addUnit(self)
-	created.emit()
 
 @abstract func tick()
 
 @abstract func getDamaged(damage : int)
-
-func _input(event: InputEvent) -> void:
-	if event.is_action("select") and event.is_pressed():
-		if get_rect().has_point(to_local(event.position)):
-			##Select
-			##event.set_input_as_handled()
-			pass
 
 func setMode(newMode : enums.UnitMode):
 	mode = newMode
@@ -77,10 +75,10 @@ func rest():
 	if hasFought == false:
 		if location.factionOwner == faction:
 			if power < maxPower:
-				power = clamp(power + (maxPower * 0.10),0,maxPower)
+				power = power + (maxPower * 0.10)
 		else:
 			if power < maxPower:
-				power = clamp(power + (maxPower * 0.025),0,maxPower)
+				power = power + (maxPower * 0.025)
 
 func hostileCheck():
 	print("Hostile check")

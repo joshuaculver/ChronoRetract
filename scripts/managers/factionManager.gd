@@ -1,4 +1,7 @@
 extends Node
+## Script name: factionManager.gd
+##
+##
 
 var factionArr: Array[Node] = []
 

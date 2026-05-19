@@ -1,11 +1,15 @@
 extends Node
+## Script name: regionManager.gd
+##
+## Manages regions and navigation between them
 
 var regionArr : Array[Node] = []
 var regionDict = {}
 
-##Region selected in interface
+## Region selected in interface
 var selectedRegion : Region = null
 
+## Navigation graph for units
 var navGraph : AStar2D = AStar2D.new()
 
 func init():

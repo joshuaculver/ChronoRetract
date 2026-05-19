@@ -1,4 +1,7 @@
 extends Node
+## Script name: battleManager.gd
+##
+##
 
 var battle = load("res://scripts/battle.gd")
 

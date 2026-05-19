@@ -1,12 +1,19 @@
 class_name UIManager
+## Script name: uiManager
+##
+## Manages UI elements and menus
+## This script is attached to a scene with nodes for relevant UI elements
 
 extends Node
 
-@onready var regPanel : BoxContainer = $CanvasLayer/RegionPanel
-@onready var regionButton : Button = $CanvasLayer/RegionPanel/SelectRegionButton
+@onready var regPanel : BoxContainer = $CanvasLayer/RegionControl/RegionPanel
+@onready var regionButton : Button = $CanvasLayer/RegionControl/RegionPanel/SelectRegionButton
 
 @onready var mainCam : Camera2D = $Camera2D
 
+@onready var playerBar : TextureProgressBar = $CanvasLayer/PlayerUIControl/PowerBar
+
+## Function for selecting and deselecting a region as well as sending the region's information to the relevant menu
 func regionSelected(newRegion : Region) -> void:
 	if newRegion == null:
 		regPanel.visible = false
@@ -30,3 +37,9 @@ func regionSelected(newRegion : Region) -> void:
 		string = string  + ("Logistics:" + str(newRegion.stats["logistics"]) + "\n")
 		
 		textPanel.text = string
+
+## Updates information in the UI regarding the player unit. Gets called by a player signal whenever the player unit's properties change
+func playerUpdate():
+	if managers.unitManager.player.power != 0:
+		var percent = (float(managers.unitManager.player.power) / float(managers.unitManager.player.maxPower)) * 100.0
+		playerBar.value = percent
