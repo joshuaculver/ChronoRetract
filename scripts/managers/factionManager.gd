@@ -1,7 +1,7 @@
-extends Node
 ## Script name: factionManager.gd
 ##
-##
+## Stores and manages factions
+extends Node
 
 var factionArr: Array[Node] = []
 

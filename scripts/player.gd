@@ -1,4 +1,6 @@
-##Unit controlled by the player
+## Script name: player.gd
+##
+## The class for the unit which the player controls
 class_name Player
 
 extends Hero

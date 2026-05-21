@@ -1,7 +1,7 @@
-class_name SessionManager
 ## Script name: session.gd
 ##
 ## Manages the top level game state and calling game elements to "take their turn" every tick
+class_name SessionManager
 
 extends Node
 

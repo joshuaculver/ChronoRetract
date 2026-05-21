@@ -1,3 +1,7 @@
+## Script name: Army.gd
+##
+## Class for generic units which represent faction armies
+
 class_name Army
 
 extends Unit

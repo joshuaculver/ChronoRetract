@@ -1,4 +1,6 @@
-##Unique unit type
+## Script name: Hero.gd
+##
+## Class for units which are unique and powerful individuals
 class_name Hero
 
 extends Unit

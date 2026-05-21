@@ -1,3 +1,6 @@
+## Script name: faction.gd
+##
+## Class which represents factions
 class_name Faction
 
 extends Node
@@ -80,11 +83,11 @@ func militaryCheck():
 func reportScore():
 	militaryPow = 0
 	for i in ownedUnits.size():
-		militaryPow = militaryPow + round(ownedUnits[i].maxPower / 100)
+		militaryPow = militaryPow + round(ownedUnits[i].maxPower / 100.0)
 		
 	var score : int = 0
 	for region in ownedRegions:
-		score = int(score + region.reportScore() + round(resources / 200))
+		score = int(score + region.reportScore() + round(resources / 200.0))
 	return int(score + militaryPow)
 
 func updateAdjRegions():

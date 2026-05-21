@@ -1,14 +1,14 @@
-extends Node
 ## Script name: battleManager.gd
 ##
-##
+## Manages wars and battles. Creates, tracks, and resolves both.
+extends Node
 
 var battle = load("res://scripts/battle.gd")
 
-##var wars : Array[War] = []
 var wars = {}
 var battles : Array[Battle] = []
 
+## Advances all existing battles 
 func tick():
 	for conflict in battles:
 		if conflict.ongoing:
@@ -16,16 +16,17 @@ func tick():
 		else:
 			resolveBattle(conflict)
 
+## Connects units to their signal which calls the battle manager on encountering an enemy
 func unitConnect(unit):
 	unit.encounteredEnemy.connect(createBattle)
 
+## Creates and stores a war. Units are considered enemies if they belong to factions which are at war
 func createWar(attacker : Faction, defender : Faction):
 	var newWar = War.new(attacker, defender)
 	
 	managers.factionDict[attacker.faction].setRapport(defender.faction, enums.Rapport.WAR)
 	managers.factionDict[defender.faction].setRapport(attacker.faction, enums.Rapport.WAR)
 
-	##wars.append(newWar)
 	wars[newWar.ID] = newWar
 	
 	print("War declared: " + str(attacker) + " -> " + str(defender))

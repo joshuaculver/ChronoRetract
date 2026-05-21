@@ -1,3 +1,7 @@
+## Script name: regionArea.gd
+##
+## Class which represents individual regions which make up the map
+
 class_name Region
 
 extends Area2D

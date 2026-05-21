@@ -1,3 +1,7 @@
+## Script name: unit.gd
+##
+## Abstract base class for all units. 
+
 @abstract class_name Unit
 
 extends Sprite2D

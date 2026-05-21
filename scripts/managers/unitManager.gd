@@ -1,8 +1,8 @@
-extends Node
 ## Script name: unitManager.gd
 ##
 ## Manages references to units and units themselves
 ## All existing units will be children of this script's node
+extends Node
 
 ## The selected unit for UI and menus if any
 var selectedUnit : Unit

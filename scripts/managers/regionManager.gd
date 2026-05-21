@@ -1,7 +1,7 @@
-extends Node
 ## Script name: regionManager.gd
 ##
 ## Manages regions and navigation between them
+extends Node
 
 var regionArr : Array[Node] = []
 var regionDict = {}

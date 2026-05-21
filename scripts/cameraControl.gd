@@ -1,3 +1,6 @@
+## Script name: cameraControl.gd
+##
+## Handles controllable camera
 class_name cameraControl
 
 extends Camera2D

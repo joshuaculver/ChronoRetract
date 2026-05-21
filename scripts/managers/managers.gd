@@ -1,8 +1,8 @@
-extends Node
 ## Script name: managers.gd
 ##
 ## This script is the top level game manager and handles initializing the rest of the managers
 ## This script should be global for the project. This also allows it to function as a singleton
+extends Node
 
 ## Manages UI elements and menus
 var UImanager

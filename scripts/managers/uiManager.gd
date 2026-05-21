@@ -1,8 +1,8 @@
-class_name UIManager
 ## Script name: uiManager
 ##
 ## Manages UI elements and menus
 ## This script is attached to a scene with nodes for relevant UI elements
+class_name UIManager
 
 extends Node
 
@@ -39,7 +39,7 @@ func regionSelected(newRegion : Region) -> void:
 		
 		textPanel.text = string
 
-## Updates information in the UI regarding the player unit. Gets called by a player signal whenever the player unit's properties change
+## Updates information in the UI regarding the player unit. Gets called by a player signal when certain properties of the player unit change
 func playerUpdate():
 	if managers.unitManager.player.power != 0:
 		var percent = (float(managers.unitManager.player.power) / float(managers.unitManager.player.maxPower)) * 100.0

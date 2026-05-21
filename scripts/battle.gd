@@ -1,4 +1,9 @@
-@abstract class_name Battle
+## Script name: battle.gd
+##
+## Class which is used by units to battle
+
+##@abstract class_name Battle
+class_name Battle
 
 extends Object
 
@@ -46,8 +51,8 @@ func turn():
 		while keepGoing:
 			for unit in defTeam:
 				if unit.power > 0:
-					if atkDmg > unit.maxPower / 2:
-						var actDmg = unit.maxPower / 2
+					if atkDmg > unit.maxPower / 2.0:
+						var actDmg = unit.maxPower / 2.0
 						atkDmg = atkDmg - actDmg
 						unit.getDamaged(actDmg)
 					else:
@@ -63,8 +68,8 @@ func turn():
 		while keepGoing:
 			for unit in atkTeam:
 				if unit.power > 0:
-					if defDmg > unit.maxPower / 2:
-						var actDmg = unit.maxPower / 2
+					if defDmg > unit.maxPower / 2.0:
+						var actDmg = unit.maxPower / 2.0
 						defDmg = defDmg - actDmg
 						unit.getDamaged(actDmg)
 					else:
