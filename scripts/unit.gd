@@ -24,7 +24,12 @@ var path : Array[int]
 var hasFought : bool = false
 
 ##Current state of unit
-@export var mode : enums.UnitMode = enums.UnitMode.NEUTRAL
+@export var mode : enums.UnitMode = enums.UnitMode.NEUTRAL :
+	get:
+		return mode
+	set(value):
+		mode = value
+		changed.emit()
 
 signal relocated
 signal encounteredEnemy(currRegion)

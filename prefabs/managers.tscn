@@ -88,8 +88,18 @@ texture_normal = ExtResource("6_tm107")
 
 [node name="PlayerActionLabel" type="Label" parent="UI/CanvasLayer/PlayerUIControl" unique_id=70368436]
 layout_mode = 0
-offset_right = 40.0
-offset_bottom = 23.0
+offset_left = 256.0
+offset_top = 512.0
+offset_right = 365.0
+offset_bottom = 535.0
+horizontal_alignment = 1
+
+[node name="Sprite2D" type="Sprite2D" parent="UI/CanvasLayer/PlayerUIControl/PlayerActionLabel" unique_id=630768129]
+modulate = Color(0, 0, 0, 1)
+z_index = -1
+position = Vector2(52, 13)
+scale = Vector2(0.76, 0.15999025)
+texture = ExtResource("6_tm107")
 
 [node name="PowerBar" type="TextureProgressBar" parent="UI/CanvasLayer/PlayerUIControl" unique_id=346585705]
 layout_mode = 0

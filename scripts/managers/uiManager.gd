@@ -12,6 +12,7 @@ extends Node
 @onready var mainCam : Camera2D = $Camera2D
 
 @onready var playerBar : TextureProgressBar = $CanvasLayer/PlayerUIControl/PowerBar
+@onready var playerActLabel : Label = $CanvasLayer/PlayerUIControl/PlayerActionLabel
 
 ## Function for selecting and deselecting a region as well as sending the region's information to the relevant menu
 func regionSelected(newRegion : Region) -> void:
@@ -43,3 +44,18 @@ func playerUpdate():
 	if managers.unitManager.player.power != 0:
 		var percent = (float(managers.unitManager.player.power) / float(managers.unitManager.player.maxPower)) * 100.0
 		playerBar.value = percent
+
+	match managers.unitManager.player.mode:
+		enums.UnitMode.NEUTRAL:
+			if managers.unitManager.player.power < managers.unitManager.player.maxPower:
+				playerActLabel.text = "Resting"
+			else:
+				playerActLabel.text = "Waiting..."
+		enums.UnitMode.TRAVEL:
+			playerActLabel.text = "Traveling"
+		enums.UnitMode.BATTLE:
+			playerActLabel.text = "Battling"
+		enums.UnitMode.AID:
+			playerActLabel.text = "Aiding Region"
+		_:
+			playerActLabel.text = ""
