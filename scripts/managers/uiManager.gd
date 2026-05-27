@@ -9,6 +9,9 @@ extends Node
 @onready var regPanel : BoxContainer = $CanvasLayer/RegionControl/RegionPanel
 @onready var regionButton : Button = $CanvasLayer/RegionControl/RegionPanel/SelectRegionButton
 
+## In game log readable to the player
+@onready var playerLog : gameLog = $CanvasLayer/PlayerLog/RichTextLabel
+
 @onready var mainCam : Camera2D = $Camera2D
 
 @onready var playerBar : TextureProgressBar = $CanvasLayer/PlayerUIControl/PowerBar
@@ -59,3 +62,7 @@ func playerUpdate():
 			playerActLabel.text = "Aiding Region"
 		_:
 			playerActLabel.text = ""
+
+func toLog(origin : String, message : String):
+	if playerLog != null:
+		playerLog.addToLog(origin, message)

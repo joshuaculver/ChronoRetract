@@ -7,6 +7,7 @@
 [ext_resource type="Script" uid="uid://cjnqw3tv4siva" path="res://scripts/cameraControl.gd" id="5_leyp6"]
 [ext_resource type="Texture2D" uid="uid://raco562y6fs5" path="res://assets/blurStatic.png" id="6_4hfd2"]
 [ext_resource type="Texture2D" uid="uid://dwvk1h5vqhw6i" path="res://icon.svg" id="6_tm107"]
+[ext_resource type="Script" uid="uid://c0cf6v7cfy45g" path="res://scripts/gameLog.gd" id="7_h4ult"]
 [ext_resource type="Script" uid="uid://cvafxjsmg8qw3" path="res://scripts/textureScroll.gd" id="7_tm107"]
 
 [sub_resource type="Gradient" id="Gradient_midqu"]
@@ -39,6 +40,12 @@ offset_top = 128.0
 offset_right = 1048.0
 offset_bottom = 267.0
 vertical = true
+
+[node name="Polygon2D" type="Polygon2D" parent="UI/CanvasLayer/RegionControl/RegionPanel" unique_id=1389504224]
+position = Vector2(-136, -11)
+scale = Vector2(1705.878, -20.664068)
+color = Color(0, 0, 0, 0.28627452)
+polygon = PackedVector2Array(0.06858638, 0.58071804, 0.1875867, 0.5807185, 0.1875867, -9.146311, 0.06858638, -9.146311)
 
 [node name="Title" type="Label" parent="UI/CanvasLayer/RegionControl/RegionPanel" unique_id=2069829296]
 layout_mode = 2
@@ -113,6 +120,35 @@ texture_progress = ExtResource("6_tm107")
 tint_under = Color(0.16924527, 0.1692453, 0.16924527, 1)
 tint_progress = Color(0, 1, 0, 1)
 
+[node name="PlayerLog" type="ScrollContainer" parent="UI/CanvasLayer" unique_id=1438677653]
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -424.0
+offset_top = -237.0
+offset_right = -4.0
+offset_bottom = -7.0
+grow_horizontal = 0
+grow_vertical = 0
+
+[node name="Polygon2D" type="Polygon2D" parent="UI/CanvasLayer/PlayerLog" unique_id=987974490]
+scale = Vector2(1705.878, -20.664068)
+color = Color(0, 0, 0, 0.28627452)
+polygon = PackedVector2Array(-0.002344817, 0.2903595, 0.25031102, 0.2903595, 0.25089723, -11.227219, -0.0046896636, -11.227219)
+
+[node name="RichTextLabel" type="RichTextLabel" parent="UI/CanvasLayer/PlayerLog" unique_id=2109124421]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+mouse_filter = 1
+bbcode_enabled = true
+fit_content = true
+scroll_following = true
+scroll_following_visible_characters = true
+script = ExtResource("7_h4ult")
+
 [node name="BG" type="Node" parent="." unique_id=681847618]
 
 [node name="River" type="Line2D" parent="BG" unique_id=378835707]
@@ -125,7 +161,7 @@ gradient = SubResource("Gradient_midqu")
 
 [node name="Water" type="Polygon2D" parent="BG" unique_id=297440137]
 z_index = -5
-position = Vector2(32, 504)
+position = Vector2(0, 496)
 color = Color(7.508397e-06, 0.61635774, 0.796423, 1)
 polygon = PackedVector2Array(1888, 392, 669, 390, -32, 384, -32, -824, 1888, -824)
 

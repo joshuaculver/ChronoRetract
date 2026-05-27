@@ -19,6 +19,7 @@ extends Area2D
 @onready var visual: Polygon2D = $Polygon2D
 @onready var collider : CollisionPolygon2D = $CollisionPolygon2D
 @onready var outline : Line2D = $Line2D
+@onready var regionControl : Control = $Control
 
 @onready var defVisual : Polygon2D
 
@@ -60,6 +61,11 @@ func _ready():
 	
 	defVisual = Polygon2D.new()
 	defVisual.polygon = polyShape
+	
+	if title != null && title != '':
+		regionControl.set_tooltip_text(title)
+	else:
+		regionControl.set_tooltip_text(str(ID))
 
 ##For future pathfinding stuff:
 ##Astar2D. Can create graph of nodes. Assign regions to vector2 positions on said graph

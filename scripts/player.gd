@@ -13,3 +13,4 @@ func _ready():
 	power = 100
 	
 	ID = managers.addUnit(self)
+	logActivity = true

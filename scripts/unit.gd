@@ -27,6 +27,9 @@ var path : Array[int]
 
 var hasFought : bool = false
 
+## Whether the unit will send updates on it's actions to the player log
+var logActivity : bool = false
+
 ##Current state of unit
 @export var mode : enums.UnitMode = enums.UnitMode.NEUTRAL :
 	get:
@@ -40,6 +43,7 @@ signal encounteredEnemy(currRegion)
 signal destroyed
 
 signal changed
+signal logSignal(ID, text : String)
 
 func _ready():
 	modulate = enums.colorDict[faction]
@@ -77,6 +81,9 @@ func move() -> void:
 			location = managers.regionManager.regionDict[nextID]
 			position = location.position
 			relocated.emit(ID, location.ID, oldID)
+			if logActivity:
+				if path.size() == 0:
+					logSignal.emit(str(ID), " Arrived at " + str(location.ID))
 
 			hostileCheck()
 

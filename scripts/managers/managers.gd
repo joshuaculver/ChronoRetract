@@ -56,6 +56,7 @@ func addUnit(unit : Unit):
 		##Connecting unit signals to managers
 		unit.relocated.connect(unitMoved)
 		unit.destroyed.connect(removeUnit)
+		unit.logSignal.connect(managers.UImanager.toLog)
 		battleManager.unitConnect(unit)
 		
 		unitID = unitID + 1
