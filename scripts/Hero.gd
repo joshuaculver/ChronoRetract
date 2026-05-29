@@ -6,6 +6,11 @@ class_name Hero
 extends Unit
 
 func tick() -> void:
+	if inBattle:
+		visible = false
+	else:
+		visible = true
+	
 	match mode:
 		enums.UnitMode.NEUTRAL:
 			rest()

@@ -7,6 +7,8 @@ class_name Battle
 
 extends Object
 
+var battleIcon = preload("res://prefabs/battleIcon.tscn")
+
 var warID : int
 var ongoing : bool = true
 var winner = null
@@ -14,6 +16,9 @@ var winner = null
 ##Attack/Defend referring to war sides not initiator and reactor in terms of map interaction
 var atkTeam : Array[Unit] = []
 var defTeam : Array[Unit] = []
+
+func _ready() -> void:
+	var newIcon = battleIcon.instantiate()
 
 func tick() -> void:
 	##Battle manager handles resolution and cleanup once battle is marked no longer ongoing

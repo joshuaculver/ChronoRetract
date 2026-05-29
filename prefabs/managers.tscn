@@ -74,8 +74,7 @@ label_settings = ExtResource("4_flgu2")
 
 [node name="SelectRegionButton" type="Button" parent="UI/CanvasLayer/RegionControl/RegionPanel" unique_id=759500174]
 layout_mode = 2
-text = "Target
-"
+text = "Travel"
 icon_alignment = 1
 
 [node name="PlayerUIControl" type="Control" parent="UI/CanvasLayer" unique_id=330626527]

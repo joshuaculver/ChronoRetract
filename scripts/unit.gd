@@ -26,6 +26,7 @@ var power : int :
 var path : Array[int]
 
 var hasFought : bool = false
+var inBattle : bool = false
 
 ## Whether the unit will send updates on it's actions to the player log
 var logActivity : bool = false

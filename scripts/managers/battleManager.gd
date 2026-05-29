@@ -48,7 +48,9 @@ func createBattle(region : Region, caller : Unit, hostile : Unit):
 			elif unit.faction == warSelect.defender.faction:
 				newBattle.defTeam.append(unit)
 				unit.setMode(enums.UnitMode.BATTLE)
-			
+		
+		newBattle.position = caller.location.position
+		
 		battles.append(newBattle)
 		print("Battle created: " + str(newBattle.atkTeam) + " - " + str(newBattle.defTeam))
 	else:
