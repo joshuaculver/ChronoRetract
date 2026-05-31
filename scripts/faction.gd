@@ -39,7 +39,7 @@ var resources : int = 0
 func _ready() -> void:
 	managers.addFaction(self)
 	
-	saveAmt = enums.powerVals['M']
+	saveAmt = enums.powerVals['S']
 
 func setRapport(target : enums.Factions, newRapport : enums.Rapport):
 	factionRapport[target] = newRapport

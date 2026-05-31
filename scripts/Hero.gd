@@ -52,11 +52,9 @@ func rest():
 		if location.factionOwner == faction:
 			if power < maxPower:
 				power = power + (maxPower *0.05)
-				print("Resting for: " + str(maxPower *0.05) + " - Current: " + str(power))
 		else:
 			if power < maxPower:
 				power = power + (maxPower *0.01)
-				print("Resting for: " + str(maxPower *0.05) + " - Current: " + str(power))
 
 func encUnit(other : Unit):
 	if other.faction == faction:

@@ -12,6 +12,8 @@ var selectedRegion : Region = null
 ## Navigation graph for units
 var navGraph : AStar2D = AStar2D.new()
 
+signal sendResources
+
 func init():
 	regionArr = get_children()
 	for region in regionArr:
@@ -28,8 +30,14 @@ func parentRegions() -> void:
 			faction.ownedRegions.append(regionArr[i])
 
 func tick() -> void:
+	var incomeDict = {}
+	
 	for i in regionArr.size():
 		regionArr[i].tick()
+		
+		incomeDict[regionArr[i].factionOwner] = regionArr[i].resourceIncome
+	
+	sendResources.emit(incomeDict)
 
 ##Called by signal of regions when region is clicked
 func regionSelected(ID) -> void:

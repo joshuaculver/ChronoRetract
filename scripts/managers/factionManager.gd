@@ -4,6 +4,7 @@
 extends Node
 
 var factionArr: Array[Node] = []
+var factionDict: Dictionary = {}
 
 func init():
 	factionArr = get_children()
@@ -16,6 +17,14 @@ func rapportCheck(from : enums.Factions, to : enums.Factions):
 		return rapport
 	else:
 		return 0
+
+func dispenseIncome(income : Dictionary):
+	factionDict = managers.factionDict
+	var dictEntries = income.keys()
+	
+	for key in dictEntries:
+		if key != enums.Factions.NONE && factionDict[key] != null:
+			factionDict[key].resources = factionDict[key].resources + income[key]
 
 func tick() -> void:
 	for i in factionArr.size():

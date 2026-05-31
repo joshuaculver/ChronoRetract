@@ -28,6 +28,8 @@ var ticksToChange : int = 10
 var sieged : bool = false
 var unitEffect : float = 0.0
 
+var resourceIncome : int = 0
+
 @export var stats : Dictionary = {
 		"population":100,
 		"growth":10,
@@ -70,28 +72,33 @@ func _ready():
 ##For future pathfinding stuff:
 ##Astar2D. Can create graph of nodes. Assign regions to vector2 positions on said graph
 func tick():
-	##TODO add un-owned region behavior. 
 	if sieged:
-		pass
+		resourceIncome = 0
 	else:
-		if units.size() > 0:
-			for i in units.size():
-				if units[i].mode == enums.UnitMode.AID:
-					##TODO
-					unitEffect = unitEffect + (0.005 * (float(units[i].power) / 100.0))
-					print("Hero: " + str(units[i].name) + " aided at: " + str(ID) + str(" current effect: ") + str(unitEffect))
-		if ticksToChange > 0:
-			ticksToChange -= 1
-		else:
-			if unitEffect > 0:
-				print("Aid mult: " + str(unitEffect))
-			stats["population"] = (stats["population"] + int((stats["growth"] * stats["logistics"])/2)) * (unitEffect)
-			unitEffect = 0
-			ticksToChange = 10
-			
-		##TODO add un-owned region behavior. 
 		if factionOwner == enums.Factions.NONE:
+			##TODO un-owned region behavior
 			pass
+		else:
+			if units.size() > 0:
+				for i in units.size():
+					if units[i].mode == enums.UnitMode.AID:
+						unitEffect = unitEffect + (0.005 * (float(units[i].power) / 100.0))
+						print("Hero: " + str(units[i].name) + " aided at: " + str(ID) + str(" current effect: ") + str(unitEffect))
+			if ticksToChange > 0:
+				ticksToChange -= 1
+			else:
+				if unitEffect > 0:
+					print("Aid mult: " + str(unitEffect))
+				stats["population"] = (stats["population"] + int((stats["growth"] * stats["logistics"])/2)) * (unitEffect)
+				unitEffect = 0
+				ticksToChange = 10
+			
+				var mult = ((stats["population"] / 100.0) + (stats["logistics"] / 10.0))
+				if mult <= 0:
+					mult = 1
+				var newIncome = int(stats["production"] * mult)
+			
+				resourceIncome = newIncome * mult
 
 func _on_input_event(viewport: Node, event: InputEvent, shape_idx: int) -> void:
 	if event.is_action("select"):

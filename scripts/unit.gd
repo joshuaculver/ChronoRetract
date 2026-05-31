@@ -15,8 +15,8 @@ var ID : int = 0
 ##Gets assigned faction's rapport
 var factionRapport : = {}
 
-var maxPower : int
-var power : int :
+var maxPower : float
+var power : float :
 	get:
 		return power
 	set(value):

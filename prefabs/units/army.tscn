@@ -4,7 +4,7 @@
 [ext_resource type="Script" uid="uid://ckhblujbs8g11" path="res://scripts/Army.gd" id="2_vw6ds"]
 
 [node name="Army" type="Sprite2D" unique_id=915219067]
-z_index = 1
+z_index = 3
 scale = Vector2(2, 2)
 texture = ExtResource("1_xa1ms")
 script = ExtResource("2_vw6ds")

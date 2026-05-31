@@ -19,6 +19,11 @@ var defTeam : Array[Unit] = []
 
 func _ready() -> void:
 	var newIcon = battleIcon.instantiate()
+	
+	newIcon.get_node("leftPos").texture = atkTeam[0].texture
+	newIcon.get_node("defPos").texture = defTeam[0].texture
+	
+	newIcon.position = atkTeam[0].location.position
 
 func tick() -> void:
 	##Battle manager handles resolution and cleanup once battle is marked no longer ongoing
@@ -40,8 +45,8 @@ func statusCheck():
 
 func turn():
 	print("Battle turn start")
-	var atkDmg = 0
-	var defDmg = 0
+	var atkDmg = 0.0
+	var defDmg = 0.0
 	
 	if atkTeam.size() > 1 || defTeam.size() > 1:
 		print("Complex turn")
@@ -90,8 +95,10 @@ func turn():
 		print("Simple turn")
 		##TODO max power added to prevent stalling/advantage larger units. Check for balancing
 		##TODO create func on units to get atk power
-		atkDmg = atkTeam[0].power + (atkTeam[0].maxPower * 0.05)
-		defDmg = defTeam[0].power + (defTeam[0].maxPower * 0.05)
+		atkDmg = (atkTeam[0].power * 0.05) + (atkTeam[0].maxPower * 0.01)
+		defDmg = (defTeam[0].power * 0.05) + (defTeam[0].maxPower * 0.01)
+		
+		print("Atk Dmg: " + str(atkDmg) + " - Def Dmg: " + str(defDmg))
 		
 		atkTeam[0].getDamaged(defDmg)
 		defTeam[0].getDamaged(atkDmg)

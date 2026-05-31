@@ -33,7 +33,7 @@ func createWar(attacker : Faction, defender : Faction):
 
 func createBattle(region : Region, caller : Unit, hostile : Unit):
 	var warSelect = null
-	for war in wars.array():
+	for war in wars.values():
 		if (war.attacker.faction == caller.faction || war.defender.faction == caller.faction) && (war.attacker.faction == hostile.faction || war.defender.faction == hostile.faction):
 			warSelect = war
 	
@@ -49,25 +49,19 @@ func createBattle(region : Region, caller : Unit, hostile : Unit):
 				newBattle.defTeam.append(unit)
 				unit.setMode(enums.UnitMode.BATTLE)
 		
-		newBattle.position = caller.location.position
-		
 		battles.append(newBattle)
 		print("Battle created: " + str(newBattle.atkTeam) + " - " + str(newBattle.defTeam))
 	else:
 		print("Could not find war for battle call")
 
 func resolveBattle(conflict):
-	if conflict.attacker != null:
-		conflict.attacker.setMode(enums.UnitMode.NEUTRAL) 
-	if conflict.atkAllies.size() > 0:
-		for unit in conflict.atkAllies:
+	if conflict.atkTeam.size() > 0:
+		for unit in conflict.atkTeam:
 			if unit != null:
 				unit.setMode(enums.UnitMode.NEUTRAL)
-	
-	if conflict.defender != null:
-		conflict.defender.setMode(enums.UnitMode.NEUTRAL) 
-	if conflict.defAllies.size() > 0:
-		for unit in conflict.defAllies:
+
+	if conflict.defTeam.size() > 0:
+		for unit in conflict.defTeam:
 			if unit != null:
 				unit.setMode(enums.UnitMode.NEUTRAL)
 
@@ -76,4 +70,4 @@ func resolveBattle(conflict):
 	##match conflict.winnder
 	
 	battles.erase(conflict)
-	conflict.queue_free()
+	##conflict.queue_free()

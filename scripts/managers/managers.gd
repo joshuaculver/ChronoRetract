@@ -37,6 +37,8 @@ func _ready():
 	regionManager.init()
 	factionManager.init()
 	
+	regionManager.sendResources.connect(factionManager.dispenseIncome)
+	
 	unitManager.addPlayer()
 
 func addFaction(faction: Faction):
@@ -85,9 +87,7 @@ func tryMakeUnit(callFaction : enums.Factions, resources: int, size : enums.Unit
 
 	var newUnit = unitScene.instantiate()
 	
-	newUnit.relocated.connect(unitMoved)
-	newUnit.selected.connect(managers.unitManager.unitSelected)
-	newUnit.destroyed.connect(removeUnit)
+	newUnit.unitSize = size
 
 	unitManager.add_child(newUnit)
 	
@@ -105,8 +105,6 @@ func tryMakeUnit(callFaction : enums.Factions, resources: int, size : enums.Unit
 	faction.ownedRegions[0].units.append(newUnit)
 	faction.ownedUnits.append(newUnit)
 	
-	unitManager.updateUnits()
-	
 	print("Faction: " + str(name) + " made unit" + " | " + "POW: " + str(newUnit.maxPower))
 
 ## Cleans up references to units which are removed
@@ -115,8 +113,6 @@ func removeUnit(unit : Unit):
 	unit.location.removeUnit(unit)
 	factionDict[unit.faction].removeUnit(unit)
 	unitDict.erase(unit.ID)
-
-	unitManager.updateUnits()
 
 ## Creates a report of relative military power of all factions
 func militaryReport():

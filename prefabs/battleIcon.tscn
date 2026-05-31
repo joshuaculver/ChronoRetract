@@ -3,6 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://cp8pn4klqu1tt" path="res://assets/sprites/crossedBlades.png" id="1_u5lcp"]
 
 [node name="BattleIcon" type="Control" unique_id=359292758]
+z_index = 6
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
