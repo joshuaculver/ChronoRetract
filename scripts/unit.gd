@@ -97,6 +97,9 @@ func rest():
 			if power < maxPower:
 				power = power + (maxPower * 0.025)
 
+func setVisibility(new : bool) -> void:
+	visible = new
+
 func hostileCheck():
 	print("Hostile check")
 	if mode != enums.UnitMode.BATTLE:

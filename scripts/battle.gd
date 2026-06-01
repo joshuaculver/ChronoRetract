@@ -5,9 +5,7 @@
 ##@abstract class_name Battle
 class_name Battle
 
-extends Object
-
-var battleIcon = preload("res://prefabs/battleIcon.tscn")
+extends Control
 
 var warID : int
 var ongoing : bool = true
@@ -17,13 +15,13 @@ var winner = null
 var atkTeam : Array[Unit] = []
 var defTeam : Array[Unit] = []
 
-func _ready() -> void:
-	var newIcon = battleIcon.instantiate()
+func initIcon() -> void:
+	$leftPos.texture = atkTeam[0].texture
+	$leftPos.modulate = atkTeam[0].modulate
+	$rightPos.texture = defTeam[0].texture
+	$rightPos.modulate = defTeam[0].modulate
 	
-	newIcon.get_node("leftPos").texture = atkTeam[0].texture
-	newIcon.get_node("defPos").texture = defTeam[0].texture
-	
-	newIcon.position = atkTeam[0].location.position
+	position = atkTeam[0].location.position
 
 func tick() -> void:
 	##Battle manager handles resolution and cleanup once battle is marked no longer ongoing

@@ -3,7 +3,7 @@
 ## Manages wars and battles. Creates, tracks, and resolves both.
 extends Node
 
-var battle = load("res://scripts/battle.gd")
+var battle = preload("res://prefabs/battle.tscn")
 
 var wars = {}
 var battles : Array[Battle] = []
@@ -38,7 +38,8 @@ func createBattle(region : Region, caller : Unit, hostile : Unit):
 			warSelect = war
 	
 	if warSelect != null:
-		var newBattle = battle.new()
+		var newBattle = battle.instantiate()
+		add_child(newBattle)
 		newBattle.warID = warSelect.ID
 
 		for unit in region.units:
@@ -48,7 +49,9 @@ func createBattle(region : Region, caller : Unit, hostile : Unit):
 			elif unit.faction == warSelect.defender.faction:
 				newBattle.defTeam.append(unit)
 				unit.setMode(enums.UnitMode.BATTLE)
+
 		
+		newBattle.initIcon()
 		battles.append(newBattle)
 		print("Battle created: " + str(newBattle.atkTeam) + " - " + str(newBattle.defTeam))
 	else:

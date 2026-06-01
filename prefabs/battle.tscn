@@ -1,0 +1,23 @@
+[gd_scene format=3 uid="uid://d2dobblr3gmsp"]
+
+[ext_resource type="Script" uid="uid://cio7jhliabxqk" path="res://scripts/battle.gd" id="1_2gxmc"]
+[ext_resource type="Texture2D" uid="uid://cp8pn4klqu1tt" path="res://assets/sprites/crossedBlades.png" id="1_04dyy"]
+
+[node name="Battle" type="Control" unique_id=359292758]
+z_index = 6
+z_as_relative = false
+layout_mode = 3
+anchors_preset = 0
+scale = Vector2(2, 2)
+tooltip_text = "There is a battle here"
+script = ExtResource("1_2gxmc")
+
+[node name="leftPos" type="Sprite2D" parent="." unique_id=1315929473]
+position = Vector2(-8, 0)
+
+[node name="rightPos" type="Sprite2D" parent="." unique_id=1347994781]
+position = Vector2(8, 0)
+
+[node name="blades" type="Sprite2D" parent="." unique_id=1219913562]
+modulate = Color(0.9882353, 0, 0, 0.8117647)
+texture = ExtResource("1_04dyy")
