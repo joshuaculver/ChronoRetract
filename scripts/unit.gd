@@ -57,6 +57,10 @@ func _ready():
 @abstract func getDamaged(damage : int)
 
 func setMode(newMode : enums.UnitMode):
+	if newMode == enums.UnitMode.BATTLE:
+		self.visible = false
+	else:
+		self.visible = true
 	mode = newMode
 
 func getPathRegion(target : Region) -> void:
@@ -96,9 +100,6 @@ func rest():
 		else:
 			if power < maxPower:
 				power = power + (maxPower * 0.025)
-
-func setVisibility(new : bool) -> void:
-	visible = new
 
 func hostileCheck():
 	print("Hostile check")

@@ -73,4 +73,4 @@ func resolveBattle(conflict):
 	##match conflict.winnder
 	
 	battles.erase(conflict)
-	##conflict.queue_free()
+	conflict.queue_free()

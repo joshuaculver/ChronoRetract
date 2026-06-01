@@ -5,6 +5,7 @@
 
 [node name="Hero" type="Sprite2D" unique_id=1699240411]
 z_index = 3
+z_as_relative = false
 scale = Vector2(2, 2)
 texture = ExtResource("1_os78n")
 script = ExtResource("2_lsqe2")

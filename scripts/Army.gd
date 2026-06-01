@@ -7,12 +7,6 @@ class_name Army
 extends Unit
 
 func tick() -> void:
-
-	if inBattle:
-		visible = false
-	else:
-		visible = true
-
 	match mode:
 		enums.UnitMode.NEUTRAL:
 			rest()
