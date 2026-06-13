@@ -35,3 +35,9 @@ func tick() -> void:
 	##DEBUG for war testing
 	if turnCount == 2:
 		managers.battleManager.createWar(managers.factionDict[enums.Factions.RED], managers.factionDict[enums.Factions.GREEN])
+
+func pauseTimer(setting : bool):
+	if setting:
+		timer.start()
+	else:
+		timer.stop()

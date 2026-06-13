@@ -1,3 +1,60 @@
 [gd_scene format=3 uid="uid://c5jgxsddp8xy0"]
 
+[ext_resource type="Script" uid="uid://cstypv7lweiqt" path="res://scripts/MainMenu.gd" id="1_1jyap"]
+[ext_resource type="Texture2D" uid="uid://dwvk1h5vqhw6i" path="res://icon.svg" id="1_wmafp"]
+
 [node name="main" type="Node2D" unique_id=1783014624]
+z_index = 20
+z_as_relative = false
+script = ExtResource("1_1jyap")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1747586115]
+modulate = Color(0, 0, 0, 0.4509804)
+position = Vector2(640, 296)
+scale = Vector2(10.618831, 6.4399986)
+texture = ExtResource("1_wmafp")
+
+[node name="MainMenuControl" type="Control" parent="." unique_id=1901208501]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 552.0
+offset_top = 304.0
+offset_right = 592.0
+offset_bottom = 344.0
+metadata/_edit_use_anchors_ = true
+
+[node name="NewGameButton" type="Button" parent="MainMenuControl" unique_id=667422769]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 14.2
+anchor_top = 8.0
+anchor_right = 16.325
+anchor_bottom = 8.575
+offset_left = -568.0
+offset_top = -272.0
+offset_right = -560.0
+offset_bottom = -264.0
+scale = Vector2(2, 2)
+text = "New Game"
+metadata/_edit_use_anchors_ = true
+
+[node name="LoadGameButton" type="Button" parent="MainMenuControl" unique_id=1465772495]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = -23.429998
+anchor_top = 13.06
+anchor_right = -21.304998
+anchor_bottom = 13.635
+offset_left = 937.19995
+offset_top = -394.4
+offset_right = 945.19995
+offset_bottom = -386.4
+scale = Vector2(2, 2)
+text = "Load "
+metadata/_edit_use_anchors_ = true
+
+[node name="Logo" type="Sprite2D" parent="." unique_id=1600875719]
+position = Vector2(640, 160)
+texture = ExtResource("1_wmafp")
+
+[connection signal="pressed" from="MainMenuControl/NewGameButton" to="." method="_on_new_game_button_pressed"]

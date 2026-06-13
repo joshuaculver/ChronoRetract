@@ -6,16 +6,20 @@ class_name UIManager
 
 extends Node
 
-@onready var regPanel : BoxContainer = $CanvasLayer/RegionControl/RegionPanel
-@onready var regionButton : Button = $CanvasLayer/RegionControl/RegionPanel/SelectRegionButton
+var mainMenuScene = preload("res://prefabs/main.tscn")
+
+@onready var regPanel : BoxContainer = $UIcanvas/RegionControl/RegionPanel
+@onready var regionButton : Button = $UIcanvas/RegionControl/RegionPanel/SelectRegionButton
 
 ## In game log readable to the player
-@onready var playerLog : gameLog = $CanvasLayer/PlayerLog/RichTextLabel
+@onready var playerLog : gameLog = $UIcanvas/PlayerLog/RichTextLabel
 
 @onready var mainCam : Camera2D = $Camera2D
 
-@onready var playerBar : TextureProgressBar = $CanvasLayer/PlayerUIControl/PowerBar
-@onready var playerActLabel : Label = $CanvasLayer/PlayerUIControl/PlayerActionLabel
+@onready var playerBar : TextureProgressBar = $UIcanvas/PlayerUIControl/PowerBar
+@onready var playerActLabel : Label = $UIcanvas/PlayerUIControl/PlayerActionLabel
+
+@onready var instanceMainMenu : mainMenu
 
 ## Function for selecting and deselecting a region as well as sending the region's information to the relevant menu
 func regionSelected(newRegion : Region) -> void:
@@ -41,6 +45,13 @@ func regionSelected(newRegion : Region) -> void:
 		string = string  + ("Logistics:" + str(newRegion.stats["logistics"]) + "\n")
 		
 		textPanel.text = string
+
+func mainMenuToggle():
+	if instanceMainMenu != null:
+		if instanceMainMenu.visible:
+			instanceMainMenu.visible = false
+		else:
+			instanceMainMenu.visible = true
 
 ## Updates information in the UI regarding the player unit. Gets called by a player signal when certain properties of the player unit change
 func playerUpdate():

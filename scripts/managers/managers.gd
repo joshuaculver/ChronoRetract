@@ -13,10 +13,15 @@ var regionManager
 var unitManager
 var battleManager
 
+@onready var background : Node2D
+@onready var UIcanvas : CanvasLayer
+
 ##Reference for existing units and factions.
 var factionDict = {}
 var unitDict = {}
 var unitID = 0
+
+var activeSession
 
 ## Basic unit which is used for creating generic armies for all factions
 var unitScene = preload("res://prefabs/units/army.tscn")
@@ -24,10 +29,27 @@ var unitScene = preload("res://prefabs/units/army.tscn")
 var sessScene = preload("res://prefabs/session.tscn")
 
 func _ready():
-	var session = sessScene.instantiate()
-	add_child(session)
-	
 	UImanager = $UI
+	background = $Background
+	UIcanvas = $UI/UIcanvas
+
+func _input(event: InputEvent) -> void:
+	if activeSession != null:
+		if event.is_action("escape"):
+			if event.is_pressed():
+				UImanager.mainMenuToggle()
+				pauseToggle()
+
+
+func startSession():
+	activeSession = sessScene.instantiate()
+	
+	UImanager.mainMenuToggle()
+	
+	UIcanvas.visible = true
+	background.visible = true
+	
+	add_child(activeSession)
 	sessionManager = $session
 	factionManager = $session/factions
 	regionManager = $session/regions
@@ -40,6 +62,19 @@ func _ready():
 	regionManager.sendResources.connect(factionManager.dispenseIncome)
 	
 	unitManager.addPlayer()
+
+##TODO handle any potential saving, cleanup, re-initializing
+func endSession():
+	activeSession.queue_free()
+
+func pauseToggle() -> void:
+	if activeSession != null:
+		if sessionManager.timer.is_stopped():
+			sessionManager.timer.start()
+			print("time unpaused")
+		else:
+			sessionManager.timer.stop()
+			print("time paused")
 
 func addFaction(faction: Faction):
 	if factionDict.has(faction):

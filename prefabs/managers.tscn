@@ -24,15 +24,16 @@ script = ExtResource("2_ld7kh")
 position = Vector2(640, 240)
 script = ExtResource("5_leyp6")
 
-[node name="CanvasLayer" type="CanvasLayer" parent="UI" unique_id=270285711]
+[node name="UIcanvas" type="CanvasLayer" parent="UI" unique_id=270285711]
+visible = false
 
-[node name="RegionControl" type="Control" parent="UI/CanvasLayer" unique_id=132564333]
+[node name="RegionControl" type="Control" parent="UI/UIcanvas" unique_id=132564333]
 layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 
-[node name="RegionPanel" type="BoxContainer" parent="UI/CanvasLayer/RegionControl" unique_id=96626426]
+[node name="RegionPanel" type="BoxContainer" parent="UI/UIcanvas/RegionControl" unique_id=96626426]
 visible = false
 layout_mode = 0
 offset_left = 896.0
@@ -41,30 +42,22 @@ offset_right = 1048.0
 offset_bottom = 267.0
 vertical = true
 
-[node name="Polygon2D" type="Polygon2D" parent="UI/CanvasLayer/RegionControl/RegionPanel" unique_id=1389504224]
+[node name="Polygon2D" type="Polygon2D" parent="UI/UIcanvas/RegionControl/RegionPanel" unique_id=1389504224]
 position = Vector2(-136, -11)
 scale = Vector2(1705.878, -20.664068)
 color = Color(0, 0, 0, 0.28627452)
 polygon = PackedVector2Array(0.06858638, 0.58071804, 0.1875867, 0.5807185, 0.1875867, -9.146311, 0.06858638, -9.146311)
 
-[node name="Title" type="Label" parent="UI/CanvasLayer/RegionControl/RegionPanel" unique_id=2069829296]
+[node name="Title" type="Label" parent="UI/UIcanvas/RegionControl/RegionPanel" unique_id=2069829296]
 layout_mode = 2
 text = "Region"
 label_settings = ExtResource("3_owny3")
 horizontal_alignment = 1
 
-[node name="TextPanel" type="BoxContainer" parent="UI/CanvasLayer/RegionControl/RegionPanel" unique_id=574450319]
+[node name="TextPanel" type="BoxContainer" parent="UI/UIcanvas/RegionControl/RegionPanel" unique_id=574450319]
 layout_mode = 2
 
-[node name="Info" type="Label" parent="UI/CanvasLayer/RegionControl/RegionPanel/TextPanel" unique_id=2015256688]
-layout_mode = 2
-text = "lorum ipsum
-lorum ipsum
-lorum ipsum
-lorum ipsum"
-label_settings = ExtResource("4_flgu2")
-
-[node name="Stats" type="Label" parent="UI/CanvasLayer/RegionControl/RegionPanel/TextPanel" unique_id=1654131873]
+[node name="Info" type="Label" parent="UI/UIcanvas/RegionControl/RegionPanel/TextPanel" unique_id=2015256688]
 layout_mode = 2
 text = "lorum ipsum
 lorum ipsum
@@ -72,18 +65,26 @@ lorum ipsum
 lorum ipsum"
 label_settings = ExtResource("4_flgu2")
 
-[node name="SelectRegionButton" type="Button" parent="UI/CanvasLayer/RegionControl/RegionPanel" unique_id=759500174]
+[node name="Stats" type="Label" parent="UI/UIcanvas/RegionControl/RegionPanel/TextPanel" unique_id=1654131873]
+layout_mode = 2
+text = "lorum ipsum
+lorum ipsum
+lorum ipsum
+lorum ipsum"
+label_settings = ExtResource("4_flgu2")
+
+[node name="SelectRegionButton" type="Button" parent="UI/UIcanvas/RegionControl/RegionPanel" unique_id=759500174]
 layout_mode = 2
 text = "Travel"
 icon_alignment = 1
 
-[node name="PlayerUIControl" type="Control" parent="UI/CanvasLayer" unique_id=330626527]
+[node name="PlayerUIControl" type="Control" parent="UI/UIcanvas" unique_id=330626527]
 layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 
-[node name="PlayerSelect" type="TextureButton" parent="UI/CanvasLayer/PlayerUIControl" unique_id=1945773019]
+[node name="PlayerSelect" type="TextureButton" parent="UI/UIcanvas/PlayerUIControl" unique_id=1945773019]
 layout_mode = 0
 offset_left = 192.00002
 offset_top = 496.0
@@ -92,7 +93,7 @@ offset_bottom = 624.0
 scale = Vector2(0.48629373, 0.52)
 texture_normal = ExtResource("6_tm107")
 
-[node name="PlayerActionLabel" type="Label" parent="UI/CanvasLayer/PlayerUIControl" unique_id=70368436]
+[node name="PlayerActionLabel" type="Label" parent="UI/UIcanvas/PlayerUIControl" unique_id=70368436]
 layout_mode = 0
 offset_left = 256.0
 offset_top = 512.0
@@ -100,14 +101,14 @@ offset_right = 365.0
 offset_bottom = 535.0
 horizontal_alignment = 1
 
-[node name="Sprite2D" type="Sprite2D" parent="UI/CanvasLayer/PlayerUIControl/PlayerActionLabel" unique_id=630768129]
+[node name="Sprite2D" type="Sprite2D" parent="UI/UIcanvas/PlayerUIControl/PlayerActionLabel" unique_id=630768129]
 modulate = Color(0, 0, 0, 1)
 z_index = -1
 position = Vector2(52, 13)
 scale = Vector2(0.76, 0.15999025)
 texture = ExtResource("6_tm107")
 
-[node name="PowerBar" type="TextureProgressBar" parent="UI/CanvasLayer/PlayerUIControl" unique_id=346585705]
+[node name="PowerBar" type="TextureProgressBar" parent="UI/UIcanvas/PlayerUIControl" unique_id=346585705]
 layout_mode = 0
 offset_left = 256.0
 offset_top = 536.0
@@ -119,7 +120,7 @@ texture_progress = ExtResource("6_tm107")
 tint_under = Color(0.16924527, 0.1692453, 0.16924527, 1)
 tint_progress = Color(0, 1, 0, 1)
 
-[node name="PlayerLog" type="ScrollContainer" parent="UI/CanvasLayer" unique_id=1438677653]
+[node name="PlayerLog" type="ScrollContainer" parent="UI/UIcanvas" unique_id=1438677653]
 anchors_preset = 3
 anchor_left = 1.0
 anchor_top = 1.0
@@ -132,12 +133,12 @@ offset_bottom = -7.0
 grow_horizontal = 0
 grow_vertical = 0
 
-[node name="Polygon2D" type="Polygon2D" parent="UI/CanvasLayer/PlayerLog" unique_id=987974490]
+[node name="Polygon2D" type="Polygon2D" parent="UI/UIcanvas/PlayerLog" unique_id=987974490]
 scale = Vector2(1705.878, -20.664068)
 color = Color(0, 0, 0, 0.28627452)
 polygon = PackedVector2Array(-0.002344817, 0.2903595, 0.25031102, 0.2903595, 0.25089723, -11.227219, -0.0046896636, -11.227219)
 
-[node name="RichTextLabel" type="RichTextLabel" parent="UI/CanvasLayer/PlayerLog" unique_id=2109124421]
+[node name="RichTextLabel" type="RichTextLabel" parent="UI/UIcanvas/PlayerLog" unique_id=2109124421]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -148,9 +149,10 @@ scroll_following = true
 scroll_following_visible_characters = true
 script = ExtResource("7_h4ult")
 
-[node name="BG" type="Node" parent="." unique_id=681847618]
+[node name="Background" type="Node2D" parent="." unique_id=1104469249]
+visible = false
 
-[node name="River" type="Line2D" parent="BG" unique_id=378835707]
+[node name="River" type="Line2D" parent="Background" unique_id=378835707]
 z_index = -2
 position = Vector2(285, 169)
 points = PackedVector2Array(155, -122, 128, -117, 117, -104, 113, -87, 119, -54, 115, -43, 109, -35, 102, -30, 86, -24, 72, -15, 62, 3, 55, 41, 78, 83, 81, 97, 79, 108, 67, 126, 53, 137, 33, 149, 22, 163, 14, 186, 15, 213, 24, 228, 37, 239, 44, 248, 68, 294)
@@ -158,13 +160,7 @@ width = 8.0
 default_color = Color(0.093007095, 0.33048627, 1, 1)
 gradient = SubResource("Gradient_midqu")
 
-[node name="Water" type="Polygon2D" parent="BG" unique_id=297440137]
-z_index = -5
-position = Vector2(0, 496)
-color = Color(7.508397e-06, 0.61635774, 0.796423, 1)
-polygon = PackedVector2Array(1888, 392, 669, 390, -32, 384, -32, -824, 1888, -824)
-
-[node name="Land" type="Polygon2D" parent="BG" unique_id=1426702924]
+[node name="Land" type="Polygon2D" parent="Background" unique_id=1426702924]
 z_index = -3
 texture_repeat = 2
 position = Vector2(32, 504)
@@ -174,4 +170,10 @@ polygon = PackedVector2Array(-419, 390, 669, 390, 685, 342, 669, 294, 677, 262, 
 uv = PackedVector2Array(-419, 390, 669, 390, 685, 342, 669, 294, 677, 262, 701, 238, 741, 230, 741, 190, 698.74164, 150.91385, 645, 133, 629, 117, 605, 61, 549, 21, 525, -11, 469, -11, 429, 13, 405, 61, 365, 85, 325, 69, 309, 45, 269, 37, 157, 77, 133, 61, 101, 69, 101, 85, 94, 113, 85, 101, 85, 85, 61, 77, 69, 53, 67, 39, 101, 13, 125, 5, 181, -3, 186, -22, 237, -35, 293, -27, 303, -39, 321, -42, 297, -88, 289, -97, 276, -108, 268, -123, 267, -149, 275, -172, 285, -185, 304, -197, 320, -209, 332, -228, 334, -238, 329, -255, 308, -294, 315, -332, 325, -350, 339, -359, 355, -365, 366, -375, 370, -392, 366, -422, 370, -439, 379, -456, 407, -461, 461, -483, 509, -491, 541, -459, 565, -451, 613, -459, 661, -491, 709, -530, 717, -554, 725, -602, 733, -658, 749, -690, 789, -730, 861, -794, 869, -826, -419, -826)
 script = ExtResource("7_tm107")
 
-[connection signal="pressed" from="UI/CanvasLayer/RegionControl/RegionPanel/SelectRegionButton" to="." method="_on_select_region_button_pressed"]
+[node name="Water" type="Polygon2D" parent="Background" unique_id=297440137]
+z_index = -5
+position = Vector2(0, 496)
+color = Color(7.508397e-06, 0.61635774, 0.796423, 1)
+polygon = PackedVector2Array(1888, 392, 669, 390, -32, 384, -32, -824, 1888, -824)
+
+[connection signal="pressed" from="UI/UIcanvas/RegionControl/RegionPanel/SelectRegionButton" to="." method="_on_select_region_button_pressed"]
