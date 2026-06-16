@@ -18,9 +18,9 @@ texture = ExtResource("1_wmafp")
 layout_mode = 3
 anchors_preset = 0
 offset_left = 552.0
-offset_top = 304.0
+offset_top = 232.0
 offset_right = 592.0
-offset_bottom = 344.0
+offset_bottom = 272.0
 metadata/_edit_use_anchors_ = true
 
 [node name="NewGameButton" type="Button" parent="MainMenuControl" unique_id=667422769]
@@ -53,8 +53,24 @@ scale = Vector2(2, 2)
 text = "Load "
 metadata/_edit_use_anchors_ = true
 
+[node name="QuitGameButton" type="Button" parent="MainMenuControl" unique_id=1857401480]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 39.25949
+anchor_top = 15.537
+anchor_right = 41.38449
+anchor_bottom = 16.112
+offset_left = -1546.3796
+offset_top = -373.47995
+offset_right = -1539.3796
+offset_bottom = -365.47995
+scale = Vector2(1.5, 1.5)
+text = "Quit Game"
+metadata/_edit_use_anchors_ = true
+
 [node name="Logo" type="Sprite2D" parent="." unique_id=1600875719]
-position = Vector2(640, 160)
+position = Vector2(640, 128)
 texture = ExtResource("1_wmafp")
 
 [connection signal="pressed" from="MainMenuControl/NewGameButton" to="." method="_on_new_game_button_pressed"]
+[connection signal="pressed" from="MainMenuControl/QuitGameButton" to="." method="_on_quit_game_button_pressed"]

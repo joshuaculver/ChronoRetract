@@ -101,9 +101,10 @@ func tick():
 				resourceIncome = newIncome * mult
 
 func _on_input_event(viewport: Node, event: InputEvent, shape_idx: int) -> void:
-	if event.is_action("select"):
-		if event.is_pressed():
-			selectedRegion.emit(ID)
+	if managers.menuLock == false:
+		if event.is_action("select"):
+			if event.is_pressed():
+				selectedRegion.emit(ID)
 
 func upgrade(stat : String):
 	statUpgrades[stat] = statUpgrades[stat] + 1
@@ -125,11 +126,13 @@ func removeUnit(unit : Unit) -> void:
 	units.erase(unit)
 
 func _on_mouse_entered() -> void:
-	defVisual.color = visual.color
-	visual.color = visual.color.darkened(0.4)
+	if managers.menuLock == false:
+		defVisual.color = visual.color
+		visual.color = visual.color.darkened(0.4)
 
 func _on_mouse_exited() -> void:
-	visual.color = defVisual.color
+	if managers.menuLock == false:
+		visual.color = defVisual.color
 	
 func selected(input : bool):
 	if input:

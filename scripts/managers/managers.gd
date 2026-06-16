@@ -13,6 +13,9 @@ var regionManager
 var unitManager
 var battleManager
 
+## Used to disable input/interactions when main menu is open
+var menuLock : bool = true
+
 @onready var background : Node2D
 @onready var UIcanvas : CanvasLayer
 
@@ -38,13 +41,11 @@ func _input(event: InputEvent) -> void:
 		if event.is_action("escape"):
 			if event.is_pressed():
 				UImanager.mainMenuToggle()
-				pauseToggle()
-
+				sessionManager.timerToggle()
+				menuLockToggle()
 
 func startSession():
 	activeSession = sessScene.instantiate()
-	
-	UImanager.mainMenuToggle()
 	
 	UIcanvas.visible = true
 	background.visible = true
@@ -62,19 +63,18 @@ func startSession():
 	regionManager.sendResources.connect(factionManager.dispenseIncome)
 	
 	unitManager.addPlayer()
+	
+	UImanager.mainMenuToggle()
+	menuLockToggle()
+	sessionManager.timerToggle()
+
+func menuLockToggle() -> void:
+	menuLock = !menuLock
+	print("Menu lock: " + str(menuLock))
 
 ##TODO handle any potential saving, cleanup, re-initializing
 func endSession():
 	activeSession.queue_free()
-
-func pauseToggle() -> void:
-	if activeSession != null:
-		if sessionManager.timer.is_stopped():
-			sessionManager.timer.start()
-			print("time unpaused")
-		else:
-			sessionManager.timer.stop()
-			print("time paused")
 
 func addFaction(faction: Faction):
 	if factionDict.has(faction):
