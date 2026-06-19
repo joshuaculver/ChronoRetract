@@ -31,6 +31,14 @@ var unitScene = preload("res://prefabs/units/army.tscn")
 ## The scene which is used to load the overall map, regions, and factions in their initial state
 var sessScene = preload("res://prefabs/session.tscn")
 
+var scoreDict = {
+		enums.Factions.RED:float(0),
+		enums.Factions.BLUE:float(0),
+		enums.Factions.GREEN:float(0),
+		enums.Factions.YELLOW:float(0),
+		enums.Factions.PURPLE:float(0),
+	}
+
 func _ready():
 	UImanager = $UI
 	background = $Background
@@ -63,9 +71,11 @@ func startSession():
 	regionManager.sendResources.connect(factionManager.dispenseIncome)
 	
 	unitManager.addPlayer()
+	unitManager.player.playerDefeated.connect(endRun)
 	
 	UImanager.mainMenuToggle()
 	menuLockToggle()
+	militaryReport()
 	sessionManager.timerToggle()
 
 func menuLockToggle() -> void:
@@ -74,7 +84,13 @@ func menuLockToggle() -> void:
 
 ##TODO handle any potential saving, cleanup, re-initializing
 func endSession():
+	UIcanvas.visible = false
+	background.visible = false
 	activeSession.queue_free()
+
+##TODO currently ends session, will eventually handle ending current run and starting a new one
+func endRun() -> void:
+	endSession()
 
 func addFaction(faction: Faction):
 	if factionDict.has(faction):
@@ -117,8 +133,8 @@ func unitMoved(unitID : int, regionID : int, lastRegionID : int):
 ## Called by factions when attempting to create a new unit
 ##TODO move to appropriate manager
 func tryMakeUnit(callFaction : enums.Factions, resources: int, size : enums.UnitSize):
-	var faction = factionDict[callFaction]
-	var amount = int(resources / faction.unitCost)
+	var faction : Faction = factionDict[callFaction]
+	var amount = enums.powerVals[size]
 
 	var newUnit = unitScene.instantiate()
 	
@@ -128,8 +144,8 @@ func tryMakeUnit(callFaction : enums.Factions, resources: int, size : enums.Unit
 	
 	faction.resources = faction.resources - (amount * faction.unitCost)
 	
-	newUnit.maxPower = amount * 100
-	newUnit.power = amount * 100
+	newUnit.maxPower = enums.powerVals[size] * faction.powerBonus
+	newUnit.power = enums.powerVals[size] * faction.powerBonus
 	newUnit.faction = faction.faction
 	newUnit.location = faction.ownedRegions[0]
 	newUnit.modulate = enums.colorDict[faction.faction]
@@ -140,6 +156,7 @@ func tryMakeUnit(callFaction : enums.Factions, resources: int, size : enums.Unit
 	faction.ownedRegions[0].units.append(newUnit)
 	faction.ownedUnits.append(newUnit)
 	
+	militaryReport()
 	print("Faction: " + str(name) + " made unit" + " | " + "POW: " + str(newUnit.maxPower))
 
 ## Cleans up references to units which are removed
@@ -159,14 +176,6 @@ func militaryReport():
 			highest = factions[i].militaryPow
 	
 	print("Highest pow: " + str(highest))
-	
-	var scoreDict = {
-		enums.Factions.RED:float(0),
-		enums.Factions.BLUE:float(0),
-		enums.Factions.GREEN:float(0),
-		enums.Factions.YELLOW:float(0),
-		enums.Factions.PURPLE:float(0),
-	}
 	
 	for i in factions.size():
 		if factions[i].faction != 5 && highest != 0 && factions[i].militaryPow != 0:

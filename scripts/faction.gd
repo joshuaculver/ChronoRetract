@@ -12,13 +12,6 @@ var ownedRegions : Array[Region] = []
 var adjacentRegions : Array[Region] = []
 var ownedUnits : Array[Unit] = []
 
-var unitCost : int = 100
-
-##Regular unit power
-var militaryPow : int = 0
-##How bad it looks for faction compared to others
-var militaryAlarm : int = 0
-
 ##Faction will keep resources instead of building
 var saving = true
 ##Amount to keep before spending
@@ -34,15 +27,36 @@ var saveAmt = 0
 	enums.Factions.NONE:enums.Rapport.NEUTRAL
 }
 
-var resources : int = 0
+var militaryPow : int = 0
+
+@export var resources : int = 0
+##Power adjustment which regular units receive from upgrades and other effects
+@export var powerBonus : float = 1.0
+
+var incomePenalty : float = 1.0
 
 func _ready() -> void:
 	managers.addFaction(self)
 	
-	saveAmt = enums.powerVals['S']
+	saveAmt = enums.powerVals[enums.UnitSize.SMALL]
 
 func setRapport(target : enums.Factions, newRapport : enums.Rapport):
 	factionRapport[target] = newRapport
+
+func getIncome(income : int) -> void:
+	var amount = income * incomePenalty
+	resources = int(resources + amount)
+
+func checkPenalty() -> void:
+	var newPenalty = 0.0
+	var totalPower = 0.0
+	for unit in ownedUnits:
+		newPenalty = newPenalty + enums.penaltyVals[unit.unitSize]
+		totalPower = totalPower + unit.power
+	newPenalty = newPenalty + (totalPower / 1000)
+	if newPenalty > 0.99:
+		newPenalty = 0.99
+	incomePenalty = 100.0 - newPenalty
 
 func tick() -> void:
 	if ownedUnits.size() == 0:
@@ -61,6 +75,7 @@ func tick() -> void:
 	if resources >= saveAmt:
 		if ownedUnits.size() == 0:
 			managers.tryMakeUnit(faction, saveAmt, enums.UnitSize.SMALL)
+			checkPenalty()
 		else:
 			saving = false
 

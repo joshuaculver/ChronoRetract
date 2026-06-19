@@ -11,7 +11,8 @@ enum UnitMode {AID, NEUTRAL, TRAVEL, BATTLE}
 enum UnitSize {SMALL, MEDIUM, LARGE, HERO}
 
 ##Standard power starting value for different sizes
-static var powerVals = {S = 100, M = 250, L = 625, X = 1565}
+static var powerVals = [100, 250, 625, 1565]
+static var penaltyVals = [0.03, 0.05, 0.10, 0.08]
 
 const colorDict = {
 	0:Color("RED"),

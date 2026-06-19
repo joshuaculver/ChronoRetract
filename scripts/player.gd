@@ -5,6 +5,8 @@ class_name Player
 
 extends Hero
 
+signal playerDefeated
+
 func _ready():
 	##modulate = enums.colorDict[faction]
 	
@@ -14,3 +16,6 @@ func _ready():
 	
 	ID = managers.addUnit(self)
 	logActivity = true
+
+func die() -> void:
+	emit_signal('playerDefeated')

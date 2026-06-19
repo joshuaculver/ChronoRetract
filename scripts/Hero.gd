@@ -6,6 +6,9 @@ class_name Hero
 extends Unit
 
 func tick() -> void:
+	if power <= 0.0:
+		die()
+	
 	match mode:
 		enums.UnitMode.NEUTRAL:
 			rest()

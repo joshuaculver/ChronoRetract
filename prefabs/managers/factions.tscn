@@ -12,6 +12,7 @@
 script = ExtResource("1_0bwsc")
 
 [node name="Red - 0" parent="." unique_id=1010137497 instance=ExtResource("2_5764h")]
+powerBonus = 1.1
 
 [node name="Blue - 1" parent="." unique_id=1141131353 instance=ExtResource("3_ohg6u")]
 
