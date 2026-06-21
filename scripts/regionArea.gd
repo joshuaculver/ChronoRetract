@@ -23,9 +23,11 @@ extends Area2D
 
 @onready var defVisual : Polygon2D
 
-var ticksToChange : int = 10
+##Defines how many ticks pass before the region produces resources
+var ticksToChange : int = enums.baseTicksToChange
 
 var sieged : bool = false
+var currentDefenses = 750
 var unitEffect : float = 0.0
 
 var resourceIncome : int = 0
@@ -35,6 +37,7 @@ var resourceIncome : int = 0
 		"growth":10,
 		"production":10,
 		"logistics":10,
+		"defenses":750
 	}
 
 @export var statUpgrades : Dictionary = {
@@ -49,13 +52,15 @@ var upgradePriceMult : Dictionary = {
 	"logistics":1.7,
 }
 
+##TODO 
+var derivedStats : Dictionary = {
+	"travelTime":30
+}
+
 signal selectedRegion
 
 func _ready():
 	visual.color = enums.colorDict[factionOwner]
-	statUpgrades["growth"] = stats["growth"]
-	statUpgrades["production"] = stats["production"]
-	statUpgrades["logistics"] = stats["logistics"]
 	
 	var polyShape = visual.polygon
 	collider.polygon = polyShape
@@ -68,20 +73,27 @@ func _ready():
 		regionControl.set_tooltip_text(title)
 	else:
 		regionControl.set_tooltip_text(str(ID))
+		
+	stats.get_or_add("defenses", 750)
 
-##For future pathfinding stuff:
-##Astar2D. Can create graph of nodes. Assign regions to vector2 positions on said graph
 func tick():
 	if sieged:
-		resourceIncome = 0
+		print(str(ID) + " - " + str(title) + " : is being sieged! Defenses remaining: " + str(stats["defenses"]))
 	else:
 		if factionOwner == enums.Factions.NONE:
 			##TODO un-owned region behavior
 			pass
 		else:
+			##Repair defenses if damaged
+			if currentDefenses < stats["defenses"]:
+				currentDefenses = currentDefenses + (stats["defenses"] * 0.1)
+			elif currentDefenses > stats["defenses"]:
+				currentDefenses = stats["defenses"]
+			
 			if units.size() > 0:
 				for i in units.size():
 					if units[i].mode == enums.UnitMode.AID:
+						##TODO move to hero function
 						unitEffect = unitEffect + (0.005 * (float(units[i].power) / 100.0))
 						print("Hero: " + str(units[i].name) + " aided at: " + str(ID) + str(" current effect: ") + str(unitEffect))
 			if ticksToChange > 0:
@@ -91,14 +103,21 @@ func tick():
 					print("Aid mult: " + str(unitEffect))
 				stats["population"] = (stats["population"] + int((stats["growth"] * stats["logistics"])/2)) * (unitEffect)
 				unitEffect = 0
-				ticksToChange = 10
+				ticksToChange = enums.baseTicksToChange
 			
-				var mult = ((stats["population"] / 100.0) + (stats["logistics"] / 10.0))
-				if mult <= 0:
-					mult = 1
-				var newIncome = int(stats["production"] * mult)
+				var mult = ((stats["population"] / 200.0) + (stats["logistics"] / 15.0))
+				if mult <= 0.0:
+					mult = 0.01
 			
-				resourceIncome = newIncome * mult
+				resourceIncome = int(stats["production"] * mult)
+
+func calcDerived() -> void:
+	var newTime = int(((100.0 - stats["logistics"]) / 3.0) * 1.5)
+	
+	if newTime >= 1:
+		derivedStats["travelTime"] = newTime
+	else:
+		derivedStats["travelTime"] = 1
 
 func _on_input_event(viewport: Node, event: InputEvent, shape_idx: int) -> void:
 	if managers.menuLock == false:

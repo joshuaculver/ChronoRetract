@@ -73,6 +73,8 @@ func startSession():
 	unitManager.addPlayer()
 	unitManager.player.playerDefeated.connect(endRun)
 	
+	sessionManager.ticked.connect(UImanager.updateTime)
+	
 	UImanager.mainMenuToggle()
 	menuLockToggle()
 	militaryReport()
@@ -87,6 +89,7 @@ func endSession():
 	UIcanvas.visible = false
 	background.visible = false
 	activeSession.queue_free()
+	UImanager.mainMenuToggle()
 
 ##TODO currently ends session, will eventually handle ending current run and starting a new one
 func endRun() -> void:
@@ -142,7 +145,7 @@ func tryMakeUnit(callFaction : enums.Factions, resources: int, size : enums.Unit
 
 	unitManager.add_child(newUnit)
 	
-	faction.resources = faction.resources - (amount * faction.unitCost)
+	faction.resources = faction.resources - (amount)
 	
 	newUnit.maxPower = enums.powerVals[size] * faction.powerBonus
 	newUnit.power = enums.powerVals[size] * faction.powerBonus

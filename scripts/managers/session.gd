@@ -8,11 +8,18 @@ extends Node
 ## Timer which indicates when a tick should be processed
 @onready var timer = $tickTimer
 
-var turnCount : int = 0
+var turnCount : int = 0 :
+	get:
+		return turnCount
+	set(value):
+		turnCount = value
+		ticked.emit(value)
 
 ## Scenes for the initial states of the factions and regions of the map respectively
 var factions = preload("res://prefabs/managers/factions.tscn")
 var regions = preload("res://prefabs/managers/regions.tscn")
+
+signal ticked(value)
 
 func _ready():
 	var newFactions = factions.instantiate()

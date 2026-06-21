@@ -16,6 +16,8 @@ var mainMenuScene = preload("res://prefabs/main.tscn")
 
 @onready var mainCam : Camera2D = $Camera2D
 
+@onready var timeDisplay : Label = $UIcanvas/TimePassed
+
 @onready var playerBar : TextureProgressBar = $UIcanvas/PlayerUIControl/PowerBar
 @onready var playerActLabel : Label = $UIcanvas/PlayerUIControl/PlayerActionLabel
 
@@ -77,3 +79,6 @@ func playerUpdate():
 func toLog(origin : String, message : String):
 	if playerLog != null:
 		playerLog.addToLog(origin, message)
+
+func updateTime(value : int):
+	timeDisplay.text = str(value)
