@@ -32,6 +32,9 @@ var unitEffect : float = 0.0
 
 var resourceIncome : int = 0
 
+##Rough representation of region development
+var score = 0
+
 @export var stats : Dictionary = {
 		"population":100,
 		"growth":10,
@@ -139,7 +142,9 @@ func upgradePrice(stat : String):
 	return null
 
 func reportScore():
-	return int(stats["population"] + stats["growth"] + stats["production"] + stats["logistics"])
+	var currScore = int(stats["population"] + stats["growth"] + stats["production"] + stats["logistics"])
+	score = currScore
+	return currScore
 	
 func removeUnit(unit : Unit) -> void:
 	units.erase(unit)

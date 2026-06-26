@@ -17,6 +17,12 @@ var saving = true
 ##Amount to keep before spending
 var saveAmt = 0
 
+var currentGoals : Array[FactionGoal] = []
+var atWar : bool = false
+
+##Amount of income receceived most recently
+var lastIncome = 0
+
 #Dictionary for tracking relationship with other factions
 @export var factionRapport : = {
 	enums.Factions.RED:enums.Rapport.NEUTRAL,
@@ -46,6 +52,7 @@ func setRapport(target : enums.Factions, newRapport : enums.Rapport):
 func getIncome(income : int) -> void:
 	var amount = income * incomePenalty
 	resources = int(resources + amount)
+	lastIncome = amount
 
 func checkPenalty() -> void:
 	var newPenalty = 0.0
@@ -79,7 +86,74 @@ func tick() -> void:
 		else:
 			saving = false
 
-##Goes down list of owned regions and buys first upgrade that can be afforded
+func pursueGoal() -> void:
+	if currentGoals.size() > 0:
+		var goal = currentGoals[0]
+		##BUILDWIDE, BUILDTALL, RAISEARMY
+		match goal.goalType:
+			enums.goalType.BUILDTALL:
+				if goal.target != null:
+					##TODO add function to find capital/most developed region
+					var upgraded = false
+					for stat in ownedRegions[0].statUpgrades:
+						if upgraded == false:
+							var check = tryUpgrade(ownedRegions[0], str(stat))
+							if check:
+								upgraded = true
+								goal.amount = goal.amount + 1
+				else:
+					var upgraded = false
+					for stat in goal.target.statUpgrades:
+						if upgraded == false:
+							var check = tryUpgrade(ownedRegions[0], str(stat))
+							if check:
+								upgraded = true
+								goal.amount = goal.amount + 1
+			enums.goalType.BUILDWIDE:
+				##TODO add function to find least developed region
+				var upgraded = false
+				for stat in ownedRegions[0].statUpgrades:
+					if upgraded == false:
+						var check = tryUpgrade(ownedRegions[0], str(stat))
+						if check:
+							upgraded = true
+							goal.amount = goal.amount + 1
+			enums.goalType.RAISEARMY:
+				match goal.target:
+					##TODO make sure unit is created before incrementing goal
+					enums.UnitSize.SMALL:
+						if resources >= enums.powerVals[enums.UnitSize.SMALL]:
+							managers.tryMakeUnit(faction, saveAmt, enums.UnitSize.SMALL)
+							goal.amount = goal.amount + 1
+					enums.UnitSize.MEDIUM:
+						if resources >= enums.powerVals[enums.UnitSize.MEDIUM]:
+							managers.tryMakeUnit(faction, saveAmt, enums.UnitSize.MEDIUM)
+							goal.amount = goal.amount + 1
+					enums.UnitSize.LARGE:
+						if resources >= enums.powerVals[enums.UnitSize.LARGE]:
+							managers.tryMakeUnit(faction, saveAmt, enums.UnitSize.LARGE)
+							goal.amount = goal.amount + 1
+					_:
+						pass
+			_:
+				pass
+	else:
+		makeGoal()
+
+func makeGoal():
+	pass
+
+func warCheck() -> void:
+	var notWar = 0
+	for stance in factionRapport:
+		if stance == enums.Rapport.WAR:
+			atWar = true
+		else:
+			notWar = notWar + 1
+	
+	if notWar == factionRapport.size():
+		atWar = false
+
 ##Returns true on succsesful upgrade
 func tryUpgrade(region : Region,  stat : String):
 		var price = region.upgradePrice(stat)

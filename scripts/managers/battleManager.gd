@@ -25,7 +25,9 @@ func createWar(attacker : Faction, defender : Faction):
 	var newWar = War.new(attacker, defender)
 	
 	managers.factionDict[attacker.faction].setRapport(defender.faction, enums.Rapport.WAR)
+	managers.factionDict[attacker.faction].warCheck()
 	managers.factionDict[defender.faction].setRapport(attacker.faction, enums.Rapport.WAR)
+	managers.factionDict[defender.faction].warCheck()
 
 	wars[newWar.ID] = newWar
 	
@@ -74,3 +76,7 @@ func resolveBattle(conflict):
 	
 	battles.erase(conflict)
 	conflict.queue_free()
+
+func resolveWar(war):
+	war.attacker.warCheck()
+	war.defender.warCheck()

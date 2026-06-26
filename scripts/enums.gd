@@ -16,6 +16,8 @@ static var baseTicksToChange : int = 15
 static var powerVals = [100, 250, 625, 1565]
 static var penaltyVals = [0.03, 0.05, 0.10, 0.08]
 
+enum goalType {BUILDWIDE, BUILDTALL, RAISEARMY}
+
 const colorDict = {
 	0:Color("RED"),
 	1:Color("BLUE"),
