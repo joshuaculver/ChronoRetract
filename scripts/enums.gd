@@ -7,6 +7,8 @@ extends Node
 enum Factions {RED, BLUE, GREEN, YELLOW, PURPLE, NONE}
 enum Rapport {SELF, ALLY, LIKE, NEUTRAL, DISLIKE, ENEMY, WAR}
 
+enum FactionDisposition {AGGRESIVE, NEUTRAL, PEACEFUL}
+
 enum UnitMode {AID, NEUTRAL, TRAVEL, BATTLE}
 enum UnitSize {SMALL, MEDIUM, LARGE, HERO}
 

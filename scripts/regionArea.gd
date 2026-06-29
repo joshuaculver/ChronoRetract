@@ -145,6 +145,27 @@ func reportScore():
 	var currScore = int(stats["population"] + stats["growth"] + stats["production"] + stats["logistics"])
 	score = currScore
 	return currScore
+
+##Returns the key for the requested stat. Otherwise will return null
+func getStat(toGet : String):
+	match toGet:
+		'highest':
+			var highest = [null, 0]
+			for stat in stats.keys():
+				if stats[stat] > highest[1]:
+					highest = [stat, stats[stat]]
+				
+			return highest[0]
+		'lowest':
+			var lowest = [null, 0]
+			for stat in stats.keys():
+				if stats[stat] < lowest[1]:
+					lowest = [stat, stats[stat]]
+				
+			return lowest[0]
+		_:
+			print("stat: " + str(toGet) + " was requested!")
+			return null
 	
 func removeUnit(unit : Unit) -> void:
 	units.erase(unit)

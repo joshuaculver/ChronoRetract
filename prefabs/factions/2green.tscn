@@ -5,6 +5,7 @@
 [node name="Green - 2" type="Node" unique_id=1413311764]
 script = ExtResource("1_26s0m")
 faction = 2
+factionDisposition = 2
 factionRapport = {
 0: 2,
 1: 3,

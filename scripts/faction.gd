@@ -17,6 +17,8 @@ var saving = true
 ##Amount to keep before spending
 var saveAmt = 0
 
+@export var factionDisposition : enums.FactionDisposition = enums.FactionDisposition.NEUTRAL
+
 var currentGoals : Array[FactionGoal] = []
 var atWar : bool = false
 
@@ -93,11 +95,11 @@ func pursueGoal() -> void:
 		match goal.goalType:
 			enums.goalType.BUILDTALL:
 				if goal.target != null:
-					##TODO add function to find capital/most developed region
+					var region = getRegion('largest')
 					var upgraded = false
-					for stat in ownedRegions[0].statUpgrades:
+					for stat in region.statUpgrades:
 						if upgraded == false:
-							var check = tryUpgrade(ownedRegions[0], str(stat))
+							var check = tryUpgrade(region, str(stat))
 							if check:
 								upgraded = true
 								goal.amount = goal.amount + 1
@@ -111,10 +113,11 @@ func pursueGoal() -> void:
 								goal.amount = goal.amount + 1
 			enums.goalType.BUILDWIDE:
 				##TODO add function to find least developed region
+				var region = getRegion('smallest')
 				var upgraded = false
-				for stat in ownedRegions[0].statUpgrades:
+				for stat in region.statUpgrades:
 					if upgraded == false:
-						var check = tryUpgrade(ownedRegions[0], str(stat))
+						var check = tryUpgrade(region, str(stat))
 						if check:
 							upgraded = true
 							goal.amount = goal.amount + 1
@@ -141,7 +144,39 @@ func pursueGoal() -> void:
 		makeGoal()
 
 func makeGoal():
-	pass
+	match factionDisposition:
+		enums.FactionDisposition.NEUTRAL:
+			pass
+		enums.FactionDisposition.AGGRESIVE:
+			pass
+		enums.FactionDisposition.PEACEFUL:
+			pass
+		_:
+			pass
+
+func getRegion(toGet: String):
+	match toGet:
+		'largest':
+			var returnRegion = [null, 0]
+			for region in ownedRegions:
+				var score = region.reportScore()
+				if score > returnRegion[1]:
+					returnRegion[0] = region
+					returnRegion[1] = score
+			
+			return returnRegion[0]
+		'smallest':
+			var returnRegion = [null, 0]
+			for region in ownedRegions:
+				var score = region.reportScore()
+				if score > returnRegion[1]:
+					returnRegion[0] = region
+					returnRegion[1] = score
+			
+			return returnRegion[0]
+		_:
+			print("Region :" + str(toGet) + " requested!")
+			return null
 
 func warCheck() -> void:
 	var notWar = 0

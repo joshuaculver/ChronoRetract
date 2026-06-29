@@ -4,6 +4,7 @@
 
 [node name="Red - 0" type="Node" unique_id=1010137497]
 script = ExtResource("1_vejgu")
+factionDisposition = 0
 factionRapport = {
 0: 0,
 1: 4,
