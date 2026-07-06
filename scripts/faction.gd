@@ -35,7 +35,8 @@ var lastIncome = 0
 	enums.Factions.NONE:enums.Rapport.NEUTRAL
 }
 
-var militaryPow : int = 0
+var militaryPow : float = 0.0
+var score : float = 0.0
 
 @export var resources : int = 0
 ##Power adjustment which regular units receive from upgrades and other effects
@@ -44,9 +45,10 @@ var militaryPow : int = 0
 var incomePenalty : float = 1.0
 
 func _ready() -> void:
-	managers.addFaction(self)
-	
-	saveAmt = enums.powerVals[enums.UnitSize.SMALL]
+	if faction != enums.Factions.NONE:
+		managers.addFaction(self)
+		
+		saveAmt = enums.powerVals[enums.UnitSize.SMALL]
 
 func setRapport(target : enums.Factions, newRapport : enums.Rapport):
 	factionRapport[target] = newRapport
@@ -68,25 +70,8 @@ func checkPenalty() -> void:
 	incomePenalty = 100.0 - newPenalty
 
 func tick() -> void:
-	if ownedUnits.size() == 0:
-		saving = true
-	
-	var upgraded = false
-	if saving == false:
-		for i in ownedRegions:
-			if upgraded != true:
-				for x in i.statUpgrades:
-					if upgraded != true:
-						var check = tryUpgrade(i, str(x))
-						if check == true:
-							upgraded = true
-							print("Upgraded: " + str(i) + "," + str(x))
-	if resources >= saveAmt:
-		if ownedUnits.size() == 0:
-			managers.tryMakeUnit(faction, saveAmt, enums.UnitSize.SMALL)
-			checkPenalty()
-		else:
-			saving = false
+	if faction != enums.Factions.NONE:
+		pursueGoal()
 
 func pursueGoal() -> void:
 	if currentGoals.size() > 0:
@@ -94,7 +79,7 @@ func pursueGoal() -> void:
 		##BUILDWIDE, BUILDTALL, RAISEARMY
 		match goal.goalType:
 			enums.goalType.BUILDTALL:
-				if goal.target != null:
+				if goal.target == null:
 					var region = getRegion('largest')
 					var upgraded = false
 					for stat in region.statUpgrades:
@@ -127,56 +112,140 @@ func pursueGoal() -> void:
 					enums.UnitSize.SMALL:
 						if resources >= enums.powerVals[enums.UnitSize.SMALL]:
 							managers.tryMakeUnit(faction, saveAmt, enums.UnitSize.SMALL)
+							checkPenalty()
 							goal.amount = goal.amount + 1
 					enums.UnitSize.MEDIUM:
 						if resources >= enums.powerVals[enums.UnitSize.MEDIUM]:
 							managers.tryMakeUnit(faction, saveAmt, enums.UnitSize.MEDIUM)
+							checkPenalty()
 							goal.amount = goal.amount + 1
 					enums.UnitSize.LARGE:
 						if resources >= enums.powerVals[enums.UnitSize.LARGE]:
 							managers.tryMakeUnit(faction, saveAmt, enums.UnitSize.LARGE)
+							checkPenalty()
 							goal.amount = goal.amount + 1
 					_:
 						pass
+			enums.goalType.STARTWAR:
+				managers.battleManager.createWar(managers.factDict[faction], managers.factDict[goal.target])
+				goal.amount = goal.amount + 1
 			_:
 				pass
+		if goal.finish():
+			currentGoals.erase(goal)
+			goal.free()
+		
 	else:
 		makeGoal()
 
 func makeGoal():
-	match factionDisposition:
-		enums.FactionDisposition.NEUTRAL:
-			pass
-		enums.FactionDisposition.AGGRESIVE:
-			pass
-		enums.FactionDisposition.PEACEFUL:
-			pass
-		_:
-			pass
+	if atWar:
+		var militaryScore = managers.militaryStatus[faction]
+		if militaryScore < 0.5:
+			var newGoal = FactionGoal.new(enums.goalType.RAISEARMY, 1, enums.UnitSize.SMALL)
+			currentGoals.append(newGoal)
+		elif militaryScore < 0.75:
+			var newGoal = FactionGoal.new(enums.goalType.RAISEARMY, 1, enums.UnitSize.MEDIUM)
+			currentGoals.append(newGoal)
+		elif militaryScore < 0.9:
+			var newGoal = FactionGoal.new(enums.goalType.RAISEARMY, 1, enums.UnitSize.LARGE)
+			currentGoals.append(newGoal)
+	else:
+		##Score is % of highest military power
+		var militaryScore = managers.militaryStatus[faction]
+		match factionDisposition:
+			enums.FactionDisposition.NEUTRAL:
+				if militaryScore <= 0.7:
+					var newGoal = FactionGoal.new(enums.goalType.RAISEARMY, 1, enums.UnitSize.MEDIUM)
+					currentGoals.append(newGoal)
+				else:
+					var rand = managers.random.randf()
+					if rand < 0.5:
+						var newGoal = FactionGoal.new(enums.goalType.BUILDWIDE, 3, null)
+						currentGoals.append(newGoal)
+					else:
+						var newGoal = FactionGoal.new(enums.goalType.BUILDTALL, 3, null)
+						currentGoals.append(newGoal)
+			enums.FactionDisposition.AGGRESIVE:
+				var warTarget = warViableCheck(0.2)
+				
+				if warTarget != null:
+					if ownedUnits.size() > 1:
+						var newGoal = FactionGoal.new(enums.goalType.STARTWAR, 1, warTarget)
+						currentGoals.append(newGoal)
+				elif militaryScore <= 0.8:
+					var newGoal = FactionGoal.new(enums.goalType.RAISEARMY, 1, enums.UnitSize.LARGE)
+					currentGoals.append(newGoal)
+				else:
+					var rand = managers.random.randf()
+					if rand < 0.05:
+						var newGoal = FactionGoal.new(enums.goalType.RAISEARMY, 1, enums.UnitSize.LARGE)
+						currentGoals.append(newGoal)
+					if rand < 0.15:
+						var newGoal = FactionGoal.new(enums.goalType.RAISEARMY, 1, enums.UnitSize.MEDIUM)
+						currentGoals.append(newGoal)
+					elif rand < 0.4:
+						var newGoal = FactionGoal.new(enums.goalType.BUILDWIDE, 2, null)
+						currentGoals.append(newGoal)
+					else:
+						var newGoal = FactionGoal.new(enums.goalType.BUILDTALL, 3, null)
+						currentGoals.append(newGoal)
+			enums.FactionDisposition.PEACEFUL:
+				if militaryScore <= 0.5:
+					var newGoal = FactionGoal.new(enums.goalType.RAISEARMY, 1, enums.UnitSize.SMALL)
+					currentGoals.append(newGoal)
+				else:
+					var rand = managers.random.randf()
+					if rand < 0.6:
+						var newGoal = FactionGoal.new(enums.goalType.BUILDWIDE, 3, null)
+						currentGoals.append(newGoal)
+					elif rand < 0.8:
+						var newGoal = FactionGoal.new(enums.goalType.BUILDTALL, 2, null)
+						currentGoals.append(newGoal)
+			_:
+				pass
 
 func getRegion(toGet: String):
 	match toGet:
 		'largest':
 			var returnRegion = [null, 0]
 			for region in ownedRegions:
-				var score = region.reportScore()
+				var regScore = region.reportScore()
 				if score > returnRegion[1]:
 					returnRegion[0] = region
-					returnRegion[1] = score
+					returnRegion[1] = regScore
 			
 			return returnRegion[0]
 		'smallest':
 			var returnRegion = [null, 0]
 			for region in ownedRegions:
-				var score = region.reportScore()
+				var regScore = region.reportScore()
 				if score > returnRegion[1]:
 					returnRegion[0] = region
-					returnRegion[1] = score
+					returnRegion[1] = regScore
 			
 			return returnRegion[0]
 		_:
 			print("Region :" + str(toGet) + " requested!")
 			return null
+
+func warViableCheck(threshold : float):
+	var neighbors = []
+	var viable = [null, null]
+	for region in adjacentRegions:
+		if neighbors.has(region.factionOwner) == false:
+			neighbors.append(region.factionOwner)
+	
+	var factScore = managers.militaryStatus[faction]
+	for fact in neighbors:
+		##Score will be between 0.0 and 1.0
+		##Returns faction with largest score difference
+		var diff = factScore - managers.militaryStatus[fact]
+		if diff > threshold:
+			if viable[0] == null || diff > viable[1]:
+				viable = [fact, diff]
+	
+	return viable[0]
 
 func warCheck() -> void:
 	var notWar = 0
@@ -204,15 +273,28 @@ func tryUpgrade(region : Region,  stat : String):
 func militaryCheck():
 	pass
 
+##Returns factions which own regions adjacent to this faction
+func currAdj():
+	var factions = []
+	for region in adjacentRegions:
+		if factions.has(region.factionOwner):
+			pass
+		else:
+			factions.append(region.factionOwner)
+	
+	return factions
+
 func reportScore():
-	militaryPow = 0
+	militaryPow = 0.0
 	for i in ownedUnits.size():
-		militaryPow = militaryPow + round(ownedUnits[i].maxPower / 100.0)
+		militaryPow = militaryPow + ownedUnits[i].maxPower
 		
-	var score : int = 0
+	score = 0.0
 	for region in ownedRegions:
-		score = int(score + region.reportScore() + round(resources / 200.0))
-	return int(score + militaryPow)
+		score = score + (region.reportScore() / 2.0)
+		
+	score = score + militaryPow
+	return score
 
 func updateAdjRegions():
 	for i in ownedRegions.size():

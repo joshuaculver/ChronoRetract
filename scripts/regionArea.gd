@@ -33,7 +33,7 @@ var unitEffect : float = 0.0
 var resourceIncome : int = 0
 
 ##Rough representation of region development
-var score = 0
+var score : float = 0.0
 
 @export var stats : Dictionary = {
 		"population":100,
@@ -142,7 +142,7 @@ func upgradePrice(stat : String):
 	return null
 
 func reportScore():
-	var currScore = int(stats["population"] + stats["growth"] + stats["production"] + stats["logistics"])
+	var currScore = float(stats["population"] + stats["growth"] + stats["production"] + stats["logistics"]) * 5.0
 	score = currScore
 	return currScore
 

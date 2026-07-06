@@ -24,7 +24,6 @@ func achieved(amt : int):
 
 func finish():
 	if amount >= goalAmount:
-		self.free()
 		return true
 	else:
 		return false

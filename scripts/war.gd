@@ -10,7 +10,7 @@ var atkAllies : Array[Faction] = []
 var defender : Faction
 var defAllies : Array[Faction] = []
 
-##TODO war goal
+var contestedRegion : Region 
 
 func _init(attack : Faction, defend : Faction):
 	attacker = attack

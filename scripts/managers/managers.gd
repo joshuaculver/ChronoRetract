@@ -26,20 +26,18 @@ var unitID = 0
 
 var activeSession
 
+var militaryStatus : Dictionary[int, float] = {}
+
 ## Basic unit which is used for creating generic armies for all factions
 var unitScene = preload("res://prefabs/units/army.tscn")
 ## The scene which is used to load the overall map, regions, and factions in their initial state
 var sessScene = preload("res://prefabs/session.tscn")
 
-var scoreDict = {
-		enums.Factions.RED:float(0),
-		enums.Factions.BLUE:float(0),
-		enums.Factions.GREEN:float(0),
-		enums.Factions.YELLOW:float(0),
-		enums.Factions.PURPLE:float(0),
-	}
+var random = RandomNumberGenerator.new()
+var fixedSeed = 1234567890
 
 func _ready():
+	random.seed = fixedSeed
 	UImanager = $UI
 	background = $Background
 	UIcanvas = $UI/UIcanvas
@@ -74,6 +72,8 @@ func startSession():
 	unitManager.player.playerDefeated.connect(endRun)
 	
 	sessionManager.ticked.connect(UImanager.updateTime)
+	
+	battleManager.logSignal.connect(managers.UImanager.toLog)
 	
 	UImanager.mainMenuToggle()
 	menuLockToggle()
@@ -158,9 +158,10 @@ func tryMakeUnit(callFaction : enums.Factions, resources: int, size : enums.Unit
 	
 	faction.ownedRegions[0].units.append(newUnit)
 	faction.ownedUnits.append(newUnit)
+	faction.reportScore()
 	
 	militaryReport()
-	print("Faction: " + str(name) + " made unit" + " | " + "POW: " + str(newUnit.maxPower))
+	print("Faction: " + str(name) + " made unit" + " | " + "POW: " + str(newUnit.maxPower) + " - Faction POW:" + str(faction.militaryPow))
 
 ## Cleans up references to units which are removed
 ##TODO move to appropriate manager
@@ -172,19 +173,22 @@ func removeUnit(unit : Unit):
 ## Creates a report of relative military power of all factions
 func militaryReport():
 	var factions = factionManager.factionArr
+	var newScore : Dictionary[int, float] = {}
 	
 	var highest = float(0)
 	for i in factions.size():
-		if factions[i].faction != 5 && factions[i].militaryPow >= highest:
-			highest = factions[i].militaryPow
-	
-	print("Highest pow: " + str(highest))
+		var currScore = factions[i].reportScore()
+		if factions[i].faction != 5 && currScore >= highest:
+			highest = currScore
 	
 	for i in factions.size():
-		if factions[i].faction != 5 && highest != 0 && factions[i].militaryPow != 0:
-			scoreDict[factions[i].faction] = snapped((float(factions[i].militaryPow) / float(highest)),0.01)
+		if highest == 0 || factions[i].faction == 5:
+			newScore[factions[i].faction] = 0.0
+		else:
+			newScore[factions[i].faction] = snapped(float(factions[i].score / highest),0.001)
 	
-	print(str(scoreDict))
+	print(str(newScore))
+	militaryStatus = newScore
 
 ## Called by the menu for player navigation
 ##TODO move to appropriate manager

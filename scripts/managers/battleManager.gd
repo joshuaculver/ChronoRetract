@@ -8,6 +8,8 @@ var battle = preload("res://prefabs/battle.tscn")
 var wars = {}
 var battles : Array[Battle] = []
 
+signal logSignal(ID, text : String)
+
 ## Advances all existing battles 
 func tick():
 	for conflict in battles:
@@ -28,9 +30,25 @@ func createWar(attacker : Faction, defender : Faction):
 	managers.factionDict[attacker.faction].warCheck()
 	managers.factionDict[defender.faction].setRapport(attacker.faction, enums.Rapport.WAR)
 	managers.factionDict[defender.faction].warCheck()
+	
+	var goals = []
+	var target
+	for region in attacker.adjacentRegions:
+		if region.factionOwner == defender.faction:
+			goals.append(region)
+	
+	##TODO currently randomly picks valid regions to attack
+	if goals.size() > 1:
+		target = goals[managers.random.randi_range(0,(goals.size()-1))]
+	elif goals.size() == 1:
+		target = goals[0]
+	else:
+		target = null
+	newWar.contestedRegion = target
 
 	wars[newWar.ID] = newWar
 	
+	logSignal.emit(str(attacker.faction), " Has declared war on: " + str(defender.faction))
 	print("War declared: " + str(attacker) + " -> " + str(defender))
 
 func createBattle(region : Region, caller : Unit, hostile : Unit):
