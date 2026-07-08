@@ -8,7 +8,11 @@ extends Node
 var selectedUnit : Unit
 
 var playerScene = preload("res://prefabs/units/player.tscn")
+
 var player : Player 
+
+## Basic unit which is used for creating generic armies for all factions
+var unitScene = preload("res://prefabs/units/army.tscn")
 
 ## Iterates through all units and calls their function for them to perform an action
 func tick() -> void:
@@ -16,6 +20,30 @@ func tick() -> void:
 	for i in unitArr.size():
 		if unitArr[i] != null:
 			unitArr[i].tick()
+
+func createUnit(callFaction : enums.Factions, size : enums.UnitSize):
+	var faction : Faction = managers.factionDict[callFaction]
+	var newUnit = unitScene.instantiate()
+	
+	newUnit.unitSize = size
+
+	add_child(newUnit)
+	
+	newUnit.maxPower = enums.powerVals[size] * faction.powerBonus
+	newUnit.power = enums.powerVals[size] * faction.powerBonus
+	newUnit.faction = faction.faction
+	newUnit.location = faction.ownedRegions[0]
+	newUnit.modulate = enums.colorDict[faction.faction]
+	
+	newUnit.position = faction.ownedRegions[0].position
+	newUnit.name = "Unit: " + str(newUnit.ID)
+	
+	faction.ownedRegions[0].units.append(newUnit)
+	faction.ownedUnits.append(newUnit)
+	faction.reportScore()
+	
+	managers.militaryReport()
+	print("Faction: " + str(name) + " made unit" + " | " + "POW: " + str(newUnit.maxPower) + " - Faction POW:" + str(faction.militaryPow))
 
 ## Creates the player unit and adds it to a region on the map
 func addPlayer():

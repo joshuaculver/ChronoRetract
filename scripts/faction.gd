@@ -6,16 +6,16 @@ class_name Faction
 extends Node
 
 @export var faction : enums.Factions
+@export var startingUnits = {
+	enums.UnitSize.SMALL:0,
+	enums.UnitSize.MEDIUM:0,
+	enums.UnitSize.LARGE:0,
+}
 
 var ownedRegions : Array[Region] = []
 ##Regions not owned by this factions adjacent to this factions regions
 var adjacentRegions : Array[Region] = []
 var ownedUnits : Array[Unit] = []
-
-##Faction will keep resources instead of building
-var saving = true
-##Amount to keep before spending
-var saveAmt = 0
 
 @export var factionDisposition : enums.FactionDisposition = enums.FactionDisposition.NEUTRAL
 
@@ -47,8 +47,6 @@ var incomePenalty : float = 1.0
 func _ready() -> void:
 	if faction != enums.Factions.NONE:
 		managers.addFaction(self)
-		
-		saveAmt = enums.powerVals[enums.UnitSize.SMALL]
 
 func setRapport(target : enums.Factions, newRapport : enums.Rapport):
 	factionRapport[target] = newRapport
@@ -108,22 +106,20 @@ func pursueGoal() -> void:
 							goal.amount = goal.amount + 1
 			enums.goalType.RAISEARMY:
 				match goal.target:
-					##TODO make sure unit is created before incrementing goal
 					enums.UnitSize.SMALL:
-						if resources >= enums.powerVals[enums.UnitSize.SMALL]:
-							managers.tryMakeUnit(faction, saveAmt, enums.UnitSize.SMALL)
+						if tryMakeUnit(enums.UnitSize.SMALL):
 							checkPenalty()
 							goal.amount = goal.amount + 1
 					enums.UnitSize.MEDIUM:
 						if resources >= enums.powerVals[enums.UnitSize.MEDIUM]:
-							managers.tryMakeUnit(faction, saveAmt, enums.UnitSize.MEDIUM)
-							checkPenalty()
-							goal.amount = goal.amount + 1
+							if tryMakeUnit(enums.UnitSize.MEDIUM):
+								checkPenalty()
+								goal.amount = goal.amount + 1
 					enums.UnitSize.LARGE:
 						if resources >= enums.powerVals[enums.UnitSize.LARGE]:
-							managers.tryMakeUnit(faction, saveAmt, enums.UnitSize.LARGE)
-							checkPenalty()
-							goal.amount = goal.amount + 1
+							if tryMakeUnit(enums.UnitSize.LARGE):
+								checkPenalty()
+								goal.amount = goal.amount + 1
 					_:
 						pass
 			enums.goalType.STARTWAR:
@@ -268,6 +264,16 @@ func tryUpgrade(region : Region,  stat : String):
 			return true
 		else:
 			return false
+
+func tryMakeUnit(size : enums.UnitSize):
+	var cost = size
+	
+	if cost <= resources:
+		resources = resources - cost
+		managers.unitManager.createUnit(faction, size)
+		return true
+	else:
+		return false
 
 ##Checks factions military situation
 func militaryCheck():
