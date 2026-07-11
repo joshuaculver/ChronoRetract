@@ -8,6 +8,8 @@ var battle = preload("res://prefabs/battle.tscn")
 var wars = {}
 var battles : Array[Battle] = []
 
+var warID = 1
+
 signal logSignal(ID, text : String)
 
 ## Advances all existing battles 
@@ -44,9 +46,17 @@ func createWar(attacker : Faction, defender : Faction):
 		target = goals[0]
 	else:
 		target = null
-	newWar.contestedRegion = target
 
+	newWar.contestedRegion = target
+	
+	while wars.has(warID):
+		warID = warID + 1
+	
+	newWar.ID = warID
 	wars[newWar.ID] = newWar
+	
+	attacker.involvedWars.append(newWar)
+	defender.involvedWars.append(newWar)
 	
 	logSignal.emit(str(attacker.faction), " Has declared war on: " + str(defender.faction))
 	print("War declared: " + str(attacker) + " -> " + str(defender))

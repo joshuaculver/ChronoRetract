@@ -21,6 +21,7 @@ var ownedUnits : Array[Unit] = []
 
 var currentGoals : Array[FactionGoal] = []
 var atWar : bool = false
+var involvedWars = Array[War]
 
 ##Amount of income receceived most recently
 var lastIncome = 0
@@ -199,6 +200,41 @@ func makeGoal():
 						var newGoal = FactionGoal.new(enums.goalType.BUILDTALL, 2, null)
 						currentGoals.append(newGoal)
 			_:
+				pass
+
+func commandUnits():
+	##Getting units which can be given commands
+	var currentUnits = []
+	for unit in ownedUnits:
+		if unit != null:
+			if !unit.inBattle && unit.unitMode.NEUTRAL:
+				currentUnits.append(unit)
+	
+	##Units exist which can be commanded
+	if currentUnits.size() > 0:
+		if atWar:
+			var sieged = []
+			for region in ownedRegions:
+				if region.sieged:
+					sieged.append(region)
+			
+			var unit = currentUnits.pop_front()
+			while unit != null:
+				if sieged > 1:
+					##TODO
+					pass
+				elif sieged == 1:
+					unit.getPathRegion(sieged[0])
+					unit = currentUnits.pop_front()
+				else:
+					for war in involvedWars:
+						if war.attacker == faction:
+							unit.getPathRegion(war.contestedRegion)
+							unit = currentUnits.pop_front()
+				
+		else:
+			##TODO spread out owned units
+			for unit in currentUnits:
 				pass
 
 func getRegion(toGet: String):
