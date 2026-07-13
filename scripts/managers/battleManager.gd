@@ -19,6 +19,10 @@ func tick():
 			conflict.tick()
 		else:
 			resolveBattle(conflict)
+	for war in wars:
+		war.tick()
+		if war.resolve:
+			pass
 
 ## Connects units to their signal which calls the battle manager on encountering an enemy
 func unitConnect(unit):
@@ -87,6 +91,25 @@ func createBattle(region : Region, caller : Unit, hostile : Unit):
 	else:
 		print("Could not find war for battle call")
 
+##Called by units to check if region is being targeted for siege by given faction
+func checkRegion(region : Region, faction : enums.Factions):
+	var checkFaction = managers.factionDict[faction]
+	for war in wars:
+		##TODO or ally
+		if war.attacker == checkFaction:
+			if war.contestedRegion == region:
+				return true
+	
+	return false
+
+func checkSeized(region : Region, attacker : Faction, defender : Faction):
+	if region.seized:
+		for war in wars:
+			if war.attacker == attacker && war.defender == defender:
+				war.contestedSeized = true
+	else:
+		return false
+
 func resolveBattle(conflict):
 	if conflict.atkTeam.size() > 0:
 		for unit in conflict.atkTeam:
@@ -97,14 +120,15 @@ func resolveBattle(conflict):
 		for unit in conflict.defTeam:
 			if unit != null:
 				unit.setMode(enums.UnitMode.NEUTRAL)
-
-	##TODO track outcome for war
-	##var effectedWar = wars[conflict.warID]
-	##match conflict.winnder
 	
 	battles.erase(conflict)
 	conflict.queue_free()
 
 func resolveWar(war):
+	if war.attackerWins:
+		managers.transferRegion(war.contestedRegion, war.defender, war.attacker)
+	
 	war.attacker.warCheck()
 	war.defender.warCheck()
+	
+	wars.erase(war.ID)

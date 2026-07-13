@@ -76,6 +76,17 @@ func addToGraph(ID, graphPos) -> void:
 		#ID, position, weight_scale
 		navGraph.add_point(ID, graphPos, 1)
 
+func transferRegion(region : Region, oldOwner : Faction, newOwner : Faction):
+	region.factionOwner = newOwner.faction
+	
+	newOwner.ownedRegions.append(region)
+	oldOwner.ownedRegions.erase(region)
+	
+	region.updateVisuals()
+	
+	oldOwner.updateAdjRegions()
+	newOwner.updateAdjRegions()
+
 func DEBUGLines():
 	for i in regionArr.size():
 		var neighbors = regionArr[i].neighbors

@@ -38,6 +38,7 @@ var logActivity : bool = false
 	set(value):
 		mode = value
 		changed.emit()
+		
 
 signal relocated
 signal encounteredEnemy(currRegion)
@@ -111,8 +112,13 @@ func hostileCheck():
 					encounteredEnemy.emit(location, self, unit)
 					print(str(self) + " found hostile " + str(unit))
 					break
-				else:
-					print(str(managers.factionManager.rapportCheck(self.faction, unit.faction)))
+		
+		if managers.battleManager.regionCheck(location, faction):
+			mode = enums.UnitMode.SIEGE
+			location.getSieged(self)
+
+func captureCheck():
+	managers.battleManager.checkSeized(location, managers.factionDict[faction], managers.factionDict[location.owner])
 
 @abstract func die()
 	##destroyed.emit(self)

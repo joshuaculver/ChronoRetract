@@ -31,6 +31,9 @@ func tick() -> void:
 		enums.UnitMode.AID:
 			##Regular units do not aid
 			rest()
+		enums.UnitMode.SIEGE:
+			if location.currentDefenses <= 0.0:
+				captureCheck()
 	
 	hasFought = false
 

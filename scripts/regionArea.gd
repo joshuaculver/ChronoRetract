@@ -14,6 +14,8 @@ extends Area2D
 @export var neighbors : Array[Region] = []
 @export var units : Array[Unit] = []
 
+var siegers : Array[Unit] = []
+
 @export var graphPos : Vector2
 
 @onready var visual: Polygon2D = $Polygon2D
@@ -27,7 +29,7 @@ extends Area2D
 var ticksToChange : int = enums.baseTicksToChange
 
 var sieged : bool = false
-var currentDefenses = 750
+var currentDefenses = 750.0
 var unitEffect : float = 0.0
 
 var resourceIncome : int = 0
@@ -63,7 +65,7 @@ var derivedStats : Dictionary = {
 signal selectedRegion
 
 func _ready():
-	visual.color = enums.colorDict[factionOwner]
+	updateVisuals()
 	
 	var polyShape = visual.polygon
 	collider.polygon = polyShape
@@ -81,7 +83,27 @@ func _ready():
 
 func tick():
 	if sieged:
-		print(str(ID) + " - " + str(title) + " : is being sieged! Defenses remaining: " + str(stats["defenses"]))
+		for unit in siegers:
+			if unit.mode != enums.UnitMode.SIEGE || unit.location != self:
+				siegers.erase(unit)
+		if siegers.size() == 0:
+			sieged = false
+			print(str(ID) + " - " + str(title) + " : siege lifted!")
+	
+	if sieged:
+		print(str(ID) + " - " + str(title) + " : is being sieged!")
+		if currentDefenses > 0:
+			var siegePow = 0.0
+			for unit in siegers:
+				siegePow = siegePow + unit.power
+			var finalPow = siegePow / 100.0 + 50.0
+			
+			print("Siege power: " + str(finalPow))
+			currentDefenses = currentDefenses - finalPow
+		else:
+			print("No defenses remaining!")
+		
+		print("Defenses remaining: " + str(stats["defenses"]))
 	else:
 		if factionOwner == enums.Factions.NONE:
 			##TODO un-owned region behavior
@@ -113,6 +135,9 @@ func tick():
 					mult = 0.01
 			
 				resourceIncome = int(stats["production"] * mult)
+
+func updateVisuals():
+	visual.color = enums.colorDict[factionOwner]
 
 func calcDerived() -> void:
 	var newTime = int(((100.0 - stats["logistics"]) / 3.0) * 1.5)
@@ -169,6 +194,10 @@ func getStat(toGet : String):
 	
 func removeUnit(unit : Unit) -> void:
 	units.erase(unit)
+
+func getSieged(sieger : Unit) -> void:
+	sieged = true
+	siegers.append(sieger)
 
 func _on_mouse_entered() -> void:
 	if managers.menuLock == false:

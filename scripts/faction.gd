@@ -21,7 +21,7 @@ var ownedUnits : Array[Unit] = []
 
 var currentGoals : Array[FactionGoal] = []
 var atWar : bool = false
-var involvedWars = Array[War]
+var involvedWars : Array[War]
 
 ##Amount of income receceived most recently
 var lastIncome = 0
@@ -228,7 +228,7 @@ func commandUnits():
 					unit = currentUnits.pop_front()
 				else:
 					for war in involvedWars:
-						if war.attacker == faction:
+						if war.attacker == self:
 							unit.getPathRegion(war.contestedRegion)
 							unit = currentUnits.pop_front()
 				

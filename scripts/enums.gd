@@ -9,7 +9,7 @@ enum Rapport {SELF, ALLY, LIKE, NEUTRAL, DISLIKE, ENEMY, WAR}
 
 enum FactionDisposition {AGGRESIVE, NEUTRAL, PEACEFUL}
 
-enum UnitMode {AID, NEUTRAL, TRAVEL, BATTLE}
+enum UnitMode {AID, NEUTRAL, TRAVEL, BATTLE, SIEGE}
 enum UnitSize {SMALL, MEDIUM, LARGE, HERO}
 
 static var baseTicksToChange : int = 15

@@ -41,6 +41,9 @@ func tick() -> void:
 		enums.UnitMode.AID:
 			##Region checks for aiding units
 			rest()
+		enums.UnitMode.SIEGE:
+			if location.currentDefenses <= 0.0:
+				captureCheck()
 	
 	hasFought = false
 
