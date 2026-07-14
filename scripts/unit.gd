@@ -113,12 +113,13 @@ func hostileCheck():
 					print(str(self) + " found hostile " + str(unit))
 					break
 		
-		if managers.battleManager.regionCheck(location, faction):
+		if managers.battleManager.checkRegion(location, faction):
 			mode = enums.UnitMode.SIEGE
 			location.getSieged(self)
 
 func captureCheck():
-	managers.battleManager.checkSeized(location, managers.factionDict[faction], managers.factionDict[location.owner])
+	if managers.battleManager.checkSeized(location, managers.factionDict[faction], managers.factionDict[location.factionOwner]):
+		pass
 
 @abstract func die()
 	##destroyed.emit(self)

@@ -79,6 +79,8 @@ func startSession():
 	menuLockToggle()
 	militaryReport()
 	sessionManager.timerToggle()
+	
+	unitManager.DEBUGInitUnit(enums.Factions.RED)
 
 func menuLockToggle() -> void:
 	menuLock = !menuLock

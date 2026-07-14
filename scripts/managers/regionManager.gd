@@ -79,6 +79,10 @@ func addToGraph(ID, graphPos) -> void:
 func transferRegion(region : Region, oldOwner : Faction, newOwner : Faction):
 	region.factionOwner = newOwner.faction
 	
+	if region.siegers.size() > 0:
+		for unit in region.siegers:
+			unit.setMode(enums.UnitMode.NEUTRAL)
+	
 	newOwner.ownedRegions.append(region)
 	oldOwner.ownedRegions.erase(region)
 	

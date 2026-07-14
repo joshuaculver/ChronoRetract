@@ -71,6 +71,7 @@ func checkPenalty() -> void:
 func tick() -> void:
 	if faction != enums.Factions.NONE:
 		pursueGoal()
+		commandUnits()
 
 func pursueGoal() -> void:
 	if currentGoals.size() > 0:
@@ -124,8 +125,9 @@ func pursueGoal() -> void:
 					_:
 						pass
 			enums.goalType.STARTWAR:
-				managers.battleManager.createWar(managers.factDict[faction], managers.factDict[goal.target])
+				managers.battleManager.createWar(managers.factionDict[faction], managers.factionDict[goal.target])
 				goal.amount = goal.amount + 1
+				warCheck()
 			_:
 				pass
 		if goal.finish():
@@ -166,7 +168,7 @@ func makeGoal():
 			enums.FactionDisposition.AGGRESIVE:
 				var warTarget = warViableCheck(0.2)
 				
-				if warTarget != null:
+				if warTarget != null && atWar == false:
 					if ownedUnits.size() > 1:
 						var newGoal = FactionGoal.new(enums.goalType.STARTWAR, 1, warTarget)
 						currentGoals.append(newGoal)
@@ -207,7 +209,7 @@ func commandUnits():
 	var currentUnits = []
 	for unit in ownedUnits:
 		if unit != null:
-			if !unit.inBattle && unit.unitMode.NEUTRAL:
+			if !unit.inBattle && unit.mode == enums.UnitMode.NEUTRAL:
 				currentUnits.append(unit)
 	
 	##Units exist which can be commanded
@@ -220,10 +222,10 @@ func commandUnits():
 			
 			var unit = currentUnits.pop_front()
 			while unit != null:
-				if sieged > 1:
+				if sieged.size() > 1:
 					##TODO
 					pass
-				elif sieged == 1:
+				elif sieged.size() == 1:
 					unit.getPathRegion(sieged[0])
 					unit = currentUnits.pop_front()
 				else:
@@ -266,13 +268,14 @@ func warViableCheck(threshold : float):
 	var viable = [null, null]
 	for region in adjacentRegions:
 		if neighbors.has(region.factionOwner) == false:
-			neighbors.append(region.factionOwner)
+			if region.factionOwner != enums.Factions.NONE:
+				neighbors.append(region.factionOwner)
 	
-	var factScore = managers.militaryStatus[faction]
+	var factScore = float(managers.militaryStatus[faction])
 	for fact in neighbors:
 		##Score will be between 0.0 and 1.0
 		##Returns faction with largest score difference
-		var diff = factScore - managers.militaryStatus[fact]
+		var diff = float(factScore - managers.militaryStatus[fact])
 		if diff > threshold:
 			if viable[0] == null || diff > viable[1]:
 				viable = [fact, diff]
@@ -282,7 +285,7 @@ func warViableCheck(threshold : float):
 func warCheck() -> void:
 	var notWar = 0
 	for stance in factionRapport:
-		if stance == enums.Rapport.WAR:
+		if factionRapport[stance] == enums.Rapport.WAR:
 			atWar = true
 		else:
 			notWar = notWar + 1

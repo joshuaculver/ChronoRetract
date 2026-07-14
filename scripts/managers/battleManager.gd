@@ -19,10 +19,11 @@ func tick():
 			conflict.tick()
 		else:
 			resolveBattle(conflict)
-	for war in wars:
-		war.tick()
-		if war.resolve:
-			pass
+	if wars.size() > 0:
+		for war in wars:
+			wars[war].tick()
+			if wars[war].resolve:
+				resolveWar(wars[war])
 
 ## Connects units to their signal which calls the battle manager on encountering an enemy
 func unitConnect(unit):
@@ -96,17 +97,18 @@ func checkRegion(region : Region, faction : enums.Factions):
 	var checkFaction = managers.factionDict[faction]
 	for war in wars:
 		##TODO or ally
-		if war.attacker == checkFaction:
-			if war.contestedRegion == region:
+		if wars[war].attacker == checkFaction:
+			if wars[war].contestedRegion == region:
 				return true
 	
 	return false
 
 func checkSeized(region : Region, attacker : Faction, defender : Faction):
-	if region.seized:
+	if region.currentDefenses <= 0:
 		for war in wars:
-			if war.attacker == attacker && war.defender == defender:
-				war.contestedSeized = true
+			if wars[war].attacker == attacker && wars[war].defender == defender:
+				wars[war].contestedSeized = true
+				return true
 	else:
 		return false
 
@@ -126,7 +128,7 @@ func resolveBattle(conflict):
 
 func resolveWar(war):
 	if war.attackerWins:
-		managers.transferRegion(war.contestedRegion, war.defender, war.attacker)
+		managers.regionManager.transferRegion(war.contestedRegion, war.defender, war.attacker)
 	
 	war.attacker.warCheck()
 	war.defender.warCheck()

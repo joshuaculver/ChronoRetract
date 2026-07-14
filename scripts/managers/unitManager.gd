@@ -21,6 +21,14 @@ func tick() -> void:
 		if unitArr[i] != null:
 			unitArr[i].tick()
 
+func DEBUGInitUnit(faction : enums.Factions):
+	match faction:
+		enums.Factions.RED:
+			createUnit(enums.Factions.RED, enums.UnitSize.LARGE)
+			createUnit(enums.Factions.RED, enums.UnitSize.LARGE)
+		_:
+			pass
+
 func createUnit(callFaction : enums.Factions, size : enums.UnitSize):
 	var faction : Faction = managers.factionDict[callFaction]
 	var newUnit = unitScene.instantiate()
@@ -43,7 +51,7 @@ func createUnit(callFaction : enums.Factions, size : enums.UnitSize):
 	faction.reportScore()
 	
 	managers.militaryReport()
-	print("Faction: " + str(name) + " made unit" + " | " + "POW: " + str(newUnit.maxPower) + " - Faction POW:" + str(faction.militaryPow))
+	print("Faction: " + str(faction) + " made unit" + " | " + "POW: " + str(newUnit.maxPower) + " - Faction POW:" + str(faction.militaryPow))
 
 ## Creates the player unit and adds it to a region on the map
 func addPlayer():
