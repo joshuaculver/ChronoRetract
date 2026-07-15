@@ -21,14 +21,6 @@ func tick() -> void:
 		if unitArr[i] != null:
 			unitArr[i].tick()
 
-func DEBUGInitUnit(faction : enums.Factions):
-	match faction:
-		enums.Factions.RED:
-			createUnit(enums.Factions.RED, enums.UnitSize.LARGE)
-			createUnit(enums.Factions.RED, enums.UnitSize.LARGE)
-		_:
-			pass
-
 func createUnit(callFaction : enums.Factions, size : enums.UnitSize):
 	var faction : Faction = managers.factionDict[callFaction]
 	var newUnit = unitScene.instantiate()

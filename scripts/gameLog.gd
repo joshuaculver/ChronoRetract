@@ -1,3 +1,6 @@
+## Script name: gameLog.gd
+##
+## Used to store and display the player facing message log in game
 class_name gameLog
 
 extends RichTextLabel

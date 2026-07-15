@@ -12,14 +12,19 @@
 script = ExtResource("1_0bwsc")
 
 [node name="Red - 0" parent="." unique_id=1010137497 instance=ExtResource("2_5764h")]
-powerBonus = 1.1
+displayName = "Red Monarchy"
 
 [node name="Blue - 1" parent="." unique_id=1141131353 instance=ExtResource("3_ohg6u")]
+displayName = "Blue Arcanists"
 
 [node name="Green - 2" parent="." unique_id=1413311764 instance=ExtResource("4_knylk")]
+displayName = "Green Democracy"
 
 [node name="Yellow - 3" parent="." unique_id=948189790 instance=ExtResource("5_44qs0")]
+displayName = "League of Eagles"
 
 [node name="Purple - 4" parent="." unique_id=435892000 instance=ExtResource("6_fkbei")]
+displayName = "Noble's Republic"
 
 [node name="None - 5" parent="." unique_id=1099005822 instance=ExtResource("7_472kn")]
+displayName = "Neutral Territory"

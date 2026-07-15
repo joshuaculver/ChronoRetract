@@ -1,3 +1,6 @@
+## Script name: war.gd
+##
+## Object class used to represent and track wars between factions
 class_name War
 
 extends Object

@@ -6,6 +6,7 @@ class_name Faction
 extends Node
 
 @export var faction : enums.Factions
+@export var displayName : String
 @export var startingUnits = {
 	enums.UnitSize.SMALL:0,
 	enums.UnitSize.MEDIUM:0,
@@ -169,7 +170,7 @@ func makeGoal():
 				var warTarget = warViableCheck(0.2)
 				
 				if warTarget != null && atWar == false:
-					if ownedUnits.size() > 1:
+					if ownedUnits.size() > 0:
 						var newGoal = FactionGoal.new(enums.goalType.STARTWAR, 1, warTarget)
 						currentGoals.append(newGoal)
 				elif militaryScore <= 0.8:

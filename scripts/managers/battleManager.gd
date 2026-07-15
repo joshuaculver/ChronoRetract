@@ -63,8 +63,8 @@ func createWar(attacker : Faction, defender : Faction):
 	attacker.involvedWars.append(newWar)
 	defender.involvedWars.append(newWar)
 	
-	logSignal.emit(str(attacker.faction), " Has declared war on: " + str(defender.faction))
-	print("War declared: " + str(attacker) + " -> " + str(defender))
+	logSignal.emit(str(attacker.displayName), " Has declared war on: " + str(defender.displayName))
+	print("War declared: " + str(attacker.displayName) + " -> " + str(defender.displayName))
 
 func createBattle(region : Region, caller : Unit, hostile : Unit):
 	var warSelect = null

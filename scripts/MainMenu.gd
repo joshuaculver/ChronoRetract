@@ -1,3 +1,6 @@
+## Script name: MainMenu.gd
+##
+## Node which handles general menu functions 
 class_name mainMenu
 
 extends Node
