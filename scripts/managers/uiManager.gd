@@ -8,8 +8,8 @@ extends Node
 
 var mainMenuScene = preload("res://prefabs/main.tscn")
 
-@onready var regPanel : BoxContainer = $UIcanvas/RegionControl/RegionPanel
-@onready var regionButton : Button = $UIcanvas/RegionControl/RegionPanel/SelectRegionButton
+@onready var regPanel : TabContainer = $UIcanvas/RTabPanel
+@onready var regionButton : Button = $UIcanvas/RTabPanel/Region/SelectRegionButton
 
 ## In game log readable to the player
 @onready var playerLog : gameLog = $UIcanvas/PlayerLog/RichTextLabel
@@ -28,18 +28,18 @@ func regionSelected(newRegion : Region) -> void:
 	if newRegion == null:
 		regPanel.visible = false
 		
-		var titleText = regPanel.get_node("Title")
+		var titleText = regPanel.get_node("Region").get_node("Title")
 		titleText.text = ""
 		
-		var textPanel = regPanel.get_node("TextPanel/Stats")
+		var textPanel = regPanel.get_node("Region").get_node("TextPanel/Stats")
 		textPanel.text = ""
 	else:
 		regPanel.visible = true
 		
-		var titleText = regPanel.get_node("Title")
+		var titleText = regPanel.get_node("Region").get_node("Title")
 		titleText.text = str(str(newRegion.ID) + " - " + newRegion.title)
 		
-		var textPanel = regPanel.get_node("TextPanel/Stats")
+		var textPanel = regPanel.get_node("Region").get_node("TextPanel/Stats")
 		
 		var string = ("Population: " + str(newRegion.stats["population"]) + "\n")
 		string = string  + ("Growth: " + str(newRegion.stats["growth"]) + "\n")

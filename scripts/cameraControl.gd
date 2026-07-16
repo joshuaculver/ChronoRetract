@@ -16,8 +16,8 @@ func _input(event: InputEvent) -> void:
 				dragging = false
 		elif event is InputEventMouseMotion and dragging:
 			var newPos = global_position - event.screen_relative
-			newPos.x = clamp(newPos.x, 250, 915)
-			newPos.y = clamp(newPos.y, 100, 515)
+			newPos.x = clamp(newPos.x, 275, 870)
+			newPos.y = clamp(newPos.y, 195, 550)
 			global_position = newPos
 		
 		if event.is_action("zoomIn"):

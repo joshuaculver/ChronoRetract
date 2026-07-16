@@ -21,51 +21,48 @@ script = ExtResource("1_4e3gx")
 script = ExtResource("2_ld7kh")
 
 [node name="Camera2D" type="Camera2D" parent="UI" unique_id=416702327]
-position = Vector2(640, 240)
+position = Vector2(576, 324)
+limit_enabled = false
+limit_smoothed = true
+position_smoothing_enabled = true
+position_smoothing_speed = 10.0
 script = ExtResource("5_leyp6")
 
 [node name="UIcanvas" type="CanvasLayer" parent="UI" unique_id=270285711]
 visible = false
 
-[node name="RegionControl" type="Control" parent="UI/UIcanvas" unique_id=132564333]
-layout_mode = 3
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
-
-[node name="RegionPanel" type="BoxContainer" parent="UI/UIcanvas/RegionControl" unique_id=96626426]
+[node name="RTabPanel" type="TabContainer" parent="UI/UIcanvas" unique_id=1653276408]
 visible = false
-layout_mode = 0
-offset_left = 896.0
-offset_top = 128.0
-offset_right = 1048.0
-offset_bottom = 267.0
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -240.0
+offset_top = -108.0
+offset_right = -32.0
+offset_bottom = 108.0
+grow_horizontal = 0
+grow_vertical = 2
+current_tab = 0
+
+[node name="Region" type="BoxContainer" parent="UI/UIcanvas/RTabPanel" unique_id=96626426]
+layout_mode = 2
+alignment = 1
 vertical = true
+metadata/_tab_index = 0
 
-[node name="Polygon2D" type="Polygon2D" parent="UI/UIcanvas/RegionControl/RegionPanel" unique_id=1389504224]
-position = Vector2(-136, -11)
-scale = Vector2(1705.878, -20.664068)
-color = Color(0, 0, 0, 0.28627452)
-polygon = PackedVector2Array(0.06858638, 0.58071804, 0.1875867, 0.5807185, 0.1875867, -9.146311, 0.06858638, -9.146311)
-
-[node name="Title" type="Label" parent="UI/UIcanvas/RegionControl/RegionPanel" unique_id=2069829296]
+[node name="Title" type="Label" parent="UI/UIcanvas/RTabPanel/Region" unique_id=2069829296]
 layout_mode = 2
 text = "Region"
 label_settings = ExtResource("3_owny3")
 horizontal_alignment = 1
 
-[node name="TextPanel" type="BoxContainer" parent="UI/UIcanvas/RegionControl/RegionPanel" unique_id=574450319]
+[node name="TextPanel" type="BoxContainer" parent="UI/UIcanvas/RTabPanel/Region" unique_id=574450319]
 layout_mode = 2
+alignment = 1
 
-[node name="Info" type="Label" parent="UI/UIcanvas/RegionControl/RegionPanel/TextPanel" unique_id=2015256688]
-layout_mode = 2
-text = "lorum ipsum
-lorum ipsum
-lorum ipsum
-lorum ipsum"
-label_settings = ExtResource("4_flgu2")
-
-[node name="Stats" type="Label" parent="UI/UIcanvas/RegionControl/RegionPanel/TextPanel" unique_id=1654131873]
+[node name="Info" type="Label" parent="UI/UIcanvas/RTabPanel/Region/TextPanel" unique_id=2015256688]
 layout_mode = 2
 text = "lorum ipsum
 lorum ipsum
@@ -73,32 +70,42 @@ lorum ipsum
 lorum ipsum"
 label_settings = ExtResource("4_flgu2")
 
-[node name="SelectRegionButton" type="Button" parent="UI/UIcanvas/RegionControl/RegionPanel" unique_id=759500174]
+[node name="Stats" type="Label" parent="UI/UIcanvas/RTabPanel/Region/TextPanel" unique_id=1654131873]
+layout_mode = 2
+text = "lorum ipsum
+lorum ipsum
+lorum ipsum
+lorum ipsum"
+label_settings = ExtResource("4_flgu2")
+
+[node name="SelectRegionButton" type="Button" parent="UI/UIcanvas/RTabPanel/Region" unique_id=759500174]
 layout_mode = 2
 text = "Travel"
 icon_alignment = 1
 
 [node name="PlayerUIControl" type="Control" parent="UI/UIcanvas" unique_id=330626527]
 layout_mode = 3
-anchors_preset = 0
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -40.0
 offset_right = 40.0
-offset_bottom = 40.0
+grow_vertical = 0
 
 [node name="PlayerSelect" type="TextureButton" parent="UI/UIcanvas/PlayerUIControl" unique_id=1945773019]
 layout_mode = 0
-offset_left = 192.00002
-offset_top = 496.0
-offset_right = 320.0
-offset_bottom = 624.0
+offset_left = 112.0
+offset_top = -128.0
+offset_right = 240.0
 scale = Vector2(0.48629373, 0.52)
 texture_normal = ExtResource("6_tm107")
 
 [node name="PlayerActionLabel" type="Label" parent="UI/UIcanvas/PlayerUIControl" unique_id=70368436]
 layout_mode = 0
-offset_left = 256.0
-offset_top = 512.0
-offset_right = 365.0
-offset_bottom = 535.0
+offset_left = 175.99998
+offset_top = -112.0
+offset_right = 285.0
+offset_bottom = -89.0
 horizontal_alignment = 1
 
 [node name="Sprite2D" type="Sprite2D" parent="UI/UIcanvas/PlayerUIControl/PlayerActionLabel" unique_id=630768129]
@@ -110,10 +117,10 @@ texture = ExtResource("6_tm107")
 
 [node name="PowerBar" type="TextureProgressBar" parent="UI/UIcanvas/PlayerUIControl" unique_id=346585705]
 layout_mode = 0
-offset_left = 256.0
-offset_top = 536.0
-offset_right = 384.0
-offset_bottom = 664.0
+offset_left = 175.99997
+offset_top = -88.0
+offset_right = 303.99997
+offset_bottom = 40.0
 scale = Vector2(0.9156333, 0.10175064)
 texture_under = ExtResource("6_tm107")
 texture_progress = ExtResource("6_tm107")
@@ -126,17 +133,18 @@ anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -424.0
-offset_top = -237.0
-offset_right = -4.0
-offset_bottom = -7.0
+offset_left = -776.0
+offset_top = -168.00003
+offset_right = -359.0
+offset_bottom = 68.0
 grow_horizontal = 0
 grow_vertical = 0
+scale = Vector2(0.96, 0.68)
 
 [node name="Polygon2D" type="Polygon2D" parent="UI/UIcanvas/PlayerLog" unique_id=987974490]
 scale = Vector2(1705.878, -20.664068)
 color = Color(0, 0, 0, 0.28627452)
-polygon = PackedVector2Array(-0.002344817, 0.2903595, 0.25031102, 0.2903595, 0.25089723, -11.227219, -0.0046896636, -11.227219)
+polygon = PackedVector2Array(-0.0048850626, 0.28466415, 0.25031102, 0.2903595, 0.25089723, -11.227219, -0.0046896636, -11.227219)
 
 [node name="RichTextLabel" type="RichTextLabel" parent="UI/UIcanvas/PlayerLog" unique_id=2109124421]
 layout_mode = 2
@@ -153,10 +161,10 @@ script = ExtResource("7_h4ult")
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = 17.0
-offset_top = 28.0
-offset_right = 57.0
-offset_bottom = 51.0
+offset_left = -20.0
+offset_top = 50.0
+offset_right = 20.0
+offset_bottom = 73.0
 grow_horizontal = 2
 text = "0"
 horizontal_alignment = 1
@@ -170,6 +178,7 @@ texture = ExtResource("6_tm107")
 
 [node name="Background" type="Node2D" parent="." unique_id=1104469249]
 visible = false
+position = Vector2(-50, 87)
 
 [node name="River" type="Line2D" parent="Background" unique_id=378835707]
 z_index = -2
@@ -195,4 +204,4 @@ position = Vector2(0, 496)
 color = Color(7.508397e-06, 0.61635774, 0.796423, 1)
 polygon = PackedVector2Array(1888, 392, 669, 390, -32, 384, -32, -824, 1888, -824)
 
-[connection signal="pressed" from="UI/UIcanvas/RegionControl/RegionPanel/SelectRegionButton" to="." method="_on_select_region_button_pressed"]
+[connection signal="pressed" from="UI/UIcanvas/RTabPanel/Region/SelectRegionButton" to="." method="_on_select_region_button_pressed"]

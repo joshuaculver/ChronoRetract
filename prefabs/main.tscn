@@ -10,17 +10,17 @@ script = ExtResource("1_1jyap")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1747586115]
 modulate = Color(0, 0, 0, 0.4509804)
-position = Vector2(640, 296)
+position = Vector2(575.60516, 324.1599)
 scale = Vector2(10.618831, 6.4399986)
 texture = ExtResource("1_wmafp")
 
 [node name="MainMenuControl" type="Control" parent="." unique_id=1901208501]
 layout_mode = 3
 anchors_preset = 0
-offset_left = 552.0
-offset_top = 232.0
-offset_right = 592.0
-offset_bottom = 272.0
+offset_left = 487.60516
+offset_top = 260.1599
+offset_right = 527.60516
+offset_bottom = 300.1599
 metadata/_edit_use_anchors_ = true
 
 [node name="NewGameButton" type="Button" parent="MainMenuControl" unique_id=667422769]
@@ -69,7 +69,7 @@ text = "Quit Game"
 metadata/_edit_use_anchors_ = true
 
 [node name="Logo" type="Sprite2D" parent="." unique_id=1600875719]
-position = Vector2(640, 128)
+position = Vector2(575.60516, 156.15991)
 texture = ExtResource("1_wmafp")
 
 [connection signal="pressed" from="MainMenuControl/NewGameButton" to="." method="_on_new_game_button_pressed"]
