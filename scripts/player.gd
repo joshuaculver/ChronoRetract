@@ -11,11 +11,10 @@ func _ready():
 	##modulate = enums.colorDict[faction]
 	
 	##Node gets ID from manager unit dictionary
-	maxPower = 110
-	power = 50
-	
 	ID = managers.addUnit(self)
 	logActivity = true
+	
+	managers.UImanager.playerUpdate()
 
 func die() -> void:
 	emit_signal('playerDefeated')

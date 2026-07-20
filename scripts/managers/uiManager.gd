@@ -30,6 +30,9 @@ signal playerPause
 
 @onready var instanceMainMenu : mainMenu
 
+func _ready() -> void:
+	regPanel.visible = false
+
 ## Function for selecting and deselecting a region as well as sending the region's information to the relevant menu
 func regionSelected(newRegion : Region) -> void:
 	if newRegion == null:
@@ -47,6 +50,14 @@ func regionSelected(newRegion : Region) -> void:
 		titleText.text = str(str(newRegion.ID) + " - " + newRegion.title)
 		
 		var textPanel = regPanel.get_node("Region").get_node("TextPanel/Stats")
+		
+		var infoPanel = regPanel.get_node("Region").get_node("TextPanel/Info")
+		var fact = 'None'
+		if managers.factionDict.has(newRegion.factionOwner):
+			fact = managers.factionDict[newRegion.factionOwner]
+			fact = str(fact).split(" ", false)[0]
+		
+		infoPanel.text = "Faction: " + "\n" + str(fact)
 		
 		var string = ("Population: " + str(newRegion.stats["population"]) + "\n")
 		string = string  + ("Growth: " + str(newRegion.stats["growth"]) + "\n")

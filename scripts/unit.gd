@@ -15,8 +15,8 @@ var ID : int = 0
 ##Gets assigned faction's rapport
 var factionRapport : = {}
 
-var maxPower : float
-var power : float :
+@export var maxPower : float
+@export var power : float :
 	get:
 		return power
 	set(value):
@@ -89,7 +89,10 @@ func move() -> void:
 			relocated.emit(ID, location.ID, oldID)
 			if logActivity:
 				if path.size() == 0:
-					logSignal.emit(str(ID), " Arrived at " + str(location.ID))
+					if self.name != null:
+						logSignal.emit(str(self.name), " Arrived at " + str(location.ID))
+					else:
+						logSignal.emit(str(ID), " Arrived at " + str(location.ID))
 
 			hostileCheck()
 

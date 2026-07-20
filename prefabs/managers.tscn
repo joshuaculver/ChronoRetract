@@ -5,7 +5,6 @@
 [ext_resource type="LabelSettings" uid="uid://cqhqhjy18of31" path="res://labelSettings/title.tres" id="3_owny3"]
 [ext_resource type="LabelSettings" uid="uid://d04acrf5gru7k" path="res://labelSettings/body.tres" id="4_flgu2"]
 [ext_resource type="Script" uid="uid://cjnqw3tv4siva" path="res://scripts/cameraControl.gd" id="5_leyp6"]
-[ext_resource type="Texture2D" uid="uid://cka42onxsufuv" path="res://assets/sprites/knightIconRound.png" id="6_0broj"]
 [ext_resource type="Texture2D" uid="uid://raco562y6fs5" path="res://assets/blurStatic.png" id="6_4hfd2"]
 [ext_resource type="Texture2D" uid="uid://dwvk1h5vqhw6i" path="res://icon.svg" id="6_tm107"]
 [ext_resource type="Texture2D" uid="uid://ddql2ejmbid0v" path="res://assets/sprites/BarSprites/powerBarEmpty.png" id="7_flgu2"]
@@ -14,6 +13,7 @@
 [ext_resource type="Texture2D" uid="uid://b5ysq22ffsp4l" path="res://assets/sprites/hourglassIconPlay.png" id="8_l1hgl"]
 [ext_resource type="Texture2D" uid="uid://bb0hepv5enp7i" path="res://assets/sprites/BarSprites/powerBarTop.png" id="8_vbhga"]
 [ext_resource type="Texture2D" uid="uid://bn1dr6swi4qpn" path="res://assets/sprites/BarSprites/powerBarFill.png" id="9_pxknj"]
+[ext_resource type="Texture2D" uid="uid://bpftj7whmaclk" path="res://assets/sprites/knightIcon.png" id="10_flgu2"]
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_h4ult"]
 load_path = "res://.godot/imported/hourglassIconPause.png-83968844e8de24f8765131cdafa23665.ctex"
@@ -37,10 +37,8 @@ position_smoothing_speed = 10.0
 script = ExtResource("5_leyp6")
 
 [node name="UIcanvas" type="CanvasLayer" parent="UI" unique_id=270285711]
-visible = false
 
 [node name="RTabPanel" type="TabContainer" parent="UI/UIcanvas" unique_id=1653276408]
-visible = false
 anchors_preset = 6
 anchor_left = 1.0
 anchor_top = 0.5
@@ -72,18 +70,10 @@ alignment = 1
 
 [node name="Info" type="Label" parent="UI/UIcanvas/RTabPanel/Region/TextPanel" unique_id=2015256688]
 layout_mode = 2
-text = "lorum ipsum
-lorum ipsum
-lorum ipsum
-lorum ipsum"
 label_settings = ExtResource("4_flgu2")
 
 [node name="Stats" type="Label" parent="UI/UIcanvas/RTabPanel/Region/TextPanel" unique_id=1654131873]
 layout_mode = 2
-text = "lorum ipsum
-lorum ipsum
-lorum ipsum
-lorum ipsum"
 label_settings = ExtResource("4_flgu2")
 
 [node name="SelectRegionButton" type="Button" parent="UI/UIcanvas/RTabPanel/Region" unique_id=759500174]
@@ -111,8 +101,8 @@ horizontal_alignment = 1
 [node name="Sprite2D" type="Sprite2D" parent="UI/UIcanvas/PlayerUIControl/PlayerActionLabel" unique_id=630768129]
 modulate = Color(0, 0, 0, 1)
 z_index = -1
-position = Vector2(54, 13)
-scale = Vector2(0.76, 0.15999025)
+position = Vector2(54.000008, 13)
+scale = Vector2(0.875, 0.15999025)
 texture = ExtResource("6_tm107")
 
 [node name="PowerBar" type="TextureProgressBar" parent="UI/UIcanvas/PlayerUIControl" unique_id=346585705]
@@ -131,13 +121,17 @@ tint_progress = Color(0, 1, 0, 1)
 
 [node name="PlayerSelect" type="TextureButton" parent="UI/UIcanvas/PlayerUIControl" unique_id=1945773019]
 layout_mode = 0
-offset_left = 91.00001
-offset_top = -147.0
-offset_right = 278.1297
-offset_bottom = 38.69232
+offset_left = 82.00001
+offset_top = -134.0
+offset_right = 269.1297
+offset_bottom = 51.69232
 scale = Vector2(0.48629373, 0.52)
-texture_normal = ExtResource("6_0broj")
-stretch_mode = 4
+texture_normal = ExtResource("10_flgu2")
+stretch_mode = 5
+
+[node name="Polygon2D" type="Polygon2D" parent="UI/UIcanvas/PlayerUIControl/PlayerSelect" unique_id=479891815]
+show_behind_parent = true
+polygon = PackedVector2Array(2, 2, 185, 2, 185, 185, 2, 185)
 
 [node name="PlayerLog" type="ScrollContainer" parent="UI/UIcanvas" unique_id=1438677653]
 anchors_preset = 3
@@ -154,7 +148,7 @@ grow_vertical = 0
 
 [node name="Polygon2D" type="Polygon2D" parent="UI/UIcanvas/PlayerLog" unique_id=987974490]
 scale = Vector2(1705.878, -20.664068)
-color = Color(0, 0, 0, 0.28627452)
+color = Color(0, 0, 0, 0.44705883)
 polygon = PackedVector2Array(-0.0048850626, 0.28466415, 0.25031102, 0.2903595, 0.25089723, -11.227219, -0.0046896636, -11.227219)
 
 [node name="RichTextLabel" type="RichTextLabel" parent="UI/UIcanvas/PlayerLog" unique_id=2109124421]

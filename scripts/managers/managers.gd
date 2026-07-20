@@ -41,6 +41,8 @@ func _ready():
 	UImanager = $UI
 	background = $Background
 	UIcanvas = $UI/UIcanvas
+	
+	UIcanvas.visible = false
 
 func _input(event: InputEvent) -> void:
 	if activeSession != null:
