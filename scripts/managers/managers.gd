@@ -73,6 +73,8 @@ func startSession():
 	
 	sessionManager.ticked.connect(UImanager.updateTime)
 	
+	UImanager.playerPause.connect(sessionManager.timerToggle)
+	
 	battleManager.logSignal.connect(managers.UImanager.toLog)
 	
 	UImanager.mainMenuToggle()

@@ -8,8 +8,15 @@ extends Node
 
 var mainMenuScene = preload("res://prefabs/main.tscn")
 
+var pauseIcon = preload("res://assets/sprites/hourglassIconPause.png")
+var playIcon = preload("res://assets/sprites/hourglassIconPlay.png")
+
 @onready var regPanel : TabContainer = $UIcanvas/RTabPanel
 @onready var regionButton : Button = $UIcanvas/RTabPanel/Region/SelectRegionButton
+
+@onready var pauseToggle : TextureButton = $UIcanvas/PauseToggle
+
+signal playerPause
 
 ## In game log readable to the player
 @onready var playerLog : gameLog = $UIcanvas/PlayerLog/RichTextLabel
@@ -82,3 +89,7 @@ func toLog(origin : String, message : String):
 
 func updateTime(value : int):
 	timeDisplay.text = str(value)
+
+func _on_pause_toggle_pressed() -> void:
+	playerPause.emit()
+	

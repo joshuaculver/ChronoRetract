@@ -5,10 +5,18 @@
 [ext_resource type="LabelSettings" uid="uid://cqhqhjy18of31" path="res://labelSettings/title.tres" id="3_owny3"]
 [ext_resource type="LabelSettings" uid="uid://d04acrf5gru7k" path="res://labelSettings/body.tres" id="4_flgu2"]
 [ext_resource type="Script" uid="uid://cjnqw3tv4siva" path="res://scripts/cameraControl.gd" id="5_leyp6"]
+[ext_resource type="Texture2D" uid="uid://cka42onxsufuv" path="res://assets/sprites/knightIconRound.png" id="6_0broj"]
 [ext_resource type="Texture2D" uid="uid://raco562y6fs5" path="res://assets/blurStatic.png" id="6_4hfd2"]
 [ext_resource type="Texture2D" uid="uid://dwvk1h5vqhw6i" path="res://icon.svg" id="6_tm107"]
+[ext_resource type="Texture2D" uid="uid://ddql2ejmbid0v" path="res://assets/sprites/BarSprites/powerBarEmpty.png" id="7_flgu2"]
 [ext_resource type="Script" uid="uid://c0cf6v7cfy45g" path="res://scripts/gameLog.gd" id="7_h4ult"]
 [ext_resource type="Script" uid="uid://cvafxjsmg8qw3" path="res://scripts/textureScroll.gd" id="7_tm107"]
+[ext_resource type="Texture2D" uid="uid://b5ysq22ffsp4l" path="res://assets/sprites/hourglassIconPlay.png" id="8_l1hgl"]
+[ext_resource type="Texture2D" uid="uid://bb0hepv5enp7i" path="res://assets/sprites/BarSprites/powerBarTop.png" id="8_vbhga"]
+[ext_resource type="Texture2D" uid="uid://bn1dr6swi4qpn" path="res://assets/sprites/BarSprites/powerBarFill.png" id="9_pxknj"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_h4ult"]
+load_path = "res://.godot/imported/hourglassIconPause.png-83968844e8de24f8765131cdafa23665.ctex"
 
 [sub_resource type="Gradient" id="Gradient_midqu"]
 offsets = PackedFloat32Array(0, 0.99706745)
@@ -38,10 +46,10 @@ anchor_left = 1.0
 anchor_top = 0.5
 anchor_right = 1.0
 anchor_bottom = 0.5
-offset_left = -240.0
-offset_top = -108.0
-offset_right = -32.0
-offset_bottom = 108.0
+offset_left = -224.0
+offset_top = -164.0
+offset_right = -16.0
+offset_bottom = 52.0
 grow_horizontal = 0
 grow_vertical = 2
 current_tab = 0
@@ -92,40 +100,44 @@ offset_top = -40.0
 offset_right = 40.0
 grow_vertical = 0
 
-[node name="PlayerSelect" type="TextureButton" parent="UI/UIcanvas/PlayerUIControl" unique_id=1945773019]
-layout_mode = 0
-offset_left = 112.0
-offset_top = -128.0
-offset_right = 240.0
-scale = Vector2(0.48629373, 0.52)
-texture_normal = ExtResource("6_tm107")
-
 [node name="PlayerActionLabel" type="Label" parent="UI/UIcanvas/PlayerUIControl" unique_id=70368436]
 layout_mode = 0
-offset_left = 175.99998
+offset_left = 187.0
 offset_top = -112.0
-offset_right = 285.0
+offset_right = 295.0
 offset_bottom = -89.0
 horizontal_alignment = 1
 
 [node name="Sprite2D" type="Sprite2D" parent="UI/UIcanvas/PlayerUIControl/PlayerActionLabel" unique_id=630768129]
 modulate = Color(0, 0, 0, 1)
 z_index = -1
-position = Vector2(52, 13)
+position = Vector2(54, 13)
 scale = Vector2(0.76, 0.15999025)
 texture = ExtResource("6_tm107")
 
 [node name="PowerBar" type="TextureProgressBar" parent="UI/UIcanvas/PlayerUIControl" unique_id=346585705]
 layout_mode = 0
-offset_left = 175.99997
-offset_top = -88.0
-offset_right = 303.99997
-offset_bottom = 40.0
-scale = Vector2(0.9156333, 0.10175064)
-texture_under = ExtResource("6_tm107")
-texture_progress = ExtResource("6_tm107")
+offset_left = 176.0
+offset_top = -87.0
+offset_right = 304.0
+offset_bottom = -54.0
+step = 0.25
+nine_patch_stretch = true
+texture_under = ExtResource("7_flgu2")
+texture_over = ExtResource("8_vbhga")
+texture_progress = ExtResource("9_pxknj")
 tint_under = Color(0.16924527, 0.1692453, 0.16924527, 1)
 tint_progress = Color(0, 1, 0, 1)
+
+[node name="PlayerSelect" type="TextureButton" parent="UI/UIcanvas/PlayerUIControl" unique_id=1945773019]
+layout_mode = 0
+offset_left = 91.00001
+offset_top = -147.0
+offset_right = 278.1297
+offset_bottom = 38.69232
+scale = Vector2(0.48629373, 0.52)
+texture_normal = ExtResource("6_0broj")
+stretch_mode = 4
 
 [node name="PlayerLog" type="ScrollContainer" parent="UI/UIcanvas" unique_id=1438677653]
 anchors_preset = 3
@@ -133,13 +145,12 @@ anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -776.0
-offset_top = -168.00003
-offset_right = -359.0
-offset_bottom = 68.0
+offset_left = -432.0
+offset_top = -256.0
+offset_right = -15.0
+offset_bottom = -20.0
 grow_horizontal = 0
 grow_vertical = 0
-scale = Vector2(0.96, 0.68)
 
 [node name="Polygon2D" type="Polygon2D" parent="UI/UIcanvas/PlayerLog" unique_id=987974490]
 scale = Vector2(1705.878, -20.664068)
@@ -152,9 +163,9 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 mouse_filter = 1
 bbcode_enabled = true
-fit_content = true
 scroll_following = true
 scroll_following_visible_characters = true
+shortcut_keys_enabled = false
 script = ExtResource("7_h4ult")
 
 [node name="TimePassed" type="Label" parent="UI/UIcanvas" unique_id=419704628]
@@ -175,6 +186,29 @@ show_behind_parent = true
 position = Vector2(19.99998, 11)
 scale = Vector2(0.429375, 0.22250009)
 texture = ExtResource("6_tm107")
+
+[node name="PauseToggle" type="TextureButton" parent="UI/UIcanvas" unique_id=300987356]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -64.0
+offset_top = -176.0
+offset_right = 64.0
+offset_bottom = -40.0
+grow_horizontal = 2
+grow_vertical = 0
+toggle_mode = true
+texture_normal = SubResource("CompressedTexture2D_h4ult")
+texture_pressed = ExtResource("8_l1hgl")
+stretch_mode = 5
+
+[node name="Polygon2D" type="Polygon2D" parent="UI/UIcanvas/PauseToggle" unique_id=204189934]
+show_behind_parent = true
+scale = Vector2(1705.878, -20.664068)
+color = Color(0, 0, 0, 0.28627452)
+polygon = PackedVector2Array(0, 0, 0.07503468, 0, 0.07503468, -6.5814724, 0, -6.5814743)
 
 [node name="Background" type="Node2D" parent="." unique_id=1104469249]
 visible = false
@@ -205,3 +239,4 @@ color = Color(7.508397e-06, 0.61635774, 0.796423, 1)
 polygon = PackedVector2Array(1888, 392, 669, 390, -32, 384, -32, -824, 1888, -824)
 
 [connection signal="pressed" from="UI/UIcanvas/RTabPanel/Region/SelectRegionButton" to="." method="_on_select_region_button_pressed"]
+[connection signal="pressed" from="UI/UIcanvas/PauseToggle" to="UI" method="_on_pause_toggle_pressed"]
