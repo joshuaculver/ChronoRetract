@@ -53,6 +53,8 @@ func _ready() -> void:
 		managers.addFaction(self)
 
 func tick() -> void:
+	if currentGoals.size() == 0:
+		makeGoal()
 	if faction != enums.Factions.NONE:
 		pursueGoal()
 		commandUnits()
@@ -140,7 +142,6 @@ func pursueGoal() -> void:
 		if goal.finish():
 			currentGoals.erase(goal)
 			goal.free()
-		
 	else:
 		makeGoal()
 
@@ -366,3 +367,9 @@ func updateAdjRegions():
 ##Removes a unit from the factions unit list
 func removeUnit(unit):
 	ownedUnits.erase(unit)
+
+func removeWar(remID):
+	for i in involvedWars.size():
+		if involvedWars[i].ID == remID:
+			involvedWars.remove_at(i)
+			break

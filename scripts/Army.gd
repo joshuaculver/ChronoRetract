@@ -30,7 +30,7 @@ func tick() -> void:
 					if path.size() <= 0:
 						mode = enums.UnitMode.BATTLE
 		enums.UnitMode.AID:
-			##Regular units do not aid
+			##Region handles aid calculation
 			rest()
 		enums.UnitMode.SIEGE:
 			if location.currentDefenses <= 0.0:

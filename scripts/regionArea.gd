@@ -117,15 +117,12 @@ func tick():
 			
 			if units.size() > 0:
 				for i in units.size():
-					if units[i].mode == enums.UnitMode.AID:
-						##TODO move to hero function
+					if units[i].unitSize == enums.UnitSize.HERO && units[i].mode == enums.UnitMode.AID:
 						unitEffect = unitEffect + (0.005 * (float(units[i].power) / 100.0))
-						print("Hero: " + str(units[i].name) + " aided at: " + str(ID) + str(" current effect: ") + str(unitEffect))
+						##print("Unit: " + str(units[i].name) + " aided at: " + str(ID) + str(" current effect: ") + str(unitEffect))
 			if ticksToChange > 0:
 				ticksToChange -= 1
 			else:
-				if unitEffect > 0:
-					print("Aid mult: " + str(unitEffect))
 				stats["population"] = (stats["population"] + int((stats["growth"] * stats["logistics"])/2)) * (unitEffect)
 				unitEffect = 0
 				ticksToChange = enums.baseTicksToChange

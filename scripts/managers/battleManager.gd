@@ -134,6 +134,15 @@ func resolveWar(war):
 	if war.attackerWins:
 		managers.regionManager.transferRegion(war.contestedRegion, war.defender, war.attacker)
 	
+	var curID = war.ID
+	
+	war.attacker.removeWar(curID)
+	war.defender.removeWar(curID)
+	
+	##TODO sets rapport to dislike. Needs to use a rapport calculation once added
+	war.attacker.setRapport(war.defender.faction, enums.Rapport.DISLIKE)
+	war.defender.setRapport(war.attacker.faction, enums.Rapport.DISLIKE)
+	
 	war.attacker.warCheck()
 	war.defender.warCheck()
 	
