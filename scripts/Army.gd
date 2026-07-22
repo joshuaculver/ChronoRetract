@@ -6,6 +6,7 @@ class_name Army
 
 extends Unit
 
+## Called every turn on unit to determine behavior
 func tick() -> void:
 	match mode:
 		enums.UnitMode.NEUTRAL:
@@ -37,12 +38,14 @@ func tick() -> void:
 	
 	hasFought = false
 
+## Handles receiving damage and initiating being destroyed
 func getDamaged(damage : int):
 	power = power - damage
 	if power <= 0:
 		print(str(self) + " destroyed")
 		die()
 
+## Destroys the unit
 func die():
 	destroyed.emit(self)
 	queue_free()

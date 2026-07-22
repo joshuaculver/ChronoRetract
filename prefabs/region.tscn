@@ -3,6 +3,8 @@
 [ext_resource type="Script" uid="uid://cgftdj0mg7kha" path="res://scripts/regionArea.gd" id="1_vxaj5"]
 
 [node name="Region" type="Area2D" unique_id=1888828550]
+monitoring = false
+monitorable = false
 script = ExtResource("1_vxaj5")
 factionOwner = 5
 

@@ -1,6 +1,7 @@
+## Script name: FactionGoal.gd
+##
 ## Object used to give factions goals
 
-##Needs to free() when done
 class_name FactionGoal
 extends Object
 
@@ -19,9 +20,11 @@ func _init(type : enums.goalType, goalNum : int, targ):
 	if targ != null:
 		target = targ
 
+##Increments on faction taking an action that is part of the goal
 func achieved(amt : int):
 	amount = amount + amt
 
+##Checks if the goal has been met
 func finish():
 	if amount >= goalAmount:
 		return true

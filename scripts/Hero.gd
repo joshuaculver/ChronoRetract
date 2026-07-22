@@ -47,7 +47,7 @@ func tick() -> void:
 	
 	hasFought = false
 
-##TODO work in stats
+##Causes hero to heal when in friendly or neutral regions
 func rest():
 	if hasFought == false:
 		if location.factionOwner == faction:
@@ -63,15 +63,13 @@ func encUnit(other : Unit):
 	elif managers.factionManager.rapportCheck(faction, other.faction) == enums.Rapport.WAR:
 		managers.battleManager.createBattle(location, self, other)
 
-##Currently using army version for testing
+##Handles hero getting receiving damage
 func getDamaged(damage : int):
 	power = power - damage
 	if power <= 0:
 		print(str(self) + " destroyed")
 		die()
 
-##Currently using army version for testing
+##Handles hero being defeated
 func die():
 	destroyed.emit(self)
-	##TODO make sure this is handled safely and node is only removed once clean up is succesfully completed
-	##queue_free()

@@ -5,8 +5,10 @@ class_name Faction
 
 extends Node
 
+##Global enum which this faction is associated with
 @export var faction : enums.Factions
 @export var displayName : String
+
 @export var startingUnits = {
 	enums.UnitSize.SMALL:0,
 	enums.UnitSize.MEDIUM:0,
@@ -27,7 +29,7 @@ var involvedWars : Array[War]
 ##Amount of income receceived most recently
 var lastIncome = 0
 
-#Dictionary for tracking relationship with other factions
+##Dictionary for tracking relationship with other factions
 @export var factionRapport : = {
 	enums.Factions.RED:enums.Rapport.NEUTRAL,
 	enums.Factions.BLUE:enums.Rapport.NEUTRAL,
@@ -50,14 +52,22 @@ func _ready() -> void:
 	if faction != enums.Factions.NONE:
 		managers.addFaction(self)
 
+func tick() -> void:
+	if faction != enums.Factions.NONE:
+		pursueGoal()
+		commandUnits()
+
+##Changes this factions rapport with passed faction
 func setRapport(target : enums.Factions, newRapport : enums.Rapport):
 	factionRapport[target] = newRapport
 
+##Calculates how many resources the faction gets currently
 func getIncome(income : int) -> void:
 	var amount = income * incomePenalty
 	resources = int(resources + amount)
 	lastIncome = amount
 
+##Calculates the income penalty for this faction from owned units
 func checkPenalty() -> void:
 	var newPenalty = 0.0
 	var totalPower = 0.0
@@ -69,11 +79,7 @@ func checkPenalty() -> void:
 		newPenalty = 0.99
 	incomePenalty = 100.0 - newPenalty
 
-func tick() -> void:
-	if faction != enums.Factions.NONE:
-		pursueGoal()
-		commandUnits()
-
+##Based on current goal determines an action, if any, for the faction to take
 func pursueGoal() -> void:
 	if currentGoals.size() > 0:
 		var goal = currentGoals[0]
@@ -138,6 +144,7 @@ func pursueGoal() -> void:
 	else:
 		makeGoal()
 
+##Creates a new goal for the faction
 func makeGoal():
 	if atWar:
 		var militaryScore = managers.militaryStatus[faction]
@@ -205,6 +212,7 @@ func makeGoal():
 			_:
 				pass
 
+##Causes faction to give units move orders
 func commandUnits():
 	##Getting units which can be given commands
 	var currentUnits = []
@@ -240,6 +248,7 @@ func commandUnits():
 			for unit in currentUnits:
 				pass
 
+##Looks up a region owned by the faction based on passed parameter
 func getRegion(toGet: String):
 	match toGet:
 		'largest':
@@ -264,6 +273,7 @@ func getRegion(toGet: String):
 			print("Region :" + str(toGet) + " requested!")
 			return null
 
+##Checks nearby factions and returns a faction with a float representing the difference in power
 func warViableCheck(threshold : float):
 	var neighbors = []
 	var viable = [null, null]
@@ -283,6 +293,7 @@ func warViableCheck(threshold : float):
 	
 	return viable[0]
 
+##Checks if the faction is currently participating in any wars
 func warCheck() -> void:
 	var notWar = 0
 	for stance in factionRapport:
@@ -305,6 +316,7 @@ func tryUpgrade(region : Region,  stat : String):
 		else:
 			return false
 
+##Returns true on succsesfully creating a unit
 func tryMakeUnit(size : enums.UnitSize):
 	var cost = size
 	
@@ -330,6 +342,7 @@ func currAdj():
 	
 	return factions
 
+##Returns the factions current score which is based on both it's military and economy
 func reportScore():
 	militaryPow = 0.0
 	for i in ownedUnits.size():
@@ -342,6 +355,7 @@ func reportScore():
 	score = score + militaryPow
 	return score
 
+##Checks and updates which regions neighbor this faction
 func updateAdjRegions():
 	for i in ownedRegions.size():
 		for x in ownedRegions[i].neighbors.size():
@@ -349,5 +363,6 @@ func updateAdjRegions():
 				adjacentRegions.append(ownedRegions[i].neighbors[x])
 	print("Faction: " + str(faction) + " | Adjacent regions: " + str(adjacentRegions))
 
+##Removes a unit from the factions unit list
 func removeUnit(unit):
 	ownedUnits.erase(unit)

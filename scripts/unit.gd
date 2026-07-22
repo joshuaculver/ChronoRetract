@@ -28,7 +28,7 @@ var path : Array[int]
 var hasFought : bool = false
 var inBattle : bool = false
 
-## Whether the unit will send updates on it's actions to the player log
+##Whether the unit will send updates on it's actions to the player log
 var logActivity : bool = false
 
 ##Current state of unit
@@ -42,6 +42,7 @@ var logActivity : bool = false
 
 signal relocated
 signal encounteredEnemy(currRegion)
+##Used in die() which is abstract
 signal destroyed
 
 signal changed
@@ -53,10 +54,13 @@ func _ready():
 	##Node gets ID from manager unit dictionary
 	ID = managers.addUnit(self)
 
+##Abstract as different unit types handle their tick differently
 @abstract func tick()
 
+##Abstract as above except for taking damage
 @abstract func getDamaged(damage : int)
 
+##Function which allows the unit to handle outside requests to have it change it's mode
 func setMode(newMode : enums.UnitMode):
 	if newMode == enums.UnitMode.BATTLE:
 		self.visible = false
@@ -64,6 +68,7 @@ func setMode(newMode : enums.UnitMode):
 		self.visible = true
 	mode = newMode
 
+##Sets the units current path to the targeted region and sets unit to travel mode causing it to move on it's ticks
 func getPathRegion(target : Region) -> void:
 	mode = enums.UnitMode.TRAVEL
 	
@@ -77,11 +82,11 @@ func getPathRegion(target : Region) -> void:
 				path.push_back(newPath[i])
 	else:
 		print("null in get path location or target")
-	
+
+##Handles the unit moving to a new region
 func move() -> void:
 	if mode == enums.UnitMode.TRAVEL || mode == enums.UnitMode.NEUTRAL:
 		if path.size() > 0:
-			print("moving")
 			var oldID = location.ID
 			var nextID = path.pop_front()
 			location = managers.regionManager.regionDict[nextID]
@@ -96,6 +101,7 @@ func move() -> void:
 
 			hostileCheck()
 
+##Used by the unit to heal in neutral/friendly regions
 func rest():
 	if hasFought == false:
 		if location.factionOwner == faction:
@@ -105,6 +111,7 @@ func rest():
 			if power < maxPower:
 				power = power + (maxPower * 0.025)
 
+##Checks the current region for any units that the current unit is at war with due to their faction
 func hostileCheck():
 	print("Hostile check")
 	if mode != enums.UnitMode.BATTLE:
@@ -120,9 +127,10 @@ func hostileCheck():
 			mode = enums.UnitMode.SIEGE
 			location.getSieged(self)
 
+##Used by the unit to check if they've met the conditions to capture a region they are sieging 
 func captureCheck():
 	if managers.battleManager.checkSeized(location, managers.factionDict[faction], managers.factionDict[location.factionOwner]):
 		pass
 
+##Called when the unit is reduced to 0 power or otherwise destroyed
 @abstract func die()
-	##destroyed.emit(self)

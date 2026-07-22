@@ -21,6 +21,7 @@ func tick() -> void:
 		if unitArr[i] != null:
 			unitArr[i].tick()
 
+##Creates a new unit and handles assigning it to a faction
 func createUnit(callFaction : enums.Factions, size : enums.UnitSize):
 	var faction : Faction = managers.factionDict[callFaction]
 	var newUnit = unitScene.instantiate()

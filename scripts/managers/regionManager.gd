@@ -14,6 +14,7 @@ var navGraph : AStar2D = AStar2D.new()
 
 signal sendResources
 
+##Not _init. Used by manager to initialize the region manager at appriopriate step in session initialization
 func init():
 	regionArr = get_children()
 	for region in regionArr:
@@ -21,13 +22,6 @@ func init():
 	
 	parentRegions()
 	connectGraph()
-
-func parentRegions() -> void:
-	for i in regionArr.size():
-		if regionArr[i].factionOwner != enums.Factions.NONE:
-			var faction = managers.factionDict[regionArr[i].factionOwner]
-			
-			faction.ownedRegions.append(regionArr[i])
 
 func tick() -> void:
 	var incomeDict = {}
@@ -55,6 +49,12 @@ func regionSelected(ID) -> void:
 		managers.UImanager.regionSelected(selectedRegion)
 		print("selected: " + str(selectedRegion.ID))
 
+##Adds a region to the navigate graph
+func addToGraph(ID, graphPos) -> void:
+		#ID, position, weight_scale
+		navGraph.add_point(ID, graphPos, 1)
+
+##Connects this regions graph position to it's neighbors
 func connectGraph():
 	for i in regionArr.size():
 		var neighbors = regionArr[i].neighbors
@@ -63,6 +63,7 @@ func connectGraph():
 				#Connecting region to navigation graph
 				navGraph.connect_points(regionArr[i].ID, neighbors[x].ID)
 
+##Adds this a region to be tracked by the region manager
 func addRegion(region : Region):
 	if regionDict.has(region):
 		print("Region already added")
@@ -72,10 +73,15 @@ func addRegion(region : Region):
 		addToGraph(region.ID, region.graphPos)
 		region.selectedRegion.connect(regionSelected)
 
-func addToGraph(ID, graphPos) -> void:
-		#ID, position, weight_scale
-		navGraph.add_point(ID, graphPos, 1)
+##Gives a region to a faction
+func parentRegions() -> void:
+	for i in regionArr.size():
+		if regionArr[i].factionOwner != enums.Factions.NONE:
+			var faction = managers.factionDict[regionArr[i].factionOwner]
+			
+			faction.ownedRegions.append(regionArr[i])
 
+##Handles transferring ownership when a region is captured by a faction
 func transferRegion(region : Region, oldOwner : Faction, newOwner : Faction):
 	region.factionOwner = newOwner.faction
 	
@@ -91,6 +97,7 @@ func transferRegion(region : Region, oldOwner : Faction, newOwner : Faction):
 	oldOwner.updateAdjRegions()
 	newOwner.updateAdjRegions()
 
+##Creates a visualization of the connections on the naviation graph
 func DEBUGLines():
 	for i in regionArr.size():
 		var neighbors = regionArr[i].neighbors

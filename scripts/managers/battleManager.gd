@@ -66,6 +66,7 @@ func createWar(attacker : Faction, defender : Faction):
 	logSignal.emit(str(attacker.displayName), " Has declared war on: " + str(defender.displayName))
 	print("War declared: " + str(attacker.displayName) + " -> " + str(defender.displayName))
 
+##Creates new battle
 func createBattle(region : Region, caller : Unit, hostile : Unit):
 	var warSelect = null
 	for war in wars.values():
@@ -103,6 +104,7 @@ func checkRegion(region : Region, faction : enums.Factions):
 	
 	return false
 
+##Checks if a region has had it's defenses reduced to 0 and an appropriate attacker is in it
 func checkSeized(region : Region, attacker : Faction, defender : Faction):
 	if region.currentDefenses <= 0:
 		for war in wars:
@@ -112,6 +114,7 @@ func checkSeized(region : Region, attacker : Faction, defender : Faction):
 	else:
 		return false
 
+##Finishes and cleans up passed battle
 func resolveBattle(conflict):
 	if conflict.atkTeam.size() > 0:
 		for unit in conflict.atkTeam:
@@ -126,6 +129,7 @@ func resolveBattle(conflict):
 	battles.erase(conflict)
 	conflict.queue_free()
 
+##Finishes and cleans up passed battle
 func resolveWar(war):
 	if war.attackerWins:
 		managers.regionManager.transferRegion(war.contestedRegion, war.defender, war.attacker)

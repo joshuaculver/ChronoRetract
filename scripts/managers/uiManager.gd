@@ -66,6 +66,7 @@ func regionSelected(newRegion : Region) -> void:
 		
 		textPanel.text = string
 
+##Toggles the main menu being open or closed
 func mainMenuToggle():
 	if instanceMainMenu != null:
 		if instanceMainMenu.visible:
@@ -73,7 +74,7 @@ func mainMenuToggle():
 		else:
 			instanceMainMenu.visible = true
 
-## Updates information in the UI regarding the player unit. Gets called by a player signal when certain properties of the player unit change
+##Updates information in the UI regarding the player unit. Gets called by a player signal when certain properties of the player unit change
 func playerUpdate():
 	if managers.unitManager.player.power != 0:
 		var percent = (float(managers.unitManager.player.power) / float(managers.unitManager.player.maxPower)) * 100.0
@@ -94,13 +95,16 @@ func playerUpdate():
 		_:
 			playerActLabel.text = ""
 
+##Adds a passed message to the player facing log
 func toLog(origin : String, message : String):
 	if playerLog != null:
 		playerLog.addToLog(origin, message)
 
+##Sets the player facing turn tracker to passed value
 func updateTime(value : int):
 	timeDisplay.text = str(value)
 
+##Handles input for the player's pause/unpause toggle button
 func _on_pause_toggle_pressed() -> void:
 	playerPause.emit()
 	

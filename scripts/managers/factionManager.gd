@@ -11,6 +11,11 @@ func init():
 	for faction in factionArr:
 		faction.updateAdjRegions()
 
+func tick() -> void:
+	for i in factionArr.size():
+		factionArr[i].tick()
+
+##Returns the rapport the first passed faction has towards the second
 func rapportCheck(from : enums.Factions, to : enums.Factions):
 	var rapport = managers.factionDict.get(from).factionRapport.get(to)
 	if rapport != null:
@@ -18,6 +23,7 @@ func rapportCheck(from : enums.Factions, to : enums.Factions):
 	else:
 		return 0
 
+##Gives each faction it's resource income
 func dispenseIncome(income : Dictionary):
 	factionDict = managers.factionDict
 	var dictEntries = income.keys()
@@ -25,7 +31,3 @@ func dispenseIncome(income : Dictionary):
 	for key in dictEntries:
 		if key != enums.Factions.NONE && factionDict[key] != null:
 			factionDict[key].resources = factionDict[key].resources + income[key]
-
-func tick() -> void:
-	for i in factionArr.size():
-		factionArr[i].tick()

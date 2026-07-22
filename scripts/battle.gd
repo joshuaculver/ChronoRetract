@@ -1,8 +1,7 @@
 ## Script name: battle.gd
 ##
-## Class which is used by units to battle
+## Class which is used to track combat between units
 
-##@abstract class_name Battle
 class_name Battle
 
 extends Control
@@ -15,6 +14,7 @@ var winner = null
 var atkTeam : Array[Unit] = []
 var defTeam : Array[Unit] = []
 
+##Sets the visual icon to match units in battle
 func initIcon() -> void:
 	$leftPos.texture = atkTeam[0].texture
 	$leftPos.modulate = atkTeam[0].modulate
@@ -23,6 +23,7 @@ func initIcon() -> void:
 	
 	position = atkTeam[0].location.position
 
+##Called every turn to continue battle
 func tick() -> void:
 	##Battle manager handles resolution and cleanup once battle is marked no longer ongoing
 	if ongoing == true:
@@ -41,6 +42,7 @@ func statusCheck():
 		ongoing = false
 		return false
 
+##Processes turn in battle. Calculates damage and damages units
 func turn():
 	print("Battle turn start")
 	var atkDmg = 0.0

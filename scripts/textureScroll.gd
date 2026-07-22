@@ -1,3 +1,7 @@
+## Script name: textureScroll.gd
+##
+## Creates an animated visual texture effect
+
 extends Polygon2D
 
 var target : Vector2 = Vector2(0, 0)

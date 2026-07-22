@@ -52,6 +52,7 @@ func _input(event: InputEvent) -> void:
 				sessionManager.timerToggle()
 				menuLockToggle()
 
+##Initializes nodes and scripts which are unique to a given play session
 func startSession():
 	activeSession = sessScene.instantiate()
 	
@@ -84,27 +85,30 @@ func startSession():
 	militaryReport()
 	sessionManager.timerToggle()
 
+##Toggles bool which indicates the menu is open
 func menuLockToggle() -> void:
 	menuLock = !menuLock
 	print("Menu lock: " + str(menuLock))
 
-##TODO handle any potential saving, cleanup, re-initializing
+##Ends the current session and returns to the main menu
 func endSession():
 	UIcanvas.visible = false
 	background.visible = false
 	activeSession.queue_free()
 	UImanager.mainMenuToggle()
 
-##TODO currently ends session, will eventually handle ending current run and starting a new one
+##Handles when a run is completed or ends
 func endRun() -> void:
 	endSession()
 
+##Adds factions to be tracked by the manager
 func addFaction(faction: Faction):
 	if factionDict.has(faction):
 		print("Faction already added")
 	else:
 		factionDict[faction.faction] = faction
 
+##Adds units to be tracked by the manager
 func addUnit(unit : Unit):
 	if unitDict.has(unit):
 		print("Unit already added")
@@ -125,10 +129,10 @@ func addUnit(unit : Unit):
 
 ## When a unit arrives at a new region they send a signal which calls this function
 ## Allows appropriate references to be established
-func unitMoved(unitID : int, regionID : int, lastRegionID : int):
+func unitMoved(callUnitID : int, regionID : int, lastRegionID : int):
 	var region = regionManager.regionDict[regionID]
 	var oldRegion = regionManager.regionDict[lastRegionID]
-	var unit = unitDict[unitID]
+	var unit = unitDict[callUnitID]
 	
 	var oldIndex = oldRegion.units.find(unit)
 	if oldIndex != -1:
@@ -136,36 +140,6 @@ func unitMoved(unitID : int, regionID : int, lastRegionID : int):
 
 	region.units.append(unit)
 	region.notify_property_list_changed()
-
-## Called by factions when attempting to create a new unit
-##TODO move to appropriate manager
-func tryMakeUnit(callFaction : enums.Factions, resources: int, size : enums.UnitSize):
-	var faction : Faction = factionDict[callFaction]
-	var amount = enums.powerVals[size]
-
-	var newUnit = unitScene.instantiate()
-	
-	newUnit.unitSize = size
-
-	unitManager.add_child(newUnit)
-	
-	faction.resources = faction.resources - (amount)
-	
-	newUnit.maxPower = enums.powerVals[size] * faction.powerBonus
-	newUnit.power = enums.powerVals[size] * faction.powerBonus
-	newUnit.faction = faction.faction
-	newUnit.location = faction.ownedRegions[0]
-	newUnit.modulate = enums.colorDict[faction.faction]
-	
-	newUnit.position = faction.ownedRegions[0].position
-	newUnit.name = "Unit: " + str(newUnit.ID)
-	
-	faction.ownedRegions[0].units.append(newUnit)
-	faction.ownedUnits.append(newUnit)
-	faction.reportScore()
-	
-	militaryReport()
-	print("Faction: " + str(name) + " made unit" + " | " + "POW: " + str(newUnit.maxPower) + " - Faction POW:" + str(faction.militaryPow))
 
 ## Cleans up references to units which are removed
 ##TODO move to appropriate manager

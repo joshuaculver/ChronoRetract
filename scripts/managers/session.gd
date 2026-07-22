@@ -39,13 +39,7 @@ func tick() -> void:
 	$factions.tick()
 	$battles.tick()
 
-func timerActive(setting : bool):
-	if timer != null:
-		if setting:
-			timer.start()
-		else:
-			timer.stop()
-
+##Toggles pausing and unpausing the game timer which causes ticks to occur
 func timerToggle() -> void:
 	if timer != null:
 		if timer.is_stopped():
@@ -54,3 +48,11 @@ func timerToggle() -> void:
 		else:
 			timerActive(false)
 			print("time paused")
+
+##Sets timer to passed state
+func timerActive(setting : bool):
+	if timer != null:
+		if setting:
+			timer.start()
+		else:
+			timer.stop()

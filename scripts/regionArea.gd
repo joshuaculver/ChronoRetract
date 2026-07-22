@@ -14,6 +14,7 @@ extends Area2D
 @export var neighbors : Array[Region] = []
 @export var units : Array[Unit] = []
 
+##Units which are attempting to attack and capture the region
 var siegers : Array[Unit] = []
 
 @export var graphPos : Vector2
@@ -57,7 +58,6 @@ var upgradePriceMult : Dictionary = {
 	"logistics":1.7,
 }
 
-##TODO 
 var derivedStats : Dictionary = {
 	"travelTime":30
 }
@@ -136,9 +136,40 @@ func tick():
 			
 				resourceIncome = int(stats["production"] * mult)
 
+##Handles when the player clicks this region
+func _on_input_event(viewport: Node, event: InputEvent, shape_idx: int) -> void:
+	if managers.menuLock == false:
+		if event.is_action("select"):
+			if event.is_pressed():
+				selectedRegion.emit(ID)
+
+##Handles region visuals for when the mouse is hovering over it
+func _on_mouse_entered() -> void:
+	if managers.menuLock == false:
+		defVisual.color = visual.color
+		visual.color = visual.color.darkened(0.4)
+
+##As above but for mouse ceasing hovering over it
+func _on_mouse_exited() -> void:
+	if managers.menuLock == false:
+		visual.color = defVisual.color
+
+##Handles visual updates for when the region is selected with the mouse
+func selected(input : bool):
+	if input:
+		z_index = 1
+		outline.default_color = Color.WHITE
+		outline.width = 4.0
+	else:
+		z_index = 0
+		outline.default_color = Color.BLACK
+		outline.width = 2.0
+
+##Sets region color to match it's owning faction's color
 func updateVisuals():
 	visual.color = enums.colorDict[factionOwner]
 
+##Calculates and updates stats derived from other stats
 func calcDerived() -> void:
 	var newTime = int(((100.0 - stats["logistics"]) / 3.0) * 1.5)
 	
@@ -147,16 +178,12 @@ func calcDerived() -> void:
 	else:
 		derivedStats["travelTime"] = 1
 
-func _on_input_event(viewport: Node, event: InputEvent, shape_idx: int) -> void:
-	if managers.menuLock == false:
-		if event.is_action("select"):
-			if event.is_pressed():
-				selectedRegion.emit(ID)
-
+##Handles improving one of the regions stats
 func upgrade(stat : String):
 	statUpgrades[stat] = statUpgrades[stat] + 1
 	stats[stat] = stats[stat] + 1
 
+##Returns the cost to upgrade the passed stat if possible
 func upgradePrice(stat : String):
 	for entry in statUpgrades:
 		if entry == stat:
@@ -166,6 +193,7 @@ func upgradePrice(stat : String):
 	##Iterated all stat upgrades and didn't find match for stat
 	return null
 
+##Returns the regions score based on it's stats
 func reportScore():
 	var currScore = float(stats["population"] + stats["growth"] + stats["production"] + stats["logistics"]) * 5.0
 	score = currScore
@@ -191,29 +219,12 @@ func getStat(toGet : String):
 		_:
 			print("stat: " + str(toGet) + " was requested!")
 			return null
-	
+
+##Removes passed unit from this region
 func removeUnit(unit : Unit) -> void:
 	units.erase(unit)
 
+##Used by siegers to get tracked by region
 func getSieged(sieger : Unit) -> void:
 	sieged = true
 	siegers.append(sieger)
-
-func _on_mouse_entered() -> void:
-	if managers.menuLock == false:
-		defVisual.color = visual.color
-		visual.color = visual.color.darkened(0.4)
-
-func _on_mouse_exited() -> void:
-	if managers.menuLock == false:
-		visual.color = defVisual.color
-	
-func selected(input : bool):
-	if input:
-		z_index = 1
-		outline.default_color = Color.WHITE
-		outline.width = 4.0
-	else:
-		z_index = 0
-		outline.default_color = Color.BLACK
-		outline.width = 2.0
