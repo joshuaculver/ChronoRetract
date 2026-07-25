@@ -18,10 +18,6 @@
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_h4ult"]
 load_path = "res://.godot/imported/hourglassIconPause.png-83968844e8de24f8765131cdafa23665.ctex"
 
-[sub_resource type="Gradient" id="Gradient_midqu"]
-offsets = PackedFloat32Array(0, 0.99706745)
-colors = PackedColorArray(1, 1, 1, 1, 0, 0.46773255, 0.90447146, 1)
-
 [node name="managers" type="Node" unique_id=599014927]
 script = ExtResource("1_4e3gx")
 
@@ -205,16 +201,7 @@ color = Color(0, 0, 0, 0.28627452)
 polygon = PackedVector2Array(0, 0, 0.07503468, 0, 0.07503468, -6.5814724, 0, -6.5814743)
 
 [node name="Background" type="Node2D" parent="." unique_id=1104469249]
-visible = false
 position = Vector2(-50, 87)
-
-[node name="River" type="Line2D" parent="Background" unique_id=378835707]
-z_index = -2
-position = Vector2(285, 169)
-points = PackedVector2Array(155, -122, 128, -117, 117, -104, 113, -87, 119, -54, 115, -43, 109, -35, 102, -30, 86, -24, 72, -15, 62, 3, 55, 41, 78, 83, 81, 97, 79, 108, 67, 126, 53, 137, 33, 149, 22, 163, 14, 186, 15, 213, 24, 228, 37, 239, 44, 248, 68, 294)
-width = 8.0
-default_color = Color(0.093007095, 0.33048627, 1, 1)
-gradient = SubResource("Gradient_midqu")
 
 [node name="Land" type="Polygon2D" parent="Background" unique_id=1426702924]
 z_index = -3

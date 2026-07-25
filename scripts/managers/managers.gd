@@ -43,6 +43,7 @@ func _ready():
 	UIcanvas = $UI/UIcanvas
 	
 	UIcanvas.visible = false
+	background.visible = false
 
 func _input(event: InputEvent) -> void:
 	if activeSession != null:
