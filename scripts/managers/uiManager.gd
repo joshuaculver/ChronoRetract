@@ -14,7 +14,7 @@ var playIcon = preload("res://assets/sprites/hourglassIconPlay.png")
 @onready var regPanel : TabContainer = $UIcanvas/RTabPanel
 @onready var regionButton : Button = $UIcanvas/RTabPanel/Region/SelectRegionButton
 
-@onready var pauseToggle : TextureButton = $UIcanvas/PauseToggle
+@onready var pauseToggle : Button = $UIcanvas/PauseToggle
 
 signal playerPause
 
@@ -32,6 +32,7 @@ signal playerPause
 
 func _ready() -> void:
 	regPanel.visible = false
+	playerPause.connect(pauseToggle.makeTween)
 
 ## Function for selecting and deselecting a region as well as sending the region's information to the relevant menu
 func regionSelected(newRegion : Region) -> void:
@@ -107,4 +108,3 @@ func updateTime(value : int):
 ##Handles input for the player's pause/unpause toggle button
 func _on_pause_toggle_pressed() -> void:
 	playerPause.emit()
-	

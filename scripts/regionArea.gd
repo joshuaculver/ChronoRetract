@@ -23,6 +23,7 @@ var siegers : Array[Unit] = []
 @onready var collider : CollisionPolygon2D = $CollisionPolygon2D
 @onready var outline : Line2D = $Line2D
 @onready var regionControl : Control = $Control
+@onready var unitLabel : RichTextLabel = $UnitLabel
 
 @onready var defVisual : Polygon2D
 
@@ -133,6 +134,16 @@ func tick():
 			
 				resourceIncome = int(stats["production"] * mult)
 
+##Adds passed unit to this region
+func addUnit(unit : Unit) -> void:
+	units.append(unit)
+	updateVis()
+
+##Removes passed unit from this region
+func removeUnit(unit : Unit) -> void:
+	units.erase(unit)
+	updateVis()
+
 ##Handles when the player clicks this region
 func _on_input_event(viewport: Node, event: InputEvent, shape_idx: int) -> void:
 	if managers.menuLock == false:
@@ -150,6 +161,26 @@ func _on_mouse_entered() -> void:
 func _on_mouse_exited() -> void:
 	if managers.menuLock == false:
 		visual.color = defVisual.color
+
+##Updates visuals for region
+func updateVis() -> void:
+	if units.size() > 1:
+		var unitByFact =  [0,0,0,0,0]
+		for unit in units:
+			unitByFact[unit.faction] = unitByFact[unit.faction] + 1
+
+		unitLabel.clear()
+		unitLabel.text = ""
+		unitLabel.push_bgcolor(Color.BLACK)
+		for i in unitByFact.size():
+			if unitByFact[i] > 0:
+				unitLabel.push_color(enums.nameDict[i])
+				unitLabel.append_text(str(unitByFact[i]))
+				unitLabel.pop()
+		unitLabel.pop_all()
+	else:
+		unitLabel.clear()
+		unitLabel.text = ""
 
 ##Handles visual updates for when the region is selected with the mouse
 func selected(input : bool):
@@ -216,10 +247,6 @@ func getStat(toGet : String):
 		_:
 			print("stat: " + str(toGet) + " was requested!")
 			return null
-
-##Removes passed unit from this region
-func removeUnit(unit : Unit) -> void:
-	units.erase(unit)
 
 ##Used by siegers to get tracked by region
 func getSieged(sieger : Unit) -> void:

@@ -1,0 +1,14 @@
+[gd_scene format=3 uid="uid://bfe888i152gqv"]
+
+[ext_resource type="Script" uid="uid://bu2sjdwjix0a7" path="res://scripts/TravelArrow.gd" id="1_oanna"]
+[ext_resource type="Texture2D" uid="uid://bhy8y6a25ktiy" path="res://assets/sprites/arrow.png" id="1_qytaf"]
+
+[node name="arrow" type="PathFollow2D" unique_id=680385806]
+top_level = true
+z_index = 3
+rotation = 0.26038012
+script = ExtResource("1_oanna")
+
+[node name="arrowSprite" type="Sprite2D" parent="." unique_id=521105953]
+rotation = -1.5707941
+texture = ExtResource("1_qytaf")

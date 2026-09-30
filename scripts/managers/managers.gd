@@ -138,8 +138,10 @@ func unitMoved(callUnitID : int, regionID : int, lastRegionID : int):
 	var oldIndex = oldRegion.units.find(unit)
 	if oldIndex != -1:
 		oldRegion.units.remove_at(oldIndex)
+		oldRegion.updateVis()
 
-	region.units.append(unit)
+	##region.units.append(unit)
+	region.addUnit(unit)
 	region.notify_property_list_changed()
 
 ## Cleans up references to units which are removed

@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://c5jqjy7ewslca"]
+
+[ext_resource type="Texture2D" uid="uid://b7nifrhgwg04t" path="res://assets/sprites/cloud16x16.png" id="1_yu6ml"]
+
+[node name="Cloud" type="Sprite2D" unique_id=1636071822]
+modulate = Color(1, 1, 1, 0.8235294)
+z_index = 5
+scale = Vector2(2, 2)
+texture = ExtResource("1_yu6ml")
+
+[node name="Shadow" type="Sprite2D" parent="." unique_id=44612782]
+modulate = Color(0, 0, 0, 0.39215687)
+z_index = 4
+position = Vector2(0, 40)
+scale = Vector2(1, 0.5)
+texture = ExtResource("1_yu6ml")

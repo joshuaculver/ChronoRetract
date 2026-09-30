@@ -49,6 +49,8 @@ signal destroyed
 signal changed
 signal logSignal(ID, text : String)
 
+var travel : Path2D
+
 func _ready():
 	modulate = enums.colorDict[faction]
 	
@@ -81,6 +83,8 @@ func getPathRegion(target : Region) -> void:
 			if newPath[i] != location.ID:
 				##push_back = append
 				path.push_back(newPath[i])
+		
+		updateTravelVis()
 	else:
 		print("null in get path location or target")
 
@@ -101,6 +105,7 @@ func move() -> void:
 						logSignal.emit(str(ID), " Arrived at " + str(location.ID))
 
 			hostileCheck()
+			updateTravelVis()
 
 ##Used by the unit to heal in neutral/friendly regions
 func rest():
@@ -132,6 +137,31 @@ func hostileCheck():
 func captureCheck():
 	if managers.battleManager.checkSeized(location, managers.factionDict[faction], managers.factionDict[location.factionOwner]):
 		pass
+
+func updateTravelVis() -> void:
+	if logActivity:
+		if mode == enums.UnitMode.TRAVEL && path.size() > 0:
+			if travel == null:
+				var newCurve = Curve2D.new()
+				newCurve.add_point(self.position)
+				##TODO Curve has functions to make this cleaner
+				for loc in path:
+					var region = managers.regionManager.regionDict[loc]
+					print(str(region.position))
+					newCurve.add_point(region.position)
+				travel = TravelIndicator.new(newCurve)
+				add_child(travel)
+			else:
+				var newCurve = Curve2D.new()
+				newCurve.add_point(self.position)
+				for loc in path:
+					var region = managers.regionManager.regionDict[loc]
+					print(str(region.position))
+					newCurve.add_point(region.position)
+				travel.updatePath(newCurve)
+		else:
+			if travel != null:
+				travel.queue_free()
 
 ##Called when the unit is reduced to 0 power or otherwise destroyed
 @abstract func die()

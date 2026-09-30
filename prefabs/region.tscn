@@ -10,11 +10,6 @@ factionOwner = 5
 
 [node name="Control" type="Control" parent="." unique_id=700927047]
 layout_mode = 3
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
 offset_left = -25.0
 offset_top = -25.0
 offset_right = 25.0
@@ -39,6 +34,22 @@ width = 2.0
 default_color = Color(0, 0, 0, 1)
 joint_mode = 2
 round_precision = 16
+
+[node name="UnitLabel" type="RichTextLabel" parent="." unique_id=1026240832]
+modulate = Color(1, 1, 1, 0.7254902)
+z_index = 5
+offset_left = -21.0
+offset_top = 13.0
+offset_right = 21.0
+offset_bottom = 36.0
+mouse_filter = 2
+bbcode_enabled = true
+text = "
+"
+scroll_active = false
+shortcut_keys_enabled = false
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [connection signal="input_event" from="." to="." method="_on_input_event"]
 [connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]

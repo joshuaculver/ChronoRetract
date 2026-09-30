@@ -1,0 +1,23 @@
+[gd_scene format=3 uid="uid://mb2w7jxyu2mh"]
+
+[node name="Unit" type="Node" unique_id=12476540]
+
+[node name="HeadLine" type="Line2D" parent="." unique_id=1208608850]
+points = PackedVector2Array(3, -12, 3, -8, 2, -6, 0, -5, -2, -6, -3, -8, -3, -12, 0, -13)
+closed = true
+width = 1.0
+default_color = Color(0, 0, 0, 1)
+
+[node name="HeadPoly" type="Polygon2D" parent="." unique_id=1359865404]
+polygon = PackedVector2Array(3, -12, 3, -8, 2, -6, 0, -5, -2, -6, -3, -8, -3, -12, 0, -13)
+
+[node name="BodyLine" type="Line2D" parent="." unique_id=491835204]
+position = Vector2(0, 12)
+points = PackedVector2Array(6, -14, 6, -12, 4, -8, 2, -2, 0, 0, -2, -2, -4, -8, -6, -12, -6, -14, 0, -14)
+closed = true
+width = 1.0
+default_color = Color(0, 0, 0, 1)
+
+[node name="BodyPoly" type="Polygon2D" parent="." unique_id=442240428]
+position = Vector2(0, 12)
+polygon = PackedVector2Array(6, -14, 6, -12, 4, -8, 2, -2, 0, 0, -2, -2, -4, -8, -6, -12, -6, -14, 0, -14)

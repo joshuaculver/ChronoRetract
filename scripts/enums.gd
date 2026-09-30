@@ -38,3 +38,13 @@ const colorDict = {
 	4:Color("PURPLE"),
 	5:Color("GRAY")
 }
+
+##Used to get faction system name from ID
+const nameDict = {
+	0:"RED",
+	1:"BLUE",
+	2:"GREEN",
+	3:"YELLOW",
+	4:"PURPLE",
+	5:"GRAY"
+}

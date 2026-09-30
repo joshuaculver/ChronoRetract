@@ -10,13 +10,11 @@
 [ext_resource type="Texture2D" uid="uid://ddql2ejmbid0v" path="res://assets/sprites/BarSprites/powerBarEmpty.png" id="7_flgu2"]
 [ext_resource type="Script" uid="uid://c0cf6v7cfy45g" path="res://scripts/gameLog.gd" id="7_h4ult"]
 [ext_resource type="Script" uid="uid://cvafxjsmg8qw3" path="res://scripts/textureScroll.gd" id="7_tm107"]
-[ext_resource type="Texture2D" uid="uid://b5ysq22ffsp4l" path="res://assets/sprites/hourglassIconPlay.png" id="8_l1hgl"]
 [ext_resource type="Texture2D" uid="uid://bb0hepv5enp7i" path="res://assets/sprites/BarSprites/powerBarTop.png" id="8_vbhga"]
 [ext_resource type="Texture2D" uid="uid://bn1dr6swi4qpn" path="res://assets/sprites/BarSprites/powerBarFill.png" id="9_pxknj"]
 [ext_resource type="Texture2D" uid="uid://bpftj7whmaclk" path="res://assets/sprites/knightIcon.png" id="10_flgu2"]
-
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_h4ult"]
-load_path = "res://.godot/imported/hourglassIconPause.png-83968844e8de24f8765131cdafa23665.ctex"
+[ext_resource type="Script" uid="uid://bng3ww03jnqrj" path="res://scripts/visual/sliderTween.gd" id="12_vbhga"]
+[ext_resource type="Script" uid="uid://du588cy8mgq22" path="res://scripts/CloudSpawner.gd" id="15_vbhga"]
 
 [node name="managers" type="Node" unique_id=599014927]
 script = ExtResource("1_4e3gx")
@@ -163,9 +161,9 @@ anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
 offset_left = -20.0
-offset_top = 50.0
+offset_top = 52.0
 offset_right = 20.0
-offset_bottom = 73.0
+offset_bottom = 75.0
 grow_horizontal = 2
 text = "0"
 horizontal_alignment = 1
@@ -177,30 +175,79 @@ position = Vector2(19.99998, 11)
 scale = Vector2(0.429375, 0.22250009)
 texture = ExtResource("6_tm107")
 
-[node name="PauseToggle" type="TextureButton" parent="UI/UIcanvas" unique_id=300987356]
+[node name="PauseToggle" type="Button" parent="UI/UIcanvas" unique_id=930824443]
 anchors_preset = 7
 anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -64.0
-offset_top = -176.0
-offset_right = 64.0
-offset_bottom = -40.0
+offset_left = -100.0
+offset_top = -156.0
+offset_right = 100.0
+offset_bottom = -84.0
 grow_horizontal = 2
 grow_vertical = 0
 toggle_mode = true
-texture_normal = SubResource("CompressedTexture2D_h4ult")
-texture_pressed = ExtResource("8_l1hgl")
-stretch_mode = 5
+flat = true
+script = ExtResource("12_vbhga")
 
-[node name="Polygon2D" type="Polygon2D" parent="UI/UIcanvas/PauseToggle" unique_id=204189934]
+[node name="Background" type="Polygon2D" parent="UI/UIcanvas/PauseToggle" unique_id=1824222453]
+modulate = Color(1, 1, 1, 0.5882353)
+position = Vector2(12, 28)
+color = Color(0.15127608, 0.15127608, 0.15127608, 1)
+polygon = PackedVector2Array(0, 0, -8, 8, 0, 16, 16, 24, 160, 24, 176, 16, 184, 8, 176, 0, 160, -8, 24, -8, 8.129164, -4.064583)
+
+[node name="Slider" type="Node2D" parent="UI/UIcanvas/PauseToggle" unique_id=1930572082]
+position = Vector2(144, 36)
+
+[node name="SliderPoly" type="Polygon2D" parent="UI/UIcanvas/PauseToggle/Slider" unique_id=2028354797]
+modulate = Color(1, 1, 1, 0.84313726)
+position = Vector2(-32, 0)
+color = Color(0, 0, 0, 1)
+polygon = PackedVector2Array(8, -20, 0, -8, 0, 8, 8, 20, 24, 28, 40, 28, 56, 20, 64, 8, 64, -0.043251038, 64, -8, 56, -20, 40, -28, 24, -28)
+
+[node name="PlayPos" type="Node2D" parent="UI/UIcanvas/PauseToggle" unique_id=349261422]
+position = Vector2(144, 36)
+
+[node name="PlayIcon" type="Line2D" parent="UI/UIcanvas/PauseToggle/PlayPos" unique_id=816723255]
+position = Vector2(-96, -70)
+points = PackedVector2Array(72, 42, 128, 70, 72, 96)
+closed = true
+width = 2.0
+default_color = Color(0, 0, 0, 1)
+
+[node name="PlayBackground" type="Polygon2D" parent="UI/UIcanvas/PauseToggle/PlayPos/PlayIcon" unique_id=1969580633]
 show_behind_parent = true
-scale = Vector2(1705.878, -20.664068)
-color = Color(0, 0, 0, 0.28627452)
-polygon = PackedVector2Array(0, 0, 0.07503468, 0, 0.07503468, -6.5814724, 0, -6.5814743)
+position = Vector2(80, 48)
+polygon = PackedVector2Array(-8, -6, 48, 22, -8, 48)
+
+[node name="PausePos" type="Node2D" parent="UI/UIcanvas/PauseToggle" unique_id=938092910]
+position = Vector2(60, 36)
+
+[node name="PauseIconR" type="Line2D" parent="UI/UIcanvas/PauseToggle/PausePos" unique_id=1493794633]
+position = Vector2(12, -28)
+points = PackedVector2Array(8, 56, 8, 0, -8, 0, -8, 56)
+closed = true
+width = 2.0
+default_color = Color(0, 0, 0, 1)
+
+[node name="PauseBackR" type="Polygon2D" parent="UI/UIcanvas/PauseToggle/PausePos/PauseIconR" unique_id=1059772636]
+show_behind_parent = true
+polygon = PackedVector2Array(8, 56, 8, 0, -8, 0, -8, 56)
+
+[node name="PauseIconL" type="Line2D" parent="UI/UIcanvas/PauseToggle/PausePos" unique_id=1368477553]
+position = Vector2(-12, -28)
+points = PackedVector2Array(8, 56, 8, 0, -8, 0, -8, 56)
+closed = true
+width = 2.0
+default_color = Color(0, 0, 0, 1)
+
+[node name="PauseBackL" type="Polygon2D" parent="UI/UIcanvas/PauseToggle/PausePos/PauseIconL" unique_id=277115830]
+show_behind_parent = true
+polygon = PackedVector2Array(8, 56, 8, 0, -8, 0, -8, 56)
 
 [node name="Background" type="Node2D" parent="." unique_id=1104469249]
+visible = false
 position = Vector2(-50, 87)
 
 [node name="Land" type="Polygon2D" parent="Background" unique_id=1426702924]
@@ -218,6 +265,9 @@ z_index = -5
 position = Vector2(0, 496)
 color = Color(7.508397e-06, 0.61635774, 0.796423, 1)
 polygon = PackedVector2Array(1888, 392, 669, 390, -32, 384, -32, -824, 1888, -824)
+
+[node name="CloudSpawner" type="Node" parent="." unique_id=1636204834]
+script = ExtResource("15_vbhga")
 
 [connection signal="pressed" from="UI/UIcanvas/RTabPanel/Region/SelectRegionButton" to="." method="_on_select_region_button_pressed"]
 [connection signal="pressed" from="UI/UIcanvas/PauseToggle" to="UI" method="_on_pause_toggle_pressed"]
